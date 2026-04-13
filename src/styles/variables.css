@@ -1,0 +1,47 @@
+:root {
+  /* ── Palette ─────────────────────────────────────── */
+  --sky-top:        #3a72c8;
+  --sky-bottom:     #87cefa;
+  --ground-dark:    #1e7a14;
+  --ground-mid:     #2ea820;
+  --ground-light:   #48cc35;
+  --path-color:     #c8a050;
+  --path-border:    #8a6020;
+  --cloud-color:    #ffffff;
+
+  /* Node states */
+  --node-idle:      #ffd700;
+  --node-hover:     #fff066;
+  --node-border:    #996600;
+  --node-current:   #ff9900;
+
+  /* Panel */
+  --panel-bg:       #0d0920;
+  --panel-border:   #7060d0;
+  --panel-header:   #1a1240;
+
+  /* HUD */
+  --hud-bg:         rgba(0,0,0,0.55);
+  --hud-text:       #ffffff;
+
+  /* ── Character ───────────────────────────────────── */
+  --char-skin:      #f4a261;
+  --char-hair:      #3a1e00;
+  --char-mustache:  #2a1000;
+  --char-shirt:     #1565c0;
+  --char-pants:     #1a237e;
+  --char-shoes:     #111111;
+
+  /* ── Typography ──────────────────────────────────── */
+  --font-game:      'Press Start 2P', monospace;
+
+  /* ── Layout ──────────────────────────────────────── */
+  --path-y:          62%;
+  --node-size:       44px;
+  --char-width:      40px;
+  --char-height:     52px;
+
+  /* ── Timing ──────────────────────────────────────── */
+  --walk-step-ms:    850ms;
+  --walk-ease:       ease-in-out;
+}

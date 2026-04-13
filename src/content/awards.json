@@ -1,0 +1,86 @@
+{
+  "awards": [
+    {
+      "id": "thea",
+      "title": "THEA Award",
+      "org": "Themed Entertainment Association",
+      "year": "2022",
+      "description": "Industry's highest honor in themed entertainment — awarded for Star Wars: Galactic Starcruiser.",
+      "emoji": "🏆"
+    },
+    {
+      "id": "disney-inventor",
+      "title": "Disney Inventor Award",
+      "org": "The Walt Disney Company",
+      "year": "2022",
+      "description": "Recognized for innovation and invention within The Walt Disney Company.",
+      "emoji": "💡"
+    },
+    {
+      "id": "patent-ble",
+      "title": "Disney Patent — BLE Innovation",
+      "org": "The Walt Disney Company",
+      "year": "2022",
+      "description": "Patented Bluetooth Low Energy innovation enabling interactive personalized guest experiences.",
+      "emoji": "📜"
+    },
+    {
+      "id": "patent-engine",
+      "title": "Disney Patent — Interactive Game Engine",
+      "org": "The Walt Disney Company",
+      "year": "2022",
+      "description": "Patented interactive game engine architecture powering Galactic Starcruiser's 2M+ play permutations.",
+      "emoji": "📜"
+    }
+  ],
+  "certifications": [
+    {
+      "id": "sixsigma",
+      "title": "Lean Six Sigma Black Belt",
+      "org": "Six Sigma Online · IT Project Management",
+      "year": "2020",
+      "emoji": "🥋"
+    },
+    {
+      "id": "ms-project",
+      "title": "Microsoft Project Master",
+      "org": "Microsoft",
+      "year": "2018",
+      "emoji": "📊"
+    },
+    {
+      "id": "pmp",
+      "title": "PMP Certification",
+      "org": "Project Management Institute",
+      "year": "Expected Fall 2026",
+      "emoji": "🎯"
+    }
+  ],
+  "education": [
+    {
+      "id": "mba",
+      "degree": "Master of Technical Project Management",
+      "field": "IT Project Management",
+      "school": "Keller Graduate School of Business",
+      "location": "Orlando, FL",
+      "year": "2014",
+      "emoji": "🎓"
+    },
+    {
+      "id": "bs",
+      "degree": "Bachelor of Science",
+      "field": "Criminal Justice",
+      "school": "New Mexico State University",
+      "location": "Las Cruces, NM",
+      "year": "2011",
+      "emoji": "🎓"
+    }
+  ],
+  "skills": [
+    { "category": "Leadership", "items": ["Cross-Functional Leadership", "Stakeholder Management", "Vendor Management", "Team Building", "Mentoring", "8 Direct Reports"] },
+    { "category": "Program Management", "items": ["Agile", "Waterfall", "Lean", "Budgeting", "Risk Management", "Change Management", "Microsoft Project", "Jira"] },
+    { "category": "Immersive & Experience", "items": ["Guest Experience Strategy", "Show Control", "LiveOps", "Physical-Digital Integration", "Location-Based Technology", "Interactive Installations"] },
+    { "category": "Technical Platforms", "items": ["Unity", "Unreal Engine", "Flutter", "iOS", "Android", "BLE Technology", "AR/VR", "AI Development"] },
+    { "category": "Architecture", "items": ["Platform Scalability", "API Integration", "IoT / Connected Devices", "Sensor Fusion", "Modular Architecture", "Technical Roadmapping"] }
+  ]
+}

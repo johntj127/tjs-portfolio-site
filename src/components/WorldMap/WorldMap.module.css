@@ -1,0 +1,425 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   WORLD MAP — Phase 3 — TOP-DOWN OVERWORLD (SMW Yoshi's Island style)
+═══════════════════════════════════════════════════════════════════════════ */
+
+.worldMap {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  cursor: default;
+  user-select: none;
+}
+
+/* ─── Background: WATER / OCEAN ─────────────────────────────────────────── */
+/* This is the ocean surrounding the island — seen from above */
+.background {
+  position: absolute;
+  inset: 0;
+  background:
+    /* SMW wave marks — horizontal crescent-like arcs */
+    repeating-linear-gradient(
+      180deg,
+      transparent,
+      transparent 14px,
+      rgba(80,140,255,0.18) 14px,
+      rgba(80,140,255,0.18) 16px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 28px,
+      rgba(255,255,255,0.05) 28px,
+      rgba(255,255,255,0.05) 30px
+    ),
+    /* Base ocean color — SMW bright blue */
+    linear-gradient(160deg, #3868e0 0%, #5080f0 40%, #3868e0 100%);
+  animation: oceanShimmer 8s ease-in-out infinite;
+}
+
+/* ─── Island SVG ─────────────────────────────────────────────────────────── */
+.islandSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ─── Depth layers (parallax drift, used by MapBackground) ──────────────── */
+.layerMountains {
+  will-change: transform;
+  animation: depthMountainDrift 36s ease-in-out infinite;
+}
+.layerHills {
+  will-change: transform;
+  animation: depthHillDrift 24s ease-in-out 2s infinite;
+}
+.layerForeground {
+  will-change: transform;
+}
+
+/* ─── Water shimmer glints ───────────────────────────────────────────────── */
+.waterGlint {
+  position: absolute;
+  width: 32px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  animation: waterGlintAnim 4s ease-in-out infinite;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+/* ─── Cloud shadows on island ────────────────────────────────────────────── */
+/* Top-down: clouds cast moving shadow patches on the grass */
+.cloudShadow1 {
+  position: absolute;
+  width: 120px;
+  height: 60px;
+  background: rgba(0, 0, 40, 0.08);
+  border-radius: 50%;
+  top: 22%;
+  left: 20%;
+  filter: blur(18px);
+  animation: cloudDrift1 18s ease-in-out infinite;
+  pointer-events: none;
+}
+.cloudShadow2 {
+  position: absolute;
+  width: 90px;
+  height: 45px;
+  background: rgba(0, 0, 40, 0.06);
+  border-radius: 50%;
+  top: 45%;
+  left: 62%;
+  filter: blur(14px);
+  animation: cloudDrift2 22s ease-in-out 3s infinite;
+  pointer-events: none;
+}
+
+/* ─── Old cloud/tree classes (kept for animation ref, not rendered) ──────── */
+.cloud { display: none; }
+.cloudBody, .cloudPuff1, .cloudPuff2, .cloudPuff3 { display: none; }
+.mountains, .hills, .groundPlane { display: none; }
+.tree, .treeTop, .treeMid, .treeTrunk { display: none; }
+
+/* ─── SVG Path ───────────────────────────────────────────────────────────── */
+.pathSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ─── Sparkles on path ───────────────────────────────────────────────────── */
+.sparkle {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: #ffd700;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%,
+                     50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  animation: sparklePop 2.4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 3;
+  transform: translate(-50%, -50%);
+}
+
+/* ─── In-world sign post ─────────────────────────────────────────────────── */
+.worldSign {
+  position: absolute;
+  left: 44%;
+  top: 48%;
+  transform: translate(-50%, -100%);
+  z-index: 4;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: signPostBob 2.4s ease-in-out infinite;
+  transition: filter 0.15s;
+}
+.worldSign:hover { filter: brightness(1.25); }
+
+.worldSignBoard {
+  background: #1a3a6b;
+  border: 2px solid #7060d0;
+  border-radius: 3px;
+  padding: 5px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  box-shadow: 0 0 0 1px #000, 2px 3px 0 rgba(0,0,0,0.5),
+              0 0 8px rgba(112,96,208,0.5);
+  animation: signPostGlow 2.4s ease-in-out 0.4s infinite;
+  min-width: 32px;
+}
+.worldSignStar { font-size: 8px; color: #ffd700; line-height: 1; }
+.worldSignText {
+  font-family: var(--font-game);
+  font-size: 7px; color: #ffd700;
+  letter-spacing: 1px; line-height: 1;
+}
+.worldSignPole {
+  width: 3px; height: 14px;
+  background: #5c3317;
+  border: 1px solid #3a1e0a;
+}
+
+/* ─── Node Wrapper ───────────────────────────────────────────────────────── */
+.nodeWrapper {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ─── Node Button — SMW Overworld Radio Button style ─────────────────────── */
+/*
+ * Looks like a physical round button pressed into the ground.
+ * Three visual layers:
+ *   1. Outer border ring  — dark, creates raised-edge illusion
+ *   2. Body               — solid color, radial top-left highlight
+ *   3. Inner ring line    — concentric circle, subtle
+ * Current node adds a pulsing radio-wave ring emanating outward.
+ */
+.node {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  /* Body color comes from CSS var set per-node in NodeMarker */
+  background: radial-gradient(
+    circle at 38% 32%,
+    rgba(255,255,255,0.38) 0%,
+    rgba(255,255,255,0.06) 38%,
+    rgba(0,0,0,0.12) 100%
+  ), var(--node-color, #888);
+  /* Outer raised-edge ring */
+  border: 3px solid rgba(0, 0, 0, 0.55);
+  /* Outline ring just inside border — lighter shade of node color */
+  outline: 1.5px solid rgba(255, 255, 255, 0.20);
+  outline-offset: -5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.12s ease, filter 0.12s ease;
+  /* Ground shadow — sits embedded in terrain */
+  box-shadow:
+    3px 3px 0 rgba(0, 0, 0, 0.50),
+    inset 0 2px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.28);
+  position: relative;
+  z-index: 5;
+}
+
+/* Inner concentric ring — makes it read as a radio button */
+.nodeShine {
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.30);
+  background: transparent;
+  pointer-events: none;
+}
+
+/* Symbol / icon inside the button */
+.nodeSymbol {
+  font-size: 14px;
+  line-height: 1;
+  pointer-events: none;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 1px 0 rgba(0,0,0,0.6));
+}
+
+/* ── Pulse ring container ── */
+/* Absolutely positioned, sits behind the node button */
+.nodePulseRing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 3px solid #ffd700;
+  pointer-events: none;
+  animation: pulseRingExpand 1.5s ease-out infinite;
+  z-index: 4;
+}
+
+.nodePulseRing2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid #ffaa00;
+  pointer-events: none;
+  animation: pulseRingExpand2 1.5s ease-out 0.55s infinite;
+  z-index: 4;
+}
+
+/* ── Node states ─────────────────────────────────────────────────────── */
+.nodeHovered {
+  transform: scale(1.12);
+  filter: brightness(1.25);
+  box-shadow:
+    3px 3px 0 rgba(0, 0, 0, 0.50),
+    0 0 10px 3px rgba(255, 255, 255, 0.25),
+    inset 0 2px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.22);
+}
+
+.nodeCurrent {
+  border-color: #cc6600 !important;
+  box-shadow:
+    3px 3px 0 rgba(0, 0, 0, 0.50),
+    0 0 10px 4px rgba(255, 180, 0, 0.55),
+    inset 0 2px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.28);
+}
+
+.nodeDisabled {
+  cursor: default;
+  opacity: 0.72;
+}
+
+.nodeDepressed {
+  animation: nodeDepress 0.44s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards !important;
+}
+
+/* ─── Node Labels ────────────────────────────────────────────────────────── */
+.nodeLabel {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  font-family: var(--font-game);
+  font-size: 7px;
+  padding: 6px 10px;
+  border: 2px solid;
+  border-radius: 3px;
+  white-space: nowrap;
+  animation: labelFadeIn 0.15s ease forwards;
+  z-index: 10;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: center;
+}
+.nodeLabelTagline {
+  font-size: 6px;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.5px;
+}
+
+.nodeSubLabel {
+  margin-top: 6px;
+  font-family: var(--font-game);
+  font-size: 7px;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000,
+               1px -1px 0 #000, -1px 1px 0 #000;
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: 0.5px;
+}
+
+/* ─── Character ──────────────────────────────────────────────────────────── */
+/* Top-down view: character is shown slightly from above / isometric-ish.
+   The existing pixel art still reads well — it just needs a subtle
+   perspective squish to suggest top-down viewing angle. */
+.character {
+  position: absolute;
+  width: 36px;
+  height: 46px;
+  transform: translate(-50%, -100%);
+  transition: left 900ms ease-in-out, top 900ms ease-in-out;
+  z-index: 6;
+  image-rendering: pixelated;
+  /* Slight vertical squish for top-down feel */
+  filter: drop-shadow(2px 3px 0 rgba(0, 0, 0, 0.4));
+}
+
+.charIdle      { animation: idleBreathe 2.8s ease-in-out infinite; }
+.charWalkRight { animation: walkBob 0.42s ease-in-out infinite; }
+.charWalkLeft  { animation: walkBobLeft 0.42s ease-in-out infinite; }
+
+/* ─── HUD ─────────────────────────────────────────────────────────────────── */
+.hud {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 10;
+  pointer-events: none;
+}
+.hudBox {
+  background: var(--hud-bg);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  padding: 8px 14px;
+  border-radius: 3px;
+  pointer-events: auto;
+}
+.hudName {
+  font-family: var(--font-game);
+  font-size: 10px;
+  color: #ffd700;
+  text-shadow: 2px 2px 0 #000;
+  letter-spacing: 1px;
+}
+.hudLocation {
+  font-family: var(--font-game);
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 4px;
+  text-shadow: 1px 1px 0 #000;
+}
+.hudYears {
+  font-family: var(--font-game);
+  font-size: 7px;
+  color: rgba(255, 215, 0, 0.6);
+  margin-top: 3px;
+}
+
+.hudSkipBtn {
+  font-family: var(--font-game);
+  font-size: 7px;
+  color: rgba(255, 255, 255, 0.7);
+  background: var(--hud-bg);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: color 0.15s, border-color 0.15s;
+  pointer-events: auto;
+}
+.hudSkipBtn:hover { color: #ffd700; border-color: #ffd700; }
+
+/* ─── Walking hint ───────────────────────────────────────────────────────── */
+.walkingHint {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-game);
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  text-shadow: 1px 1px 0 #000;
+  animation: idleBreathe 1.4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 5;
+}

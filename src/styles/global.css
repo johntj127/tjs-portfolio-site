@@ -1,0 +1,47 @@
+@import './variables.css';
+@import './animations.css';
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-game);
+  background: #000;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Pixel-art text rendering */
+* {
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+}
+
+/* Utility: pixel-shadow text */
+.pixel-text {
+  font-family: var(--font-game);
+  color: #fff;
+  text-shadow:
+    2px  0   0 #000,
+   -2px  0   0 #000,
+    0    2px  0 #000,
+    0   -2px  0 #000,
+    2px  2px 0 #000;
+}
+
+/* Scrollable panel content */
+.panel-scroll {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--panel-border) var(--panel-bg);
+}
+
+.panel-scroll::-webkit-scrollbar        { width: 6px; }
+.panel-scroll::-webkit-scrollbar-track  { background: var(--panel-bg); }
+.panel-scroll::-webkit-scrollbar-thumb  { background: var(--panel-border); border-radius: 3px; }
