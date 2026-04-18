@@ -146,7 +146,7 @@ export default function Overview() {
             </g>
           </svg>
           <img
-            src="/assets/avatar.png"
+            src={import.meta.env.BASE_URL + 'assets/avatar.png'}
             alt="TJ Johnson"
             className={styles.avatar}
           />
