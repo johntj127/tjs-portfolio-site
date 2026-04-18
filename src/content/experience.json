@@ -1,74 +1,71 @@
 [
   {
-    "id": "mgr-tp",
+    "id": "tech-mgr-24",
     "company": "The Walt Disney Company",
-    "title": "Manager, Technical Producer",
+    "title": "Technology Manager",
     "division": "Disney Experiences",
-    "years": "2024 – Present",
+    "years": "Feb 2024 – Apr 2026",
     "highlights": [
-      "Directs immersive content across physical, mobile, and streaming platforms",
-      "Leads 3 sustainment teams: Magic Mobile (BLE, Location Services, Mobile Wallet)",
-      "8 direct reports + multiple vendor teams",
-      "Shipped MagicBand+ Holiday Windows experience — first of its kind",
-      "Built BLE accessibility app for closed captioning & audio descriptions (international rollout)",
-      "Oversaw Buzz Lightyear Space Ranger Spin gameplay innovation (Unreal Engine)"
+      "Led cross-functional development across physical, mobile, and streaming platforms — Unity, iOS, Android, and Flutter",
+      "Delivered 3 immersive mobile and physical experiences; contributed to a 40% increase in engagement",
+      "Reduced security incidents by 78% in 6 months via New Relic and AppDynamics implementation",
+      "Delivered accessibility mobile app using BLE, audio watermarks, and VPS technologies (international rollout)",
+      "Led delivery of the MagicBand+ Holiday Windows experience — first-of-kind retail interactive activation",
+      "Led end-to-end QA and delivery for Millennium Falcon: Major Mission Update"
     ]
   },
   {
     "id": "pm-tp",
     "company": "The Walt Disney Company",
-    "title": "Program Manager / Technical Producer",
+    "title": "Program Manager",
     "division": "Walt Disney Imagineering",
-    "years": "2021 – 2024",
+    "years": "Jun 2021 – Feb 2024",
     "highlights": [
-      "Delivered Star Wars: Galactic Starcruiser — custom game engine, 15+ APIs, 2M+ play permutations",
-      "THEA Award + 2 Disney Patents + 100% Guest Satisfaction rating",
-      "Led World of Color: Happiness! — real-time mobile voting driving live show moments",
-      "Technical Lead for Character AI Studio (D309) — AI-driven transmedia experience",
-      "Led Project 256 / GAIA Engine — confidential in-park metaverse with Unity, Unreal, AR, BLE",
-      "Originated Disney Me avatar concept, later adopted for broader brand use"
+      "Delivered Star Wars: Galactic Starcruiser — custom game engine, 15+ API integrations, BLE, and 2M+ personalized play permutations",
+      "THEA Award · 2 Disney Patents tied to BLE innovation and interactive game engine architecture",
+      "Created Imagineering's first LiveOps support team for mobile and immersive game systems",
+      "Led technical architecture for an AI-driven cross-platform character experience spanning Disney+ and in-park",
+      "Spearheaded World of Color: Happiness! — Flutter mobile voting + real-time show control integration"
     ]
   },
   {
-    "id": "tech-cos",
+    "id": "tech-mgr-17",
     "company": "The Walt Disney Company",
-    "title": "Technology Manager / Chief of Staff",
+    "title": "Technology Manager",
     "division": "Disney Parks Technology & Digital",
-    "years": "2017 – 2021",
+    "years": "Feb 2017 – Jun 2021",
     "highlights": [
-      "$500K average savings per project via workflow optimization",
-      "Implemented Jira enterprise-wide — 82% reduction in release defects across ~500 developers",
-      "Upgraded 261 Oracle databases + 49 Red Hat servers in 6 months (vs. previous 2-year timeline)",
-      "Reported directly to VP — led portfolio delivery on high-priority initiatives",
-      "73% increase in Cast satisfaction through engagement and diversity programs",
-      "Applied Lean Six Sigma to automate sustainment and improve team scalability"
+      "Enhanced solution engineering processes, saving an average of $500K per project",
+      "Led Jira implementation and workflow standardization — 82% reduction in release defects across ~500 developers",
+      "Led company-wide Oracle and RHEL upgrade across 265 databases and 49 servers in under 5 months, zero downtime",
+      "Managed a 200+ project technology portfolio spanning Capital and Operating budgets",
+      "Drove PMO and delivery improvements across engineering and solutioning functions"
     ]
   },
   {
-    "id": "tech-mgr",
+    "id": "cos",
     "company": "The Walt Disney Company",
-    "title": "Technology Manager + R&D Program Manager",
+    "title": "Chief of Staff",
     "division": "Disney Parks Technology & Digital",
-    "years": "2014 – 2017",
+    "years": "Jul 2014 – Feb 2017",
     "highlights": [
-      "Built the first formal PMO for Disney Parks Technology & Digital",
-      "Managed 200+ technology initiatives: $125M Capital + $275M Operating",
-      "Delivered personalized Guest Experience Technologies across 26 attractions and dining venues",
-      "Partnered with Creative, Engineering, and Business to align R&D feasibility and innovation strategy",
-      "Creative-technical translator: pairing existing technologies in new ways for first-of-kind experiences"
+      "Established the first formal PMO for Disney Parks Technology & Digital — 200+ initiatives worth $400M+",
+      "Standardized project management practices, introduced performance metrics, and aligned technology roadmaps with strategic growth plans",
+      "Designed and implemented portfolio tracking systems for Solution Engineering and Reference Architecture",
+      "Built organizational reporting, metrics, and annual planning practices to improve strategic alignment and business visibility"
     ]
   },
   {
     "id": "imagineering-rd",
     "company": "The Walt Disney Company",
-    "title": "Imagineering R&D Program Manager",
+    "title": "R&D Project Manager",
     "division": "Walt Disney Imagineering",
-    "years": "2013 – 2014",
+    "years": "Aug 2013 – Jul 2014",
     "highlights": [
-      "Led Next Gen Experience Enhancements (Storymaker): personalized storytelling across 20+ attraction queues",
-      "Delivered personalized dining engagements across 5+ restaurants",
-      "Led Virtual Concierge Project: real-time Guest + Cast messaging system, $600K delivered $200K under budget",
-      "Translated creative vision into scalable technical solutions at Imagineering"
+      "Delivered first-of-their-kind personalized guest experiences across 27 experiences in attractions, dining, and resorts",
+      "Leveraged BLE, MagicBand, radio-node sensing, and real-time digital signage to create personalized interactive moments",
+      "Partnered with creative, engineering, and Unreal content teams to align early-stage innovation with technical feasibility",
+      "Served as creative-technical translator inside WDI, bridging emerging technology and guest-facing storytelling"
     ]
   },
   {
@@ -76,21 +73,23 @@
     "company": "The Walt Disney Company",
     "title": "Resort Operations Manager",
     "division": "Walt Disney World Resort",
-    "years": "2006 – 2013",
+    "years": "Aug 2005 – Aug 2013",
     "highlights": [
-      "Managed resort operations across Walt Disney World properties",
-      "Built deep foundation in guest experience, operations, and Disney culture",
-      "Developed the people-first and guest-first perspective that drives all future work"
+      "Progressive leadership across Caribbean Beach, All-Star Resorts, BoardWalk, and Grand Floridian Resort",
+      "Built the resort's first dedicated concierge itinerary planning team, supporting personalized guest planning 180 days out",
+      "Led large-scale operations across Bell Services, Housekeeping, Front Office, and Concierge",
+      "Piloted Virtual Guest Assistant — text-based guest/cast communication system that helped open the path to WDI R&D"
     ]
   },
   {
     "id": "guest-relations",
     "company": "The Walt Disney Company",
-    "title": "Guest Relations",
-    "division": "Walt Disney World Resort",
-    "years": "2005 – 2006",
+    "title": "Magic Kingdom Guest Relations",
+    "division": "Magic Kingdom Resort · Walt Disney World",
+    "years": "Jan 2005 – Jun 2005",
     "highlights": [
-      "First role at Disney — where the love of building memorable guest experiences began"
+      "Supported guests in real time — service recovery and complex on-the-ground issues at Magic Kingdom",
+      "Built an early understanding of how live experiences succeed, fail, and are remembered"
     ]
   }
 ]

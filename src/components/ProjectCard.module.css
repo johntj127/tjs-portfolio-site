@@ -1,0 +1,268 @@
+/* ── Card shell ──────────────────────────────────────────────── */
+.card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 2px;
+  padding: 24px;
+  cursor: pointer;
+  transition:
+    border-color var(--transition-hover),
+    background   var(--transition-hover),
+    transform    var(--transition-hover),
+    box-shadow   var(--transition-hover);
+}
+
+.media {
+  position: relative;
+  height: 184px;
+  margin: -8px -8px 18px;
+  overflow: hidden;
+  border: 1px solid rgba(200, 152, 42, 0.12);
+  background:
+    linear-gradient(180deg, rgba(10, 12, 18, 0.18), rgba(10, 12, 18, 0.74)),
+    rgba(8, 10, 15, 0.92);
+}
+
+.mediaImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.88) brightness(0.84) contrast(1.03);
+  transition:
+    transform 340ms ease,
+    filter 240ms ease;
+}
+
+.mediaVeil,
+.mediaFrame {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.mediaVeil {
+  background:
+    linear-gradient(180deg, rgba(7, 10, 16, 0.02) 0%, rgba(7, 10, 16, 0.16) 42%, rgba(7, 10, 16, 0.62) 100%),
+    linear-gradient(90deg, rgba(7, 10, 16, 0.48) 0%, rgba(7, 10, 16, 0.08) 28%, rgba(7, 10, 16, 0.24) 100%);
+}
+
+.mediaFrame {
+  inset: 10px;
+  border: 1px solid rgba(200, 152, 42, 0.16);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+    inset 0 -28px 42px rgba(5, 8, 14, 0.28);
+}
+
+/* ── Corner brackets ─────────────────────────────────────────── */
+/* Top-left bracket */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  width: 12px;
+  height: 12px;
+  border-top: 1.5px solid var(--accent-gold-dim);
+  border-left: 1.5px solid var(--accent-gold-dim);
+  transform: scale(0);
+  transform-origin: top left;
+  transition: transform 180ms ease 0ms, border-color 180ms ease;
+}
+
+/* Bottom-right bracket */
+.card::after {
+  content: '';
+  position: absolute;
+  bottom: 7px;
+  right: 7px;
+  width: 12px;
+  height: 12px;
+  border-bottom: 1.5px solid var(--accent-gold-dim);
+  border-right: 1.5px solid var(--accent-gold-dim);
+  transform: scale(0);
+  transform-origin: bottom right;
+  transition: transform 180ms ease 40ms, border-color 180ms ease 40ms;
+}
+
+/* ── Hover state ─────────────────────────────────────────────── */
+.card:hover {
+  border-color: var(--accent-gold-dim);
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+}
+
+.card:hover .mediaImage,
+.card:focus-visible .mediaImage {
+  transform: scale(1.035);
+  filter: saturate(0.94) brightness(0.9) contrast(1.04);
+}
+
+.card:hover::before {
+  transform: scale(1);
+  border-color: var(--accent-gold);
+}
+
+.card:hover::after {
+  transform: scale(1);
+  border-color: var(--accent-gold);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 2px;
+}
+
+/* ── Selection dot ───────────────────────────────────────────── */
+.selectDot {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-gold-dim);
+  opacity: 0.45;
+  pointer-events: none;
+  transition:
+    opacity var(--transition-hover),
+    background var(--transition-hover),
+    box-shadow var(--transition-hover);
+}
+
+.selectDot::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 1px solid rgba(200, 152, 42, 0.18);
+  border-radius: 50%;
+  transition:
+    border-color var(--transition-hover),
+    box-shadow var(--transition-hover);
+}
+
+.selectDot::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  background:
+    linear-gradient(
+      to right,
+      transparent calc(50% - 6px),
+      rgba(200, 152, 42, 0.16) calc(50% - 6px),
+      rgba(200, 152, 42, 0.16) calc(50% + 6px),
+      transparent calc(50% + 6px)
+    ),
+    linear-gradient(
+      to bottom,
+      transparent calc(50% - 6px),
+      rgba(200, 152, 42, 0.16) calc(50% - 6px),
+      rgba(200, 152, 42, 0.16) calc(50% + 6px),
+      transparent calc(50% + 6px)
+    );
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 1px, 1px 100%;
+  opacity: 0.38;
+  transition: opacity var(--transition-hover);
+}
+
+.card:hover .selectDot,
+.card:focus-visible .selectDot {
+  opacity: 1;
+  background: var(--accent-gold);
+  box-shadow: 0 0 8px rgba(200, 152, 42, 0.35);
+}
+
+.card:hover .selectDot::before,
+.card:focus-visible .selectDot::before {
+  border-color: rgba(200, 152, 42, 0.36);
+  box-shadow: 0 0 8px rgba(200, 152, 42, 0.12);
+}
+
+.card:hover .selectDot::after,
+.card:focus-visible .selectDot::after {
+  opacity: 0.68;
+}
+
+/* ── Name ───────────────────────────────────────────────────── */
+.name {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  transition: transform 200ms ease;
+}
+
+.card:hover .name {
+  transform: translateX(-3px);
+}
+
+/* ── Short gold rule ────────────────────────────────────────── */
+.rule {
+  width: 28px;
+  height: 1px;
+  background: var(--accent-gold-dim);
+  margin: 14px 0;
+  flex-shrink: 0;
+}
+
+/* ── Tags ───────────────────────────────────────────────────── */
+.tags {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 18px;
+}
+
+.typeTag,
+.roleTag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  line-height: 1;
+}
+
+.typeTag { color: var(--accent-gold-dim); }
+.roleTag { color: var(--text-dim); }
+
+/* ── Summary ────────────────────────────────────────────────── */
+.summary {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  flex: 1;
+}
+
+/* ── Impact ─────────────────────────────────────────────────── */
+.impact {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent-gold-dim);
+  letter-spacing: 0.08em;
+  margin-top: 16px;
+  line-height: 1.4;
+}
+
+/* ── CTA ────────────────────────────────────────────────────── */
+.cta {
+  margin-top: 18px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  text-align: right;
+  transition: color var(--transition-hover);
+}
+
+.card:hover .cta { color: var(--text-primary); }

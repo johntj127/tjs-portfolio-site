@@ -1,47 +1,45 @@
 :root {
-  /* ── Palette ─────────────────────────────────────── */
-  --sky-top:        #3a72c8;
-  --sky-bottom:     #87cefa;
-  --ground-dark:    #1e7a14;
-  --ground-mid:     #2ea820;
-  --ground-light:   #48cc35;
-  --path-color:     #c8a050;
-  --path-border:    #8a6020;
-  --cloud-color:    #ffffff;
+  /* ── Direction A: The Cartographer's Terminal ─────────────────── */
 
-  /* Node states */
-  --node-idle:      #ffd700;
-  --node-hover:     #fff066;
-  --node-border:    #996600;
-  --node-current:   #ff9900;
+  /* Backgrounds */
+  --bg-primary:         #0c0b09;
+  --bg-surface:         #131210;
+  --bg-surface-2:       #1a1916;
+  --bg-card:            #131210;
+  --bg-card-hover:      #1a1916;
 
-  /* Panel */
-  --panel-bg:       #0d0920;
-  --panel-border:   #7060d0;
-  --panel-header:   #1a1240;
+  /* Accent — warm gold */
+  --accent-gold:        #c8982a;
+  --accent-gold-dim:    #967536;
+  --accent-gold-muted:  #3a2e12;
+  --accent-gold-glow:   rgba(200, 152, 42, 0.22);
 
-  /* HUD */
-  --hud-bg:         rgba(0,0,0,0.55);
-  --hud-text:       #ffffff;
+  /* Text */
+  --text-primary:       #e8e0d0;
+  --text-secondary:     #8a7f6e;
+  --text-dim:           #70655b;
+  --text-accent:        #c8982a;
 
-  /* ── Character ───────────────────────────────────── */
-  --char-skin:      #f4a261;
-  --char-hair:      #3a1e00;
-  --char-mustache:  #2a1000;
-  --char-shirt:     #1565c0;
-  --char-pants:     #1a237e;
-  --char-shoes:     #111111;
+  /* Borders */
+  --border-subtle:      rgba(58, 46, 18, 0.7);
+  --border-mid:         #2e2a22;
+  --border-accent:      #c8982a;
 
-  /* ── Typography ──────────────────────────────────── */
-  --font-game:      'Press Start 2P', monospace;
+  /* Sidebar */
+  --sidebar-width:      200px;
+  --sidebar-bg:         #0f0e0c;
+  --sidebar-border:     #1e1c18;
 
-  /* ── Layout ──────────────────────────────────────── */
-  --path-y:          62%;
-  --node-size:       44px;
-  --char-width:      40px;
-  --char-height:     52px;
+  /* Typography */
+  --font-display:       'Syne', sans-serif;
+  --font-body:          'Inter', sans-serif;
+  --font-mono:          'JetBrains Mono', monospace;
 
-  /* ── Timing ──────────────────────────────────────── */
-  --walk-step-ms:    850ms;
-  --walk-ease:       ease-in-out;
+  /* Transitions */
+  --transition-content: 200ms ease-out;
+  --transition-hover:   150ms ease;
+
+  /* Z-index layers */
+  --z-sidebar:  40;
+  --z-modal:    50;
 }

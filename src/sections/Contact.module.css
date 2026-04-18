@@ -1,0 +1,215 @@
+.contact {
+  position: relative;
+  padding: 56px 48px;
+  max-width: 620px;
+  overflow: hidden;
+}
+
+.mapField {
+  inset: -2% -6% -10% -6%;
+  opacity: 0.82;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.72) 28%, rgba(0, 0, 0, 0.94));
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.72) 28%, rgba(0, 0, 0, 0.94));
+}
+
+.headerMeta {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: rgba(200, 152, 42, 0.76);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  padding: 6px 10px;
+  border: 1px solid rgba(200, 152, 42, 0.12);
+  border-radius: 999px;
+  background: rgba(12, 15, 22, 0.42);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: rgba(220, 224, 233, 0.78);
+  letter-spacing: 0.04em;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(200, 152, 42, 0.78);
+  box-shadow: 0 0 0 3px rgba(200, 152, 42, 0.08);
+}
+
+.pageTitle {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+  margin-bottom: 24px;
+}
+
+.lead {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 48px;
+}
+
+/* ── Link rows ───────────────────────────────────────────────── */
+.links {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+@keyframes contactWaypointRegister {
+  0% {
+    border-color: rgba(200, 152, 42, 0.30);
+    background: rgba(200, 152, 42, 0.42);
+    box-shadow: 0 0 0 3px rgba(200, 152, 42, 0.04);
+  }
+  55% {
+    border-color: rgba(200, 152, 42, 0.48);
+    background: rgba(200, 152, 42, 0.82);
+    box-shadow: 0 0 0 6px rgba(200, 152, 42, 0.10);
+  }
+  100% {
+    border-color: rgba(200, 152, 42, 0.42);
+    background: rgba(200, 152, 42, 0.64);
+    box-shadow: 0 0 0 4px rgba(200, 152, 42, 0.08);
+  }
+}
+
+.link {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  padding: 18px 16px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  text-decoration: none;
+  transition:
+    background   var(--transition-hover),
+    border-color var(--transition-hover);
+}
+
+.link::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border: 1px solid rgba(200, 152, 42, 0.30);
+  border-radius: 50%;
+  background: rgba(200, 152, 42, 0.42);
+  box-shadow: 0 0 0 3px rgba(200, 152, 42, 0.04);
+  transform: translateY(-50%);
+  transition:
+    border-color var(--transition-hover),
+    box-shadow var(--transition-hover),
+    background var(--transition-hover),
+    opacity var(--transition-hover);
+}
+
+.link:hover {
+  background: var(--bg-surface);
+  border-color: var(--border-subtle);
+}
+
+.link:hover::before,
+.link:focus-visible::before {
+  animation: contactWaypointRegister 220ms ease-out both;
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 2px;
+}
+
+.linkLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.linkValue {
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  color: var(--text-primary);
+}
+
+.linkArrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent-gold-dim);
+  transition:
+    color var(--transition-hover),
+    transform var(--transition-hover);
+}
+
+.link:hover .linkArrow,
+.link:focus-visible .linkArrow {
+  color: var(--accent-gold);
+  transform: translateX(1px);
+}
+
+.linkPrimary {
+  border-color: rgba(200, 152, 42, 0.12);
+  background:
+    linear-gradient(90deg, rgba(200, 152, 42, 0.05), rgba(200, 152, 42, 0.00) 48%),
+    rgba(14, 17, 24, 0.40);
+}
+
+.linkPrimary .linkLabel {
+  color: rgba(200, 152, 42, 0.88);
+}
+
+.linkPrimary .linkArrow {
+  color: rgba(200, 152, 42, 0.90);
+}
+
+.coordinate {
+  position: relative;
+  z-index: 1;
+  margin-top: 36px;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: rgba(200, 152, 42, 0.28);
+  letter-spacing: 0.14em;
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .contact { padding: 40px 24px; }
+  .mapField { inset: 0 -10% -12% -10%; }
+  .status { width: 100%; max-width: 100%; }
+  .link { grid-template-columns: 64px 1fr auto; gap: 12px; padding: 16px 12px; }
+  .linkValue { font-size: 12.5px; }
+  .coordinate { margin-top: 28px; font-size: 8.5px; }
+}

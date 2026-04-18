@@ -33,9 +33,9 @@ function el(tag, attrs, parent) {
 }
 const defs = el('defs',{})
 
-/* ─── HILL: bullet/tombstone, straight sides + round cap ─────────────── */
+/* ─── HILL: SMW ghost-hill shape — rounded dome, short straight sides ─── */
 function hill(cx, gY, rx, sh) {
-  const ry = rx * 0.92   // nearly square pixels; slight y-bias keeps cap round
+  const ry = rx * 1.05   // slightly taller than wide cap = rounder dome look
   const id = uid()
   const d = `M ${cx-rx},${gY} L ${cx-rx},${gY-sh} A ${rx},${ry},0,0,1,${cx+rx},${gY-sh} L ${cx+rx},${gY} Z`
   const cp = el('clipPath',{id},defs); el('path',{d},cp)
@@ -45,7 +45,7 @@ function hill(cx, gY, rx, sh) {
     d:`M ${cx+rx*.28},${gY} L ${cx+rx*.28},${gY-sh} A ${rx*.72},${ry*.72},0,0,1,${cx+rx},${gY-sh} L ${cx+rx},${gY} Z`,
     fill:'#3a8010','clip-path':`url(#${id})`
   })
-  el('rect',{x:cx-rx,y:gY-sh-ry-1,width:rx*.56,height:sh+ry+1,fill:'#90e030','clip-path':`url(#${id})`})
+  el('ellipse',{cx:cx-rx*.22,cy:gY-sh-ry*.60,rx:rx*.38,ry:ry*.30,fill:'rgba(180,255,60,0.28)','clip-path':`url(#${id})`})
   el('ellipse',{cx:cx-rx*.16,cy:gY-sh-ry*.70,rx:rx*.20,ry:ry*.18,fill:'rgba(255,255,255,.22)','clip-path':`url(#${id})`})
 }
 
@@ -177,33 +177,45 @@ el('path',{
 })
 
 /* ═══════════════════════════════════════════════
-   HILLS — back to front
-   Left = big hero cluster | right = scattered
+   HILLS — back to front, matching SMW reference scale
+   Reference: hills are LARGE, dominant, clustered
+   Left lower cluster is the visual anchor of the map
 ═══════════════════════════════════════════════ */
 
-// Upper plateau (behind right forest)
-hill(82,  40,  7,  5)
-hill(94,  38,  8,  6)
-hill(74,  42,  6,  4)
-hill(105, 42,  6,  4)
+// Upper plateau hills (behind right forest) — mid-size
+hill(76,  42,  8,  5)
+hill(88,  40,  9,  6)
+hill(68,  44,  7,  4)
+hill(100, 43,  7,  4)
 
-// LEFT HERO CLUSTER — fat mound hills, wide not tall
-hill(22,  67,  8,  5)
-hill(34,  65, 10,  7)   // biggest hill on map
-hill(26,  62,  8,  5)
-hill(44,  65,  9,  6)
-hill(54,  63,  7,  5)
-hill(18,  70,  7,  5)
+// MID-LEFT CLUSTER — second terrace, overlapping back row
+hill(14,  60, 11,  7)
+hill(28,  57, 12,  8)
+hill(42,  59, 10,  6)
+hill(22,  63, 10,  6)
+
+// LOWER-LEFT HERO CLUSTER — biggest hills, dominant visual anchor
+// These are the iconic SMW ghost hills — large and packed
+hill( 8,  76, 11,  7)
+hill(22,  73, 14,  9)   // biggest on map
+hill(36,  74, 13,  8)
+hill(14,  80, 10,  6)
+hill(48,  72, 12,  7)
+hill(56,  70, 10,  6)
+
+// Mid-island bridge hills — connect left cluster to center
+hill(68,  65,  7,  4)
+hill(78,  66,  7,  4)
 
 // Right side scattered
-hill(112, 62,  6,  4)
-hill(122, 60,  7,  5)
+hill(112, 62,  7,  4)
+hill(124, 60,  8,  5)
 
-// Lower standalone hills (level 1 / foreground) — bigger so they read
-hill(24,  84, 11,  7)
-hill(40,  86,  9,  6)
-hill(148, 78, 11,  7)
-hill(164, 83,  9,  6)
+// Lower foreground corners
+hill(28,  85,  9,  5)
+hill(42,  87,  8,  5)
+hill(148, 79,  9,  5)
+hill(163, 84,  8,  5)
 
 /* ═══════════════════════════════════════════════
    TREES
@@ -226,10 +238,8 @@ hill(164, 83,  9,  6)
 // Lower center bush cluster — small tight group like reference
 ;[[92,84,2.4],[97,82,2.6],[103,84,2.4],[109,83,2.4],[115,82,2.2]].forEach(([cx,cy,r])=>tree(cx,cy,r))
 
-// Mid-island scattered (sparse)
-tree(60, 70, 2.6)
-tree(70, 68, 2.6)
-tree(78, 72, 2.4)
+// Mid-island tight cluster
+;[[62,70,2.4],[66,68,2.6],[70,70,2.4],[74,68,2.4],[68,72,2.2]].forEach(([cx,cy,r])=>tree(cx,cy,r))
 
 // Near house lower-left
 tree(32, 79, 2.6)

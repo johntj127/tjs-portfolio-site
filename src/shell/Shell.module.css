@@ -1,0 +1,759 @@
+/* ═══════════════════════════════════════════════════════════════
+   SHELL — desktop layout + mobile scaffold
+   Direction A: The Cartographer's Terminal
+════════════════════════════════════════════════════════════════ */
+
+/* ── Desktop shell container ─────────────────────────────────── */
+.shell {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background: var(--bg-primary);
+  overflow: hidden;
+}
+
+.shell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(
+      42% 38% at -6% -4%,
+      rgba(74, 168, 196, 0.08) 0%,
+      rgba(74, 168, 196, 0.04) 28%,
+      rgba(74, 168, 196, 0.00) 62%
+    ),
+    radial-gradient(
+      44% 40% at 106% 108%,
+      rgba(108, 88, 178, 0.08) 0%,
+      rgba(108, 88, 178, 0.04) 30%,
+      rgba(108, 88, 178, 0.00) 64%
+    );
+  mix-blend-mode: screen;
+  opacity: 0.42;
+}
+
+/* ── Sidebar (desktop) ───────────────────────────────────────── */
+.sidebar {
+  position: relative;
+  z-index: 1;
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+  height: 100vh;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar::after {
+  content: '';
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  right: 0;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(200, 152, 42, 0.10) 18%,
+    rgba(200, 152, 42, 0.14) 50%,
+    rgba(200, 152, 42, 0.10) 82%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* ── Content area ────────────────────────────────────────────── */
+.content {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-width: 0;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-mid) transparent;
+}
+
+.content::before,
+.content::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.content::before {
+  top: 18px;
+  left: 18px;
+  border-top: 1px solid rgba(200, 152, 42, 0.22);
+  border-left: 1px solid rgba(200, 152, 42, 0.22);
+}
+
+.content::after {
+  right: 18px;
+  bottom: 18px;
+  border-right: 1px solid rgba(200, 152, 42, 0.18);
+  border-bottom: 1px solid rgba(200, 152, 42, 0.18);
+}
+
+.content::-webkit-scrollbar       { width: 4px; }
+.content::-webkit-scrollbar-track { background: transparent; }
+.content::-webkit-scrollbar-thumb { background: var(--border-mid); border-radius: 2px; }
+
+/* key-based re-render triggers animation on every route change */
+.contentInner {
+  width: 100%;
+  min-height: 100%;
+  will-change: opacity, transform;
+}
+
+.contentInner > * {
+  position: relative;
+  width: 100%;
+  overflow-x: clip;
+}
+
+.contentInnerExit {
+  animation: contentFadeOut 90ms ease-out both;
+}
+
+.contentInnerEnter {
+  animation: contentFadeInSettle 170ms ease-out both;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   QUEST LOG — sidebar navigation
+════════════════════════════════════════════════════════════════ */
+
+.questLog {
+  --compass-axis-offset: 12px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  padding: 34px 0 24px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.questLog::before,
+.questLog::after {
+  content: '';
+  position: absolute;
+  top: 110px;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.questLog::before {
+  background:
+    radial-gradient(circle at 56% 8%, rgba(91, 205, 210, 0.42) 0 2px, transparent 7px),
+    radial-gradient(circle at 66% 16%, rgba(132, 109, 217, 0.36) 0 2.4px, transparent 7px),
+    radial-gradient(circle at 59% 24%, rgba(223, 182, 96, 0.38) 0 1.8px, transparent 6px),
+    radial-gradient(circle at 62% 13%, rgba(230, 191, 108, 0.28) 0 1.2px, transparent 4.5px),
+    radial-gradient(circle at 68% 31%, rgba(81, 191, 200, 0.34) 0 2.2px, transparent 7px),
+    radial-gradient(circle at 61% 39%, rgba(155, 128, 225, 0.32) 0 2px, transparent 7px),
+    radial-gradient(circle at 65% 29%, rgba(224, 184, 98, 0.24) 0 1.1px, transparent 4.5px),
+    radial-gradient(circle at 72% 48%, rgba(91, 205, 210, 0.28) 0 1.8px, transparent 6px),
+    radial-gradient(circle at 58% 57%, rgba(132, 109, 217, 0.30) 0 2px, transparent 7px),
+    radial-gradient(circle at 69% 66%, rgba(223, 182, 96, 0.30) 0 1.7px, transparent 6px),
+    radial-gradient(circle at 63% 53%, rgba(228, 188, 101, 0.22) 0 1px, transparent 4px),
+    radial-gradient(circle at 63% 76%, rgba(91, 205, 210, 0.26) 0 1.8px, transparent 6px),
+    radial-gradient(circle at 71% 88%, rgba(155, 128, 225, 0.28) 0 2px, transparent 7px),
+    radial-gradient(circle at 67% 79%, rgba(223, 182, 96, 0.24) 0 1.15px, transparent 4.5px),
+    radial-gradient(circle at 61% 96%, rgba(223, 182, 96, 0.26) 0 1.6px, transparent 6px),
+    radial-gradient(circle at 65% 91%, rgba(232, 194, 116, 0.22) 0 1px, transparent 4px);
+  filter: blur(1.2px);
+  opacity: 0.88;
+  mix-blend-mode: screen;
+  animation:
+    sidebarDustDrift 24s ease-in-out infinite alternate,
+    sidebarDustPulse 10s ease-in-out infinite;
+}
+
+.questLog::after {
+  background:
+    radial-gradient(circle at 54% 12%, rgba(88, 201, 204, 0.22) 0 10px, transparent 26px),
+    radial-gradient(circle at 64% 21%, rgba(132, 109, 217, 0.18) 0 12px, transparent 30px),
+    radial-gradient(circle at 59% 18%, rgba(223, 182, 96, 0.14) 0 7px, transparent 18px),
+    radial-gradient(circle at 61% 12%, rgba(239, 201, 122, 0.20) 0 1.8px, transparent 6px),
+    radial-gradient(circle at 60% 34%, rgba(88, 201, 204, 0.18) 0 12px, transparent 28px),
+    radial-gradient(circle at 70% 44%, rgba(145, 118, 219, 0.16) 0 11px, transparent 27px),
+    radial-gradient(circle at 63% 49%, rgba(223, 182, 96, 0.12) 0 6px, transparent 16px),
+    radial-gradient(circle at 66% 46%, rgba(237, 197, 115, 0.18) 0 1.5px, transparent 5px),
+    radial-gradient(circle at 58% 58%, rgba(88, 201, 204, 0.14) 0 12px, transparent 29px),
+    radial-gradient(circle at 68% 72%, rgba(132, 109, 217, 0.15) 0 11px, transparent 27px),
+    radial-gradient(circle at 60% 88%, rgba(223, 182, 96, 0.10) 0 8px, transparent 22px),
+    radial-gradient(circle at 65% 78%, rgba(223, 182, 96, 0.10) 0 5px, transparent 15px),
+    radial-gradient(circle at 62% 83%, rgba(240, 200, 119, 0.16) 0 1.4px, transparent 5px);
+  filter: blur(7px);
+  opacity: 0.62;
+  animation:
+    sidebarDustVeil 32s ease-in-out infinite alternate,
+    sidebarGoldShimmerA 13s ease-in-out infinite;
+}
+
+.questLog > * {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes navDotPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(200, 152, 42, 0.16);
+  }
+  55% {
+    box-shadow: 0 0 0 4px rgba(200, 152, 42, 0.05);
+  }
+  100% {
+    box-shadow: 0 0 0 2px rgba(200, 152, 42, 0.04);
+  }
+}
+
+@keyframes compassHaloRotate {
+  from {
+    transform: translateZ(0) rotate(0deg);
+  }
+  to {
+    transform: translateZ(0) rotate(360deg);
+  }
+}
+
+@keyframes compassParticleDrift {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    opacity: 0.42;
+  }
+  50% {
+    transform: translate3d(3px, -4px, 0) rotate(5deg) scale(1.02);
+    opacity: 0.56;
+  }
+  100% {
+    transform: translate3d(-4px, 3px, 0) rotate(-4deg) scale(0.99);
+    opacity: 0.44;
+  }
+}
+
+@keyframes compassParticlePulse {
+  0%,
+  100% {
+    opacity: 0.32;
+    filter: blur(0.8px);
+  }
+  50% {
+    opacity: 0.58;
+    filter: blur(1.15px);
+  }
+}
+
+@keyframes sidebarDustDrift {
+  0% {
+    transform: translate3d(-3px, -18px, 0) rotate(-1.5deg);
+  }
+  50% {
+    transform: translate3d(6px, 12px, 0) rotate(1deg);
+  }
+  100% {
+    transform: translate3d(2px, 30px, 0) rotate(2deg);
+  }
+}
+
+@keyframes sidebarDustPulse {
+  0%,
+  100% {
+    opacity: 0.74;
+  }
+  50% {
+    opacity: 0.96;
+  }
+}
+
+@keyframes sidebarDustVeil {
+  0% {
+    transform: translate3d(-10px, -10px, 0) scale(0.98);
+    opacity: 0.42;
+  }
+  50% {
+    transform: translate3d(8px, 10px, 0) scale(1.03);
+    opacity: 0.68;
+  }
+  100% {
+    transform: translate3d(4px, 24px, 0) scale(1.01);
+    opacity: 0.5;
+  }
+}
+
+@keyframes sidebarGoldShimmerA {
+  0%,
+  100% {
+    opacity: 0.16;
+    filter: blur(7px);
+  }
+  24% {
+    opacity: 0.24;
+    filter: blur(6.2px);
+  }
+  39% {
+    opacity: 0.36;
+    filter: blur(5.4px);
+  }
+  58% {
+    opacity: 0.18;
+    filter: blur(6.9px);
+  }
+  79% {
+    opacity: 0.3;
+    filter: blur(5.8px);
+  }
+}
+
+@keyframes sidebarGoldShimmerB {
+  0%,
+  100% {
+    opacity: 0.14;
+    filter: blur(1.3px);
+  }
+  18% {
+    opacity: 0.2;
+    filter: blur(1.1px);
+  }
+  34% {
+    opacity: 0.15;
+    filter: blur(1.35px);
+  }
+  52% {
+    opacity: 0.3;
+    filter: blur(0.9px);
+  }
+  71% {
+    opacity: 0.18;
+    filter: blur(1.25px);
+  }
+  86% {
+    opacity: 0.26;
+    filter: blur(1px);
+  }
+}
+
+/* Thin horizontal rules */
+.divider {
+  height: 1px;
+  background: var(--border-mid);
+  margin: 0 20px;
+  flex-shrink: 0;
+}
+
+.navRail {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding-top: 2px;
+}
+
+.navRail::before {
+  content: '';
+  position: absolute;
+  top: 286px;
+  bottom: 18px;
+  left: calc(50% + var(--compass-axis-offset) - 0.5px);
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    rgba(200, 152, 42, 0.18) 0%,
+    rgba(200, 152, 42, 0.10) 16%,
+    rgba(200, 152, 42, 0.08) 84%,
+    rgba(200, 152, 42, 0.04) 100%
+  );
+  pointer-events: none;
+}
+
+.navRail::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 63% 15%, rgba(236, 198, 116, 0.30) 0 1.4px, transparent 5px),
+    radial-gradient(circle at 67% 32%, rgba(241, 203, 126, 0.24) 0 1.1px, transparent 4.5px),
+    radial-gradient(circle at 61% 54%, rgba(236, 198, 116, 0.22) 0 1.2px, transparent 4.5px),
+    radial-gradient(circle at 68% 73%, rgba(242, 205, 130, 0.20) 0 1.1px, transparent 4.5px),
+    radial-gradient(circle at 64% 90%, rgba(238, 201, 123, 0.18) 0 1px, transparent 4px);
+  mix-blend-mode: screen;
+  opacity: 0.14;
+  animation: sidebarGoldShimmerB 17s ease-in-out infinite 2.8s;
+}
+
+.navRail > * {
+  position: relative;
+  z-index: 1;
+}
+
+.compassBlock {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 2px 42px;
+  width: 100%;
+  flex-shrink: 0;
+  isolation: isolate;
+  transform: translateX(var(--compass-axis-offset));
+}
+
+.compassBlock::before,
+.compassBlock::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.compassBlock::before {
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle at 34% 32%,
+      rgba(95, 205, 210, 0.30) 0,
+      rgba(95, 205, 210, 0.16) 20%,
+      rgba(95, 205, 210, 0) 54%
+    ),
+    radial-gradient(
+      circle at 68% 70%,
+      rgba(139, 109, 212, 0.28) 0,
+      rgba(139, 109, 212, 0.16) 24%,
+      rgba(139, 109, 212, 0) 58%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(217, 169, 73, 0.09) 0 16%,
+      rgba(217, 169, 73, 0.04) 28%,
+      rgba(217, 169, 73, 0) 52%
+    ),
+    conic-gradient(
+      from 24deg,
+      rgba(63, 170, 179, 0.10) 0deg,
+      rgba(74, 194, 201, 0.26) 96deg,
+      rgba(121, 96, 197, 0.26) 212deg,
+      rgba(79, 182, 186, 0.12) 320deg,
+      rgba(63, 170, 179, 0.10) 360deg
+    );
+  filter: blur(12px) saturate(112%);
+  opacity: 0.56;
+  transform-origin: 50% 50%;
+  animation: compassHaloRotate 72s linear infinite;
+}
+
+.compassBlock::after {
+  width: 118px;
+  height: 118px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 36%, rgba(92, 204, 208, 0.14) 0 24%, transparent 62%),
+    radial-gradient(circle at 68% 67%, rgba(146, 120, 220, 0.12) 0 22%, transparent 60%),
+    radial-gradient(circle at 52% 52%, rgba(223, 182, 96, 0.08) 0 12%, transparent 42%);
+  filter: blur(6px);
+  opacity: 0.72;
+  animation: compassParticleDrift 34s ease-in-out infinite alternate;
+}
+
+.compassImage {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: min(196px, calc(100% - 4px));
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 18px rgba(12, 16, 24, 0.20));
+}
+
+/* Nav list */
+.navList {
+  list-style: none;
+  flex: 1;
+  padding: 8px 0 0;
+  overflow: hidden;
+}
+
+/* Each nav link */
+.navItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+  padding: 11px 22px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition:
+    color var(--transition-hover),
+    border-color var(--transition-hover);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.navDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid rgba(200, 152, 42, 0.18);
+  background: rgba(200, 152, 42, 0.24);
+  box-shadow: 0 0 0 2px rgba(200, 152, 42, 0.03);
+  transition:
+    border-color var(--transition-hover),
+    background var(--transition-hover),
+    box-shadow var(--transition-hover),
+    opacity var(--transition-hover);
+}
+
+.navLabel {
+  position: relative;
+  z-index: 1;
+}
+
+.navItem:hover {
+  color: var(--text-primary);
+}
+
+.navItem:hover .navDot {
+  border-color: rgba(200, 152, 42, 0.26);
+  background: rgba(200, 152, 42, 0.34);
+}
+
+/* Active state — gold left border + full-brightness text + subtle fill */
+.navActive {
+  color: var(--text-primary) !important;
+  border-left-color: var(--accent-gold) !important;
+  background: rgba(200, 152, 42, 0.06);
+  box-shadow: inset 0 1px 0 rgba(200, 152, 42, 0.04), inset 0 -1px 0 rgba(200, 152, 42, 0.04);
+  animation: navRegisterPulse 220ms ease-out both;
+}
+
+.navActive::before,
+.navActive::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 7px;
+  height: 1px;
+  background: rgba(200, 152, 42, 0.62);
+}
+
+.navActive::before {
+  top: 8px;
+}
+
+.navActive::after {
+  bottom: 8px;
+}
+
+.navActive .navDot {
+  border-color: rgba(200, 152, 42, 0.48);
+  background: rgba(200, 152, 42, 0.78);
+  box-shadow: 0 0 0 2px rgba(200, 152, 42, 0.04);
+  animation: navDotPulse 220ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contentInner {
+    will-change: auto;
+  }
+
+  .contentInnerExit {
+    animation: contentFadeOut 100ms ease-out both;
+  }
+
+  .contentInnerEnter {
+    animation: contentFadeInReduced 160ms ease-out both;
+  }
+
+  .navActive .navDot {
+    animation: none;
+  }
+
+  .questLog::before,
+  .questLog::after {
+    animation: none;
+  }
+
+  .navRail::after {
+    animation: none;
+    opacity: 0.12;
+  }
+
+  .questLog::before {
+    opacity: 0.52;
+  }
+
+  .questLog::after {
+    opacity: 0.34;
+  }
+
+  .compassBlock::before {
+    animation: none;
+    opacity: 0.46;
+  }
+
+  .compassBlock::after {
+    animation: none;
+    opacity: 0.42;
+    filter: blur(5px);
+  }
+}
+
+/* Contact — visually lighter utility item, separated from primary nav */
+.navContact {
+  font-size: 11.5px;
+  color: var(--text-dim);
+  margin-top: 4px;
+  border-top: 1px solid var(--sidebar-border);
+  padding-top: 13px;
+}
+
+.navContact:hover { color: var(--text-secondary); }
+
+/* Resume download — utility link below second divider */
+.resumeLink {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 22px 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color var(--transition-hover);
+  line-height: 1;
+}
+
+.resumeLink:hover {
+  color: var(--text-secondary);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE — top bar + drawer scaffold
+   Activates at ≤ 768px
+════════════════════════════════════════════════════════════════ */
+
+.topBar {
+  display: none; /* hidden on desktop */
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 56px;
+  background: var(--sidebar-bg);
+  border-bottom: 1px solid var(--sidebar-border);
+  padding: 0 20px;
+  align-items: center;
+  justify-content: space-between;
+  z-index: var(--z-sidebar);
+  flex-shrink: 0;
+}
+
+.topBarMark {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: 0.04em;
+  user-select: none;
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color var(--transition-hover);
+}
+
+.hamburger:hover { color: var(--text-primary); }
+
+/* Three-line icon drawn in CSS — no icon dependency */
+.hamburgerLine {
+  display: block;
+  width: 20px;
+  height: 1.5px;
+  background: currentColor;
+  border-radius: 1px;
+}
+
+/* Drawer backdrop */
+.drawerOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: var(--z-modal);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+/* Drawer panel */
+.drawer {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: var(--sidebar-width);
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  display: flex;
+  flex-direction: column;
+  animation: drawerSlideIn 200ms ease-out both;
+}
+
+.drawerClose {
+  position: absolute;
+  top: 18px;
+  right: 14px;
+  font-size: 16px;
+  color: var(--text-dim);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  line-height: 1;
+  transition: color var(--transition-hover);
+}
+
+.drawerClose:hover { color: var(--text-primary); }
+
+/* ── Mobile breakpoint ───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .sidebar  { display: none; }
+  .topBar   { display: flex; }
+
+  .content {
+    height: calc(100vh - 56px);
+    margin-top: 56px;
+  }
+
+  /* On mobile the shell doesn't need flex row since sidebar is gone */
+  .shell { display: block; }
+}

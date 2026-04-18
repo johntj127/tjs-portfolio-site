@@ -1,0 +1,60 @@
+[
+  {
+    "category": "Leadership",
+    "items": [
+      "Cross-Functional Leadership",
+      "Stakeholder Management",
+      "Vendor Management",
+      "Team Building",
+      "Mentoring"
+    ]
+  },
+  {
+    "category": "Program Management",
+    "items": [
+      "Agile",
+      "Waterfall",
+      "Lean",
+      "Budgeting",
+      "Risk Management",
+      "Change Management",
+      "Microsoft Project",
+      "Jira"
+    ]
+  },
+  {
+    "category": "Interactive Systems & Live Ops",
+    "items": [
+      "Show Control",
+      "LiveOps",
+      "Physical-Digital Integration",
+      "Location-Based Technology",
+      "Real-Time Experiences",
+      "Interactive Installations"
+    ]
+  },
+  {
+    "category": "Technical Platforms",
+    "items": [
+      "Unity",
+      "Unreal Engine",
+      "Flutter",
+      "iOS",
+      "Android",
+      "BLE Technology",
+      "AR/VR",
+      "AI Development"
+    ]
+  },
+  {
+    "category": "Architecture",
+    "items": [
+      "Platform Scalability",
+      "API Integration",
+      "IoT / Connected Devices",
+      "Sensor Fusion",
+      "Modular Architecture",
+      "Technical Roadmapping"
+    ]
+  }
+]
