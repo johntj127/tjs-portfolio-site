@@ -3,10 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TJ Johnson</title>
+    <title>TJ Johnson - Delivery Ninja</title>
+
+    <script>
+      (function () {
+        var redirect = sessionStorage.getItem('redirect')
+        if (!redirect) return
+        sessionStorage.removeItem('redirect')
+        if (redirect !== location.pathname + location.search + location.hash) {
+          history.replaceState(null, '', redirect)
+        }
+      })()
+    </script>
+
+    <!-- Direction A typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   </head>
   <body>
     <div id="root"></div>

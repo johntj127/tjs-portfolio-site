@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>TJ Johnson - Delivery Ninja</title>
+    <script>
+      (function () {
+        var path = location.pathname.replace(/^\/tjs-portfolio-site/, '') || '/'
+        var redirect = path + location.search + location.hash
+        sessionStorage.setItem('redirect', redirect)
+        location.replace('/tjs-portfolio-site/')
+      })()
+    </script>
+  </head>
+  <body></body>
+</html>
