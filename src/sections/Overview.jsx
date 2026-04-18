@@ -75,7 +75,7 @@ const TIER1 = [
     name: 'Star Wars: Galactic Starcruiser',
     typeTag: 'Custom Game Platform',
     roleTag: 'Technical Producer',
-    imageSrc: '/assets/project-images/swgs_hero_01.jpg',
+    imageSrc: import.meta.env.BASE_URL + 'assets/project-images/swgs_hero_01.jpg',
     imageAlt: '',
     imagePosition: 'center 42%',
     summary:
@@ -88,7 +88,7 @@ const TIER1 = [
     name: 'Millennium Falcon: Major Mission Update',
     typeTag: 'Gameplay Systems · Unreal Engine 5',
     roleTag: 'Technology Manager',
-    imageSrc: '/assets/project-images/falcon_01.jpg',
+    imageSrc: import.meta.env.BASE_URL + 'assets/project-images/falcon_01.jpg',
     imageAlt: '',
     imagePosition: 'center center',
     summary:
@@ -101,7 +101,7 @@ const TIER1 = [
     name: 'Virtual Guest Services',
     typeTag: 'Production AI · Live Ops',
     roleTag: 'Technology Manager',
-    imageSrc: '/assets/project-images/VGS_01.jpg',
+    imageSrc: import.meta.env.BASE_URL + 'assets/project-images/VGS_01.jpg',
     imageAlt: '',
     imagePosition: 'center center',
     summary:

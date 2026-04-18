@@ -100,7 +100,7 @@ export default function ProjectDetail() {
               ].filter(Boolean).join(' ')}
             >
               <img
-                src={project.detailImage}
+                src={import.meta.env.BASE_URL + project.detailImage}
                 alt={project.detailImageAlt ?? ''}
                 className={styles.mediaImage}
                 loading="lazy"

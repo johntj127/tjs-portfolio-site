@@ -77,7 +77,7 @@ export default function Projects() {
               roleTag={p.role}
               summary={p.summary}
               impact={p.impact}
-              imageSrc={p.cardImage}
+              imageSrc={p.cardImage ? import.meta.env.BASE_URL + p.cardImage : undefined}
               imageAlt={p.cardImageAlt ?? ''}
               imagePosition={p.cardImagePosition}
             />
@@ -100,7 +100,7 @@ export default function Projects() {
               roleTag={p.role}
               summary={p.summary}
               impact={p.impact}
-              imageSrc={p.cardImage}
+              imageSrc={p.cardImage ? import.meta.env.BASE_URL + p.cardImage : undefined}
               imageAlt={p.cardImageAlt ?? ''}
               imagePosition={p.cardImagePosition}
             />
