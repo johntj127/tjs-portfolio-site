@@ -195,6 +195,17 @@
   animation: revealUp 360ms ease-out 240ms both;
 }
 
+.systemZone {
+  position: relative;
+  z-index: 1;
+  margin-top: 18px;
+}
+
+.systemZoneContent {
+  position: relative;
+  z-index: 1;
+}
+
 .translationSection::before {
   content: '';
   position: absolute;
@@ -316,6 +327,7 @@
   .name            { font-size: 36px; }
   .positioning     { font-size: 15px; max-width: 100%; }
   .translationBody { font-size: 14.5px; }
+  .systemZone      { margin-top: 10px; }
   /* Quote block collapses to full-width below identity text */
   .quoteBlock      { width: 100%; }
 }

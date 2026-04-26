@@ -3,6 +3,7 @@ import ProjectCard from '../components/ProjectCard.jsx'
 import CapabilityCards from '../components/CapabilityCards.jsx'
 import CapabilityDetailModal from '../components/CapabilityDetailModal.jsx'
 import MapField from '../components/MapField/MapField.jsx'
+import OverviewRouteOverlay from '../components/OverviewRouteOverlay.jsx'
 import TranslationGrid from '../components/TranslationGrid.jsx'
 import styles from './Overview.module.css'
 
@@ -293,20 +294,26 @@ export default function Overview() {
         </blockquote>
       </section>
 
-      {/* ── Capability pillars ────────────────────────── */}
-      <CapabilityCards items={PILLARS} onSelect={openCapability} />
+      <section className={styles.systemZone} aria-label="Core capabilities and game production translation">
+        <OverviewRouteOverlay />
 
-      <section className={styles.translationSection} aria-labelledby="game-production-translation">
-        <h2 id="game-production-translation" className={styles.sectionLabel}>
-          How This Translates to Game Production
-        </h2>
-        <p className={styles.translationBody}>
-          My background is not adjacent to game production because it was simply
-          {' '}“themed entertainment.” It is adjacent because I led live, player-facing
-          interactive systems with real-time infrastructure, game engines, mobile platforms,
-          operational telemetry, release dependencies, support models, and guest/player impact at scale.
-        </p>
-        <TranslationGrid rows={TRANSLATION_ROWS} />
+        <div className={styles.systemZoneContent}>
+          {/* ── Capability pillars ────────────────────────── */}
+          <CapabilityCards items={PILLARS} onSelect={openCapability} />
+
+          <section className={styles.translationSection} aria-labelledby="game-production-translation">
+            <h2 id="game-production-translation" className={styles.sectionLabel}>
+              How This Translates to Game Production
+            </h2>
+            <p className={styles.translationBody}>
+              My background is not adjacent to game production because it was simply
+              {' '}“themed entertainment.” It is adjacent because I led live, player-facing
+              interactive systems with real-time infrastructure, game engines, mobile platforms,
+              operational telemetry, release dependencies, support models, and guest/player impact at scale.
+            </p>
+            <TranslationGrid rows={TRANSLATION_ROWS} />
+          </section>
+        </div>
       </section>
 
       <div className={styles.divider} aria-hidden="true" />

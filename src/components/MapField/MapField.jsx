@@ -267,21 +267,32 @@ export default function MapField({ variant = 'overview', className = '' }) {
 
           <g className={styles.contentAwareTravellers}>
             <g className={styles.travelPulseGold}>
-              <circle cx="0" cy="0" r="2.4" />
-              <circle cx="0" cy="0" r="6.4" fill="none" strokeWidth="0.7" />
+              <circle cx="0" cy="0" r="2.8" />
+              <circle cx="0" cy="0" r="7.6" fill="none" strokeWidth="0.8" />
               <animateMotion
-                dur="14s"
+                dur="10s"
                 repeatCount="indefinite"
                 rotate="auto"
                 path="M 76,146 C 98,240 92,332 114,430 S 122,616 104,790"
               />
             </g>
             <g className={styles.travelPulseTeal}>
-              <circle cx="0" cy="0" r="1.9" />
-              <circle cx="0" cy="0" r="5.6" fill="none" strokeWidth="0.62" />
+              <circle cx="0" cy="0" r="2.2" />
+              <circle cx="0" cy="0" r="6.3" fill="none" strokeWidth="0.68" />
               <animateMotion
-                dur="14s"
-                begin="-6s"
+                dur="10s"
+                begin="-3.4s"
+                repeatCount="indefinite"
+                rotate="auto"
+                path="M 76,146 C 98,240 92,332 114,430 S 122,616 104,790"
+              />
+            </g>
+            <g className={styles.travelPulseGold}>
+              <circle cx="0" cy="0" r="2.1" />
+              <circle cx="0" cy="0" r="5.8" fill="none" strokeWidth="0.62" />
+              <animateMotion
+                dur="10s"
+                begin="-6.8s"
                 repeatCount="indefinite"
                 rotate="auto"
                 path="M 76,146 C 98,240 92,332 114,430 S 122,616 104,790"
@@ -328,24 +339,35 @@ export default function MapField({ variant = 'overview', className = '' }) {
 
           <g className={styles.contentAwareTravellers}>
             <g className={styles.travelPulseGold}>
-              <circle cx="0" cy="0" r="2.5" />
-              <circle cx="0" cy="0" r="6.8" fill="none" strokeWidth="0.72" />
+              <circle cx="0" cy="0" r="2.8" />
+              <circle cx="0" cy="0" r="7.8" fill="none" strokeWidth="0.8" />
               <animateMotion
-                dur="16s"
+                dur="11s"
                 repeatCount="indefinite"
                 rotate="auto"
                 path="M 936,104 C 1016,166 1022,318 952,420 S 914,626 972,804"
               />
             </g>
             <g className={styles.travelPulseTeal}>
-              <circle cx="0" cy="0" r="2" />
-              <circle cx="0" cy="0" r="5.8" fill="none" strokeWidth="0.64" />
+              <circle cx="0" cy="0" r="2.2" />
+              <circle cx="0" cy="0" r="6.4" fill="none" strokeWidth="0.68" />
               <animateMotion
-                dur="16s"
-                begin="-8s"
+                dur="11s"
+                begin="-3.7s"
                 repeatCount="indefinite"
                 rotate="auto"
                 path="M 878,142 C 964,188 978,298 924,394"
+              />
+            </g>
+            <g className={styles.travelPulseGold}>
+              <circle cx="0" cy="0" r="2.1" />
+              <circle cx="0" cy="0" r="6" fill="none" strokeWidth="0.62" />
+              <animateMotion
+                dur="11s"
+                begin="-7.1s"
+                repeatCount="indefinite"
+                rotate="auto"
+                path="M 936,104 C 1016,166 1022,318 952,420 S 914,626 972,804"
               />
             </g>
           </g>
@@ -391,24 +413,35 @@ export default function MapField({ variant = 'overview', className = '' }) {
 
           <g className={styles.contentAwareTravellers}>
             <g className={styles.travelPulseGold}>
-              <circle cx="0" cy="0" r="2.3" />
-              <circle cx="0" cy="0" r="6.2" fill="none" strokeWidth="0.68" />
+              <circle cx="0" cy="0" r="2.6" />
+              <circle cx="0" cy="0" r="7.2" fill="none" strokeWidth="0.76" />
               <animateMotion
-                dur="18s"
+                dur="12s"
                 repeatCount="indefinite"
                 rotate="auto"
                 path="M 172,774 C 304,722 446,718 582,746 S 842,766 994,732"
               />
             </g>
             <g className={styles.travelPulseTeal}>
-              <circle cx="0" cy="0" r="1.8" />
-              <circle cx="0" cy="0" r="5.2" fill="none" strokeWidth="0.58" />
+              <circle cx="0" cy="0" r="2.1" />
+              <circle cx="0" cy="0" r="5.8" fill="none" strokeWidth="0.64" />
               <animateMotion
-                dur="18s"
-                begin="-9s"
+                dur="12s"
+                begin="-4s"
                 repeatCount="indefinite"
                 rotate="auto"
                 path="M 244,748 C 378,720 530,720 674,742"
+              />
+            </g>
+            <g className={styles.travelPulseGold}>
+              <circle cx="0" cy="0" r="2" />
+              <circle cx="0" cy="0" r="5.6" fill="none" strokeWidth="0.6" />
+              <animateMotion
+                dur="12s"
+                begin="-8s"
+                repeatCount="indefinite"
+                rotate="auto"
+                path="M 172,774 C 304,722 446,718 582,746 S 842,766 994,732"
               />
             </g>
           </g>
@@ -433,6 +466,30 @@ export default function MapField({ variant = 'overview', className = '' }) {
               strokeLinecap="round"
               className={styles.routePath}
             />
+          </g>
+
+          <g className={styles.contentAwareTravellers}>
+            <g className={styles.travelPulseTeal}>
+              <circle cx="0" cy="0" r="1.8" />
+              <circle cx="0" cy="0" r="5.2" fill="none" strokeWidth="0.56" />
+              <animateMotion
+                dur="9s"
+                repeatCount="indefinite"
+                rotate="auto"
+                path="M 246,506 C 344,488 478,492 608,512"
+              />
+            </g>
+            <g className={styles.travelPulseGold}>
+              <circle cx="0" cy="0" r="1.9" />
+              <circle cx="0" cy="0" r="5.4" fill="none" strokeWidth="0.58" />
+              <animateMotion
+                dur="9s"
+                begin="-4.5s"
+                repeatCount="indefinite"
+                rotate="auto"
+                path="M 246,744 C 384,730 536,732 692,748"
+              />
+            </g>
           </g>
         </>
       )}

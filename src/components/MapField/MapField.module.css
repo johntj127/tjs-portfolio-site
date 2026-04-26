@@ -8,6 +8,16 @@
   to   { stroke-dashoffset: 0;  }
 }
 
+@keyframes routeFlowOverviewFast {
+  from { stroke-dashoffset: 70; }
+  to   { stroke-dashoffset: 0;  }
+}
+
+@keyframes travellerGlow {
+  0%, 100% { opacity: 0.42; transform: scale(0.92); }
+  45%      { opacity: 1;    transform: scale(1.08); }
+}
+
 @keyframes ambientDriftA {
   0%, 100% { transform: translateY(0px);   }
   50%       { transform: translateY(-20px); }
@@ -97,27 +107,46 @@
 }
 
 .contentAwareTravellers {
-  opacity: 0.94;
+  opacity: 0.98;
 }
 
 .travelPulseGold,
 .travelPulseTeal {
   transform-box: fill-box;
   transform-origin: center;
+  animation: travellerGlow 2.8s ease-in-out infinite;
 }
 
 .travelPulseGold {
   color: rgba(200, 152, 42, 0.92);
-  filter: drop-shadow(0 0 6px rgba(200, 152, 42, 0.38));
+  filter: drop-shadow(0 0 8px rgba(200, 152, 42, 0.46));
 }
 
 .travelPulseTeal {
-  color: rgba(79, 195, 247, 0.82);
-  filter: drop-shadow(0 0 6px rgba(79, 195, 247, 0.3));
+  color: rgba(104, 214, 255, 0.9);
+  filter: drop-shadow(0 0 8px rgba(79, 195, 247, 0.4));
 }
 
 .contentAwareEdgeAccent {
-  opacity: 0.4;
+  opacity: 0.56;
+}
+
+.overviewContentAware .contentAwareRoute .routePath,
+.overviewContentAware .contentAwareSweep .routePath,
+.overviewContentAware .contentAwareLower .routePath,
+.overviewContentAware .contentAwareEdgeAccent .routePath {
+  animation: routeFlowOverviewFast 4.2s linear infinite;
+}
+
+.overviewContentAware .contentAwareRoute .routePathSlow,
+.overviewContentAware .contentAwareSweep .routePathSlow,
+.overviewContentAware .contentAwareLower .routePathSlow,
+.overviewContentAware .contentAwareEdgeAccent .routePathSlow {
+  animation: routeFlowOverviewFast 6.6s linear infinite;
+}
+
+.overviewContentAware .contentAwareNode {
+  opacity: 0.96;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -127,7 +156,9 @@
   .hubPulseRingSlow,
   .driftA,
   .driftB,
-  .driftC {
+  .driftC,
+  .travelPulseGold,
+  .travelPulseTeal {
     animation: none;
   }
 

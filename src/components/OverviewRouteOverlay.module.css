@@ -1,0 +1,149 @@
+@keyframes overlayDashFlow {
+  from { stroke-dashoffset: 72; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes overlayDashFlowSlow {
+  from { stroke-dashoffset: 54; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes overlayNodePulse {
+  0%, 100% { opacity: 0.24; transform: scale(0.96); }
+  45% { opacity: 0.72; transform: scale(1.06); }
+}
+
+@keyframes overlayTravellerGlow {
+  0%, 100% { opacity: 0.38; transform: scale(0.92); }
+  40% { opacity: 1; transform: scale(1.1); }
+}
+
+.overlay {
+  position: absolute;
+  inset: -20px -34px -24px -34px;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.desktop,
+.mobile {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  color: var(--accent-gold);
+  fill: none;
+  stroke: currentColor;
+}
+
+.mobile {
+  display: none;
+}
+
+.primaryRoutes,
+.secondaryRoutes {
+  opacity: 0.92;
+}
+
+.routeStrong,
+.routeSoft {
+  fill: none;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.routeStrong {
+  stroke-width: 1.4;
+  stroke-dasharray: 7 9;
+  animation: overlayDashFlow 4.8s linear infinite;
+}
+
+.routeSoft {
+  stroke-width: 0.95;
+  stroke-dasharray: 3 11;
+  opacity: 0.64;
+  animation: overlayDashFlowSlow 6.4s linear infinite;
+}
+
+.nodes {
+  color: rgba(200, 152, 42, 0.92);
+}
+
+.nodeCore {
+  fill: currentColor;
+  stroke: none;
+  filter: drop-shadow(0 0 7px rgba(200, 152, 42, 0.44));
+}
+
+.nodeRing {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 0.85;
+  opacity: 0.62;
+}
+
+.nodeRingPulse {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 0.9;
+  opacity: 0.68;
+  animation: overlayNodePulse 3.8s ease-in-out infinite;
+}
+
+.travellers {
+  opacity: 0.98;
+}
+
+.pulseGold,
+.pulseTeal {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: overlayTravellerGlow 2.7s ease-in-out infinite;
+}
+
+.pulseGold {
+  color: rgba(200, 152, 42, 0.96);
+  fill: currentColor;
+  stroke: currentColor;
+  filter: drop-shadow(0 0 8px rgba(200, 152, 42, 0.48));
+}
+
+.pulseTeal {
+  color: rgba(100, 214, 255, 0.94);
+  fill: currentColor;
+  stroke: currentColor;
+  filter: drop-shadow(0 0 8px rgba(79, 195, 247, 0.44));
+}
+
+.pulseRing {
+  fill: none;
+  stroke-width: 0.72;
+}
+
+@media (max-width: 900px) {
+  .overlay {
+    inset: -14px -18px -12px -18px;
+  }
+
+  .desktop {
+    display: none;
+  }
+
+  .mobile {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .routeStrong,
+  .routeSoft,
+  .nodeRingPulse,
+  .pulseGold,
+  .pulseTeal {
+    animation: none;
+  }
+
+  .travellers {
+    display: none;
+  }
+}
