@@ -2,43 +2,39 @@ import React from 'react'
 import styles from './OverviewRouteOverlay.module.css'
 
 export default function OverviewRouteOverlay() {
-  const desktopPath = `M -34,248
-    C 8,228 44,182 88,144
-    C 128,108 188,102 238,124
-    C 286,146 306,188 316,234
-    C 324,266 350,278 398,286
-    L 1026,286
-    C 1078,286 1106,312 1108,362
-    L 1110,672
-    C 1110,718 1086,742 1042,742
-    L 150,742
-    C 114,742 96,760 96,798
-    L 98,1260
-    C 98,1304 120,1326 164,1326
-    L 1032,1326
-    C 1074,1326 1092,1304 1092,1260
-    L 1092,1172
-    C 1092,1266 1074,1350 1038,1426
-    C 1004,1494 940,1546 850,1582
-    C 814,1596 796,1620 796,1658
-    L 796,1814
-    C 796,1842 812,1856 840,1856
-    L 1088,1856
-    C 1132,1856 1166,1842 1198,1812
-    C 1142,1816 1094,1818 1040,1818
-    L 828,1818
-    C 788,1818 768,1798 768,1758
-    L 768,1454
-    C 768,1424 754,1410 724,1410
-    L 548,1410
-    C 514,1410 498,1426 498,1460
-    L 498,1818
-    C 498,1844 484,1856 458,1856
-    L 164,1856
-    C 122,1856 98,1834 98,1792
-    L 98,1404
-    C 98,1372 114,1356 146,1356
-    L 430,1356`
+  const desktopPath = `M -42,248
+    C 14,220 54,174 102,138
+    C 150,104 214,108 254,144
+    C 292,180 302,236 286,292
+    C 268,346 226,388 160,418
+    L 1040,418
+    C 1080,418 1100,438 1100,478
+    L 1100,730
+    C 1100,770 1080,790 1040,790
+    L 168,790
+    C 124,790 102,812 102,856
+    L 102,1298
+    C 102,1342 124,1364 168,1364
+    L 1044,1364
+    C 1084,1364 1104,1384 1104,1424
+    L 1104,1494
+    C 1104,1530 1086,1548 1050,1548
+    L 168,1548
+    C 124,1548 102,1570 102,1614
+    L 102,1878
+    C 102,1918 122,1938 162,1938
+    L 420,1938
+    C 458,1938 478,1918 478,1880
+    L 478,1558
+    C 478,1520 498,1500 536,1500
+    L 760,1500
+    C 798,1500 818,1520 818,1558
+    L 818,1880
+    C 818,1918 838,1938 876,1938
+    L 1092,1938
+    C 1130,1938 1158,1920 1188,1888
+    L 1188,1568
+    C 1188,1528 1208,1508 1248,1508`
 
   const mobilePath = `M 26,132
     C 56,112 96,108 128,122
@@ -64,39 +60,39 @@ export default function OverviewRouteOverlay() {
         />
 
         <g className={styles.nodes}>
-          <g transform="translate(114 128)">
+          <g transform="translate(108 136)">
             <circle r="4.6" className={styles.nodeCore} />
             <circle r="11.8" className={styles.nodeRing} />
           </g>
-          <g transform="translate(316 234)">
+          <g transform="translate(160 418)">
             <circle r="4.2" className={styles.nodeCore} />
             <circle r="10.8" className={styles.nodeRing} />
           </g>
-          <g transform="translate(1088 384)">
+          <g transform="translate(1100 478)">
             <circle r="5" className={styles.nodeCore} />
             <circle r="14" className={styles.nodeRingPulse} />
           </g>
-          <g transform="translate(96 748)">
+          <g transform="translate(102 856)">
             <circle r="5.2" className={styles.nodeCore} />
             <circle r="14.8" className={styles.nodeRingPulse} />
           </g>
-          <g transform="translate(1092 1260)">
+          <g transform="translate(1044 1364)">
             <circle r="4.8" className={styles.nodeCore} />
             <circle r="13.4" className={styles.nodeRing} />
           </g>
-          <g transform="translate(796 1658)">
+          <g transform="translate(168 1548)">
             <circle r="5.1" className={styles.nodeCore} />
             <circle r="14.6" className={styles.nodeRingPulse} />
           </g>
-          <g transform="translate(498 1460)">
+          <g transform="translate(478 1558)">
             <circle r="4.4" className={styles.nodeCore} />
             <circle r="12.2" className={styles.nodeRing} />
           </g>
-          <g transform="translate(98 1792)">
+          <g transform="translate(818 1558)">
             <circle r="4.4" className={styles.nodeCore} />
             <circle r="12.2" className={styles.nodeRing} />
           </g>
-          <g transform="translate(1088 1856)">
+          <g transform="translate(1188 1888)">
             <circle r="4.4" className={styles.nodeCore} />
             <circle r="12.2" className={styles.nodeRing} />
           </g>
