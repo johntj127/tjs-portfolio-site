@@ -224,15 +224,32 @@
 
 .list {
   margin: 0;
-  padding-left: 18px;
+  padding: 0;
+  list-style: none;
   color: rgba(220, 224, 233, 0.8);
 }
 
 .list li {
+  position: relative;
   margin-bottom: 10px;
+  padding-left: 16px;
   font-family: var(--font-body);
   font-size: 14px;
   line-height: 1.66;
+}
+
+.list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 5px;
+  height: 5px;
+  border: 1px solid rgba(200, 152, 42, 0.32);
+  border-radius: 50%;
+  background: rgba(200, 152, 42, 0.52);
+  box-shadow: 0 0 0 3px rgba(200, 152, 42, 0.04);
+  transform: translateY(-50%);
 }
 
 .projectLink,

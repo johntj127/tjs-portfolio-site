@@ -23,10 +23,10 @@
 }
 
 .mapField {
-  inset: -6% -10% -10% -10%;
-  opacity: 0.34;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.8) 38%, rgba(0, 0, 0, 1));
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.8) 38%, rgba(0, 0, 0, 1));
+  inset: -8% -10% -10% -10%;
+  opacity: 0.52;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.14), rgba(0, 0, 0, 0.74) 42%, rgba(0, 0, 0, 0.96));
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.14), rgba(0, 0, 0, 0.74) 42%, rgba(0, 0, 0, 0.96));
 }
 
 /* ── Back navigation ─────────────────────────────────────────── */
@@ -335,5 +335,5 @@
 /* ── Responsive ──────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .detail { padding: 36px 24px 56px; }
-  .mapField { inset: 0 -12% -14% -12%; }
+  .mapField { inset: -2% -12% -14% -12%; opacity: 0.46; }
 }

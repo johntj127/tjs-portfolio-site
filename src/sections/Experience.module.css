@@ -30,17 +30,17 @@
 
 .mapField {
   inset: -14% -10% 0 -10%;
-  opacity: 0.62;
+  opacity: 0.72;
   mask-image: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.24),
-    rgba(0, 0, 0, 0.76) 34%,
+    rgba(0, 0, 0, 0.16),
+    rgba(0, 0, 0, 0.68) 34%,
     rgba(0, 0, 0, 0.98) 100%
   );
   -webkit-mask-image: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.24),
-    rgba(0, 0, 0, 0.76) 34%,
+    rgba(0, 0, 0, 0.16),
+    rgba(0, 0, 0, 0.68) 34%,
     rgba(0, 0, 0, 0.98) 100%
   );
 }

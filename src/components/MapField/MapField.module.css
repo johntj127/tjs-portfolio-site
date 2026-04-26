@@ -45,7 +45,7 @@
 }
 
 .subpage {
-  opacity: 0.18;
+  opacity: 0.28;
 }
 
 /* Route paths with continuous dashoffset flow */
@@ -53,7 +53,7 @@
 .routePathSlow { animation: routeFlowSlow 12s linear 2s infinite; }
 
 /* Hierarchy — secondary paths step back */
-.pathQuiet { opacity: 0.38; }
+.pathQuiet { opacity: 0.48; }
 
 /* Hub glow — primary nodes read as anchors */
 .hubGlow { filter: drop-shadow(0 0 8px currentColor); }

@@ -55,6 +55,7 @@
   align-items: baseline;
   gap: 12px;
   flex-wrap: wrap;
+  min-width: 0;
 }
 
 .headerLabel,
@@ -91,11 +92,11 @@
 
 .row {
   display: grid;
-  grid-template-columns: minmax(180px, 0.72fr) minmax(0, 1.28fr);
-  gap: 18px;
+  grid-template-columns: minmax(210px, 270px) minmax(0, 1fr);
+  gap: 24px;
   position: relative;
   margin-bottom: 8px;
-  padding: 13px 14px 13px 28px;
+  padding: 14px 16px;
   border: 1px solid rgba(200, 152, 42, 0.08);
   background:
     linear-gradient(90deg, rgba(79, 195, 247, 0.04), rgba(79, 195, 247, 0) 22%),
@@ -110,28 +111,26 @@
 }
 
 .row::before {
-  left: 13px;
-  top: 50%;
+  left: 18px;
+  top: 22px;
   width: 6px;
   height: 6px;
   border: 1px solid rgba(200, 152, 42, 0.28);
   border-radius: 50%;
   background: rgba(200, 152, 42, 0.48);
   box-shadow: 0 0 0 3px rgba(200, 152, 42, 0.05);
-  transform: translateY(-50%);
 }
 
 .row::after {
-  left: 15px;
-  top: 0;
-  bottom: 0;
-  width: 1px;
+  left: 26px;
+  top: 25px;
+  width: 24px;
+  height: 1px;
   background: linear-gradient(
-    to bottom,
-    rgba(200, 152, 42, 0),
-    rgba(200, 152, 42, 0.22) 18%,
-    rgba(200, 152, 42, 0.16) 82%,
-    rgba(200, 152, 42, 0)
+    to right,
+    rgba(200, 152, 42, 0.24),
+    rgba(79, 195, 247, 0.12),
+    rgba(79, 195, 247, 0)
   );
 }
 
@@ -145,12 +144,15 @@
 }
 
 .term {
+  position: relative;
   font-family: var(--font-mono);
   font-size: 10px;
   color: rgba(79, 195, 247, 0.86);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   line-height: 1.55;
+  padding-left: 48px;
+  align-self: center;
 }
 
 .definition {
@@ -158,6 +160,7 @@
   font-size: 13.5px;
   line-height: 1.68;
   color: rgba(220, 224, 233, 0.8);
+  min-width: 0;
 }
 
 @media (max-width: 720px) {
@@ -176,15 +179,23 @@
 
   .row {
     grid-template-columns: 1fr;
-    gap: 6px;
-    padding: 13px 12px 13px 24px;
+    gap: 8px;
+    padding: 13px 12px 13px 14px;
   }
 
   .row::before {
-    left: 10px;
+    left: 14px;
+    top: 19px;
   }
 
   .row::after {
-    left: 12px;
+    left: 22px;
+    top: 22px;
+    width: 18px;
+  }
+
+  .term {
+    padding-left: 40px;
+    align-self: start;
   }
 }
