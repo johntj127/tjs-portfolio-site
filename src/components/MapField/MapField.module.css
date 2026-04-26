@@ -45,7 +45,7 @@
 }
 
 .overviewContentAware {
-  opacity: 0.34;
+  opacity: 0.46;
 }
 
 .subpage {
@@ -58,6 +58,15 @@
 
 /* Hierarchy — secondary paths step back */
 .pathQuiet { opacity: 0.48; }
+
+.overviewContentAware .overviewPrimaryRoute {
+  opacity: 0.12;
+  stroke-width: 1.2;
+}
+
+.overviewContentAware .overviewSupportRoutes {
+  opacity: 0.18;
+}
 
 /* Hub glow — primary nodes read as anchors */
 .hubGlow { filter: drop-shadow(0 0 8px currentColor); }
@@ -72,19 +81,19 @@
 .driftC { animation: ambientDriftC 18s ease-in-out 9s infinite; }
 
 .contentAwareRoute {
-  opacity: 0.72;
+  opacity: 0.9;
 }
 
 .contentAwareSweep {
-  opacity: 0.62;
+  opacity: 0.82;
 }
 
 .contentAwareLower {
-  opacity: 0.54;
+  opacity: 0.72;
 }
 
 .contentAwareNode {
-  filter: drop-shadow(0 0 8px currentColor);
+  filter: drop-shadow(0 0 10px currentColor);
 }
 
 @media (prefers-reduced-motion: reduce) {
