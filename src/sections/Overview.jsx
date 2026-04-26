@@ -91,11 +91,12 @@ const PILLARS = [
       </svg>
     ),
     label: 'Live Ops & Sustainment',
-    body:  'Building operational models that endure: monitoring, alerting, release cadence, and L1/L2 support across live systems.',
+    body:  'Built Imagineering’s first LiveOps support model, spanning monitoring, release cadence, and L1/L2 support across live systems.',
     translation:
       'Live-service operations, KPI tracking, release readiness, incident escalation, telemetry, dashboards, support models, bug triage, and post-launch improvement.',
     practice: [
       'Built operational models for live guest-facing systems.',
+      'Created Imagineering’s first LiveOps support team, operationalizing post-launch support for Star Wars: Galactic Starcruiser and Disney Uncharted Adventure.',
       'Managed L1/L2 support structures, release cadence, monitoring, alerting, escalation, and partner readiness.',
       'Used observability and workflow tools including Splunk, New Relic, AppDynamics, and task/bug tracking systems.',
       'Prioritized bugs and incidents based on guest/player impact, severity, and operational risk.',
@@ -142,7 +143,7 @@ const PILLARS = [
 const TRANSLATION_ROWS = [
   {
     need: 'Live service operations',
-    experience: 'Sustained mobile, BLE, location, signage, AI assistant, and guest-facing platforms in live environments.',
+    experience: 'Built Imagineering’s first LiveOps support model for Star Wars: Galactic Starcruiser and Disney Uncharted Adventure, then sustained mobile, BLE, location, signage, AI assistant, and guest-facing platforms in live environments.',
   },
   {
     need: 'Release and configuration management',
@@ -236,6 +237,7 @@ export default function Overview() {
 
       {/* ── Ambient background field ─────────────────── */}
       <MapField variant="overviewContentAware" />
+      <OverviewRouteOverlay />
 
       {/* ── Identity block ───────────────────────────── */}
       <section className={styles.identity} aria-label="Introduction">
@@ -295,8 +297,6 @@ export default function Overview() {
       </section>
 
       <section className={styles.systemZone} aria-label="Core capabilities and game production translation">
-        <OverviewRouteOverlay />
-
         <div className={styles.systemZoneContent}>
           {/* ── Capability pillars ────────────────────────── */}
           <CapabilityCards items={PILLARS} onSelect={openCapability} />

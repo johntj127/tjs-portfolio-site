@@ -4,7 +4,7 @@ import styles from './MapField.module.css'
 // Shared decorative route network used by overview and future subpages.
 // Coordinate space: 1060 x 900.
 export default function MapField({ variant = 'overview', className = '' }) {
-  const contentAwareOverview = variant === 'overviewContentAware'
+  const contentAwareOverview = false
 
   return (
     <svg

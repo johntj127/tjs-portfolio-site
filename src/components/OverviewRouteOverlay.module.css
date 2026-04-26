@@ -1,26 +1,26 @@
-@keyframes overlayDashFlow {
-  from { stroke-dashoffset: 72; }
+@keyframes journeyFlow {
+  from { stroke-dashoffset: 88; }
   to { stroke-dashoffset: 0; }
 }
 
-@keyframes overlayDashFlowSlow {
-  from { stroke-dashoffset: 54; }
+@keyframes journeyDockFlow {
+  from { stroke-dashoffset: 36; }
   to { stroke-dashoffset: 0; }
 }
 
-@keyframes overlayNodePulse {
-  0%, 100% { opacity: 0.24; transform: scale(0.96); }
-  45% { opacity: 0.72; transform: scale(1.06); }
+@keyframes journeyNodePulse {
+  0%, 100% { opacity: 0.18; transform: scale(0.96); }
+  45% { opacity: 0.66; transform: scale(1.05); }
 }
 
-@keyframes overlayTravellerGlow {
-  0%, 100% { opacity: 0.38; transform: scale(0.92); }
-  40% { opacity: 1; transform: scale(1.1); }
+@keyframes travellerGlow {
+  0%, 100% { opacity: 0.34; transform: scale(0.92); }
+  38% { opacity: 0.96; transform: scale(1.08); }
 }
 
 .overlay {
   position: absolute;
-  inset: -20px -34px -24px -34px;
+  inset: -22px -44px -26px -112px;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
@@ -31,7 +31,7 @@
   width: 100%;
   height: 100%;
   overflow: visible;
-  color: var(--accent-gold);
+  color: rgba(200, 152, 42, 0.94);
   fill: none;
   stroke: currentColor;
 }
@@ -40,89 +40,83 @@
   display: none;
 }
 
-.primaryRoutes,
-.secondaryRoutes {
-  opacity: 0.92;
-}
-
-.routeStrong,
-.routeSoft {
+.primaryRoute,
+.dockTick {
   fill: none;
   stroke-linecap: round;
   vector-effect: non-scaling-stroke;
 }
 
-.routeStrong {
-  stroke-width: 1.4;
-  stroke-dasharray: 7 9;
-  animation: overlayDashFlow 4.8s linear infinite;
+.primaryRoute {
+  stroke-width: 1.35;
+  stroke-dasharray: 8 9;
+  opacity: 0.84;
+  animation: journeyFlow 7.6s linear infinite;
 }
 
-.routeSoft {
-  stroke-width: 0.95;
-  stroke-dasharray: 3 11;
-  opacity: 0.64;
-  animation: overlayDashFlowSlow 6.4s linear infinite;
+.dockingRoutes {
+  opacity: 0.58;
+}
+
+.dockTick {
+  stroke-width: 0.9;
+  stroke-dasharray: 3 10;
+  animation: journeyDockFlow 9.8s linear infinite;
 }
 
 .nodes {
-  color: rgba(200, 152, 42, 0.92);
+  color: rgba(200, 152, 42, 0.9);
 }
 
 .nodeCore {
   fill: currentColor;
   stroke: none;
-  filter: drop-shadow(0 0 7px rgba(200, 152, 42, 0.44));
+  filter: drop-shadow(0 0 7px rgba(200, 152, 42, 0.42));
 }
 
 .nodeRing {
   fill: none;
   stroke: currentColor;
-  stroke-width: 0.85;
-  opacity: 0.62;
+  stroke-width: 0.82;
+  opacity: 0.56;
 }
 
 .nodeRingPulse {
   fill: none;
   stroke: currentColor;
-  stroke-width: 0.9;
-  opacity: 0.68;
-  animation: overlayNodePulse 3.8s ease-in-out infinite;
+  stroke-width: 0.88;
+  opacity: 0.62;
+  animation: journeyNodePulse 4.8s ease-in-out infinite;
 }
 
 .travellers {
-  opacity: 0.98;
+  opacity: 0.96;
 }
 
-.pulseGold,
-.pulseTeal {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: overlayTravellerGlow 2.7s ease-in-out infinite;
-}
-
-.pulseGold {
+.traveller {
   color: rgba(200, 152, 42, 0.96);
   fill: currentColor;
   stroke: currentColor;
   filter: drop-shadow(0 0 8px rgba(200, 152, 42, 0.48));
-}
-
-.pulseTeal {
-  color: rgba(100, 214, 255, 0.94);
-  fill: currentColor;
-  stroke: currentColor;
-  filter: drop-shadow(0 0 8px rgba(79, 195, 247, 0.44));
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: travellerGlow 3.4s ease-in-out infinite;
 }
 
 .pulseRing {
   fill: none;
-  stroke-width: 0.72;
+  stroke-width: 0.66;
+}
+
+@media (max-width: 1120px) {
+  .overlay {
+    inset: -18px -26px -20px -72px;
+  }
 }
 
 @media (max-width: 900px) {
   .overlay {
-    inset: -14px -18px -12px -18px;
+    inset: -10px -18px -10px -26px;
   }
 
   .desktop {
@@ -132,14 +126,26 @@
   .mobile {
     display: block;
   }
+
+  .primaryRoute {
+    stroke-width: 1.18;
+    stroke-dasharray: 7 10;
+    opacity: 0.72;
+    animation-duration: 9.2s;
+  }
+
+  .dockTick {
+    stroke-width: 0.78;
+    opacity: 0.72;
+    animation-duration: 11.2s;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .routeStrong,
-  .routeSoft,
+  .primaryRoute,
+  .dockTick,
   .nodeRingPulse,
-  .pulseGold,
-  .pulseTeal {
+  .traveller {
     animation: none;
   }
 

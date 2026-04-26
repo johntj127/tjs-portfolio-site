@@ -6,129 +6,184 @@ export default function OverviewRouteOverlay() {
     <div className={styles.overlay} aria-hidden="true">
       <svg
         className={styles.desktop}
-        viewBox="0 0 1200 760"
+        viewBox="0 0 1200 1900"
         preserveAspectRatio="none"
         focusable="false"
       >
-        <g className={styles.primaryRoutes}>
-          <path
-            d="M 84,74 C 92,170 94,264 100,364 S 102,560 96,690"
-            className={styles.routeStrong}
-          />
-          <path
-            d="M 122,84 C 314,44 604,34 1018,72"
-            className={styles.routeStrong}
-          />
-          <path
-            d="M 1048,104 C 1102,188 1114,336 1078,470 S 1046,630 1088,720"
-            className={styles.routeStrong}
-          />
-          <path
-            d="M 140,694 C 316,654 560,648 808,674 S 1000,692 1082,670"
-            className={styles.routeStrong}
-          />
-        </g>
+        <path
+          className={styles.primaryRoute}
+          d="M -26,236
+             C 24,214 70,168 118,126
+             C 162,88 230,82 280,120
+             C 332,158 344,212 414,230
+             C 558,268 760,252 960,246
+             C 1038,244 1078,272 1084,334
+             L 1090,556
+             C 1092,618 1058,646 988,646
+             L 156,646
+             C 110,646 92,674 92,726
+             L 92,1126
+             C 92,1184 116,1212 176,1212
+             L 1022,1212
+             C 1070,1212 1096,1240 1098,1292
+             L 1104,1426
+             C 1108,1492 1082,1528 1022,1538
+             C 922,1554 836,1540 760,1516
+             C 706,1498 688,1520 688,1578
+             L 688,1658
+             C 688,1718 716,1750 770,1750
+             L 1022,1750
+             C 1094,1750 1142,1778 1208,1828"
+        />
 
-        <g className={styles.secondaryRoutes}>
+        <g className={styles.dockingRoutes}>
           <path
-            d="M 108,188 C 224,172 348,174 476,190"
-            className={styles.routeSoft}
+            className={styles.dockTick}
+            d="M 116,214 C 190,198 266,196 346,214"
           />
           <path
-            d="M 630,188 C 780,164 928,166 1040,198"
-            className={styles.routeSoft}
+            className={styles.dockTick}
+            d="M 214,604 C 384,586 626,586 878,612"
           />
           <path
-            d="M 124,360 C 250,334 382,338 510,356"
-            className={styles.routeSoft}
+            className={styles.dockTick}
+            d="M 188,1186 C 392,1166 646,1168 904,1198"
           />
           <path
-            d="M 1048,270 C 1024,350 1022,430 1038,520"
-            className={styles.routeSoft}
+            className={styles.dockTick}
+            d="M 446,1514 C 520,1498 584,1502 652,1528"
           />
           <path
-            d="M 232,612 C 404,592 624,594 842,620"
-            className={styles.routeSoft}
+            className={styles.dockTick}
+            d="M 760,1498 C 874,1476 970,1482 1054,1514"
           />
         </g>
 
         <g className={styles.nodes}>
-          <g transform="translate(100 210)">
-            <circle r="4.8" className={styles.nodeCore} />
-            <circle r="12.5" className={styles.nodeRing} />
-          </g>
-          <g transform="translate(96 430)">
-            <circle r="5.8" className={styles.nodeCore} />
-            <circle r="16.5" className={styles.nodeRingPulse} />
-          </g>
-          <g transform="translate(282 66)">
-            <circle r="3.8" className={styles.nodeCore} />
-            <circle r="10.2" className={styles.nodeRing} />
-          </g>
-          <g transform="translate(862 68)">
-            <circle r="4.2" className={styles.nodeCore} />
-            <circle r="11.2" className={styles.nodeRing} />
-          </g>
-          <g transform="translate(1040 224)">
+          <g transform="translate(114 128)">
             <circle r="4.6" className={styles.nodeCore} />
-            <circle r="13.2" className={styles.nodeRing} />
+            <circle r="11.8" className={styles.nodeRing} />
           </g>
-          <g transform="translate(1048 474)">
-            <circle r="5.4" className={styles.nodeCore} />
-            <circle r="15.8" className={styles.nodeRingPulse} />
-          </g>
-          <g transform="translate(248 668)">
-            <circle r="4" className={styles.nodeCore} />
+          <g transform="translate(430 232)">
+            <circle r="4.2" className={styles.nodeCore} />
             <circle r="10.8" className={styles.nodeRing} />
           </g>
-          <g transform="translate(934 686)">
+          <g transform="translate(1088 338)">
+            <circle r="5" className={styles.nodeCore} />
+            <circle r="14" className={styles.nodeRingPulse} />
+          </g>
+          <g transform="translate(92 726)">
+            <circle r="5.2" className={styles.nodeCore} />
+            <circle r="14.8" className={styles.nodeRingPulse} />
+          </g>
+          <g transform="translate(1098 1292)">
+            <circle r="4.8" className={styles.nodeCore} />
+            <circle r="13.4" className={styles.nodeRing} />
+          </g>
+          <g transform="translate(688 1578)">
+            <circle r="5.1" className={styles.nodeCore} />
+            <circle r="14.6" className={styles.nodeRingPulse} />
+          </g>
+          <g transform="translate(1024 1750)">
             <circle r="4.4" className={styles.nodeCore} />
-            <circle r="11.4" className={styles.nodeRing} />
+            <circle r="12.2" className={styles.nodeRing} />
           </g>
         </g>
 
         <g className={styles.travellers}>
-          <g className={styles.pulseGold}>
-            <circle r="2.8" />
-            <circle r="7.6" className={styles.pulseRing} />
-            <animateMotion
-              dur="10s"
-              repeatCount="indefinite"
-              rotate="auto"
-              path="M 84,74 C 92,170 94,264 100,364 S 102,560 96,690"
-            />
-          </g>
-          <g className={styles.pulseTeal}>
-            <circle r="2.5" />
-            <circle r="6.8" className={styles.pulseRing} />
-            <animateMotion
-              dur="8.5s"
-              begin="-2.8s"
-              repeatCount="indefinite"
-              rotate="auto"
-              path="M 122,84 C 314,44 604,34 1018,72"
-            />
-          </g>
-          <g className={styles.pulseGold}>
-            <circle r="2.6" />
-            <circle r="7.2" className={styles.pulseRing} />
-            <animateMotion
-              dur="11s"
-              begin="-4.2s"
-              repeatCount="indefinite"
-              rotate="auto"
-              path="M 1048,104 C 1102,188 1114,336 1078,470 S 1046,630 1088,720"
-            />
-          </g>
-          <g className={styles.pulseTeal}>
+          <g className={styles.traveller}>
             <circle r="2.4" />
-            <circle r="6.4" className={styles.pulseRing} />
+            <circle r="6.6" className={styles.pulseRing} />
             <animateMotion
-              dur="9.5s"
-              begin="-5.1s"
+              dur="18s"
               repeatCount="indefinite"
               rotate="auto"
-              path="M 140,694 C 316,654 560,648 808,674 S 1000,692 1082,670"
+              path="M -26,236
+                    C 24,214 70,168 118,126
+                    C 162,88 230,82 280,120
+                    C 332,158 344,212 414,230
+                    C 558,268 760,252 960,246
+                    C 1038,244 1078,272 1084,334
+                    L 1090,556
+                    C 1092,618 1058,646 988,646
+                    L 156,646
+                    C 110,646 92,674 92,726
+                    L 92,1126
+                    C 92,1184 116,1212 176,1212
+                    L 1022,1212
+                    C 1070,1212 1096,1240 1098,1292
+                    L 1104,1426
+                    C 1108,1492 1082,1528 1022,1538
+                    C 922,1554 836,1540 760,1516
+                    C 706,1498 688,1520 688,1578
+                    L 688,1658
+                    C 688,1718 716,1750 770,1750
+                    L 1022,1750
+                    C 1094,1750 1142,1778 1208,1828"
+            />
+          </g>
+          <g className={styles.traveller}>
+            <circle r="2.1" />
+            <circle r="5.9" className={styles.pulseRing} />
+            <animateMotion
+              dur="18s"
+              begin="-6s"
+              repeatCount="indefinite"
+              rotate="auto"
+              path="M -26,236
+                    C 24,214 70,168 118,126
+                    C 162,88 230,82 280,120
+                    C 332,158 344,212 414,230
+                    C 558,268 760,252 960,246
+                    C 1038,244 1078,272 1084,334
+                    L 1090,556
+                    C 1092,618 1058,646 988,646
+                    L 156,646
+                    C 110,646 92,674 92,726
+                    L 92,1126
+                    C 92,1184 116,1212 176,1212
+                    L 1022,1212
+                    C 1070,1212 1096,1240 1098,1292
+                    L 1104,1426
+                    C 1108,1492 1082,1528 1022,1538
+                    C 922,1554 836,1540 760,1516
+                    C 706,1498 688,1520 688,1578
+                    L 688,1658
+                    C 688,1718 716,1750 770,1750
+                    L 1022,1750
+                    C 1094,1750 1142,1778 1208,1828"
+            />
+          </g>
+          <g className={styles.traveller}>
+            <circle r="2.3" />
+            <circle r="6.2" className={styles.pulseRing} />
+            <animateMotion
+              dur="18s"
+              begin="-12s"
+              repeatCount="indefinite"
+              rotate="auto"
+              path="M -26,236
+                    C 24,214 70,168 118,126
+                    C 162,88 230,82 280,120
+                    C 332,158 344,212 414,230
+                    C 558,268 760,252 960,246
+                    C 1038,244 1078,272 1084,334
+                    L 1090,556
+                    C 1092,618 1058,646 988,646
+                    L 156,646
+                    C 110,646 92,674 92,726
+                    L 92,1126
+                    C 92,1184 116,1212 176,1212
+                    L 1022,1212
+                    C 1070,1212 1096,1240 1098,1292
+                    L 1104,1426
+                    C 1108,1492 1082,1528 1022,1538
+                    C 922,1554 836,1540 760,1516
+                    C 706,1498 688,1520 688,1578
+                    L 688,1658
+                    C 688,1718 716,1750 770,1750
+                    L 1022,1750
+                    C 1094,1750 1142,1778 1208,1828"
             />
           </g>
         </g>
@@ -136,90 +191,122 @@ export default function OverviewRouteOverlay() {
 
       <svg
         className={styles.mobile}
-        viewBox="0 0 420 860"
+        viewBox="0 0 420 2100"
         preserveAspectRatio="none"
         focusable="false"
       >
-        <g className={styles.primaryRoutes}>
-          <path
-            d="M 36,86 C 40,202 44,356 48,522 S 50,720 44,820"
-            className={styles.routeStrong}
-          />
-          <path
-            d="M 304,124 C 360,226 374,390 348,542 S 334,734 362,824"
-            className={styles.routeStrong}
-          />
-          <path
-            d="M 70,776 C 156,748 242,748 338,770"
-            className={styles.routeStrong}
-          />
-        </g>
+        <path
+          className={styles.primaryRoute}
+          d="M 28,120
+             C 54,102 84,96 116,114
+             C 150,132 164,172 170,220
+             C 180,292 220,310 298,312
+             C 340,314 362,336 362,376
+             L 362,566
+             C 362,606 344,628 304,628
+             L 72,628
+             C 44,628 30,646 30,682
+             L 30,1226
+             C 30,1268 48,1288 88,1288
+             L 354,1288
+             C 382,1288 396,1304 396,1334
+             L 396,1498
+             C 396,1536 374,1554 336,1554
+             L 110,1554
+             C 72,1554 52,1572 52,1610
+             L 52,1810
+             C 52,1846 72,1866 108,1866
+             L 344,1866"
+        />
 
-        <g className={styles.secondaryRoutes}>
-          <path
-            d="M 58,188 C 132,170 214,172 306,192"
-            className={styles.routeSoft}
-          />
-          <path
-            d="M 58,470 C 150,446 250,448 334,468"
-            className={styles.routeSoft}
-          />
+        <g className={styles.dockingRoutes}>
+          <path className={styles.dockTick} d="M 76,300 C 142,286 212,288 292,306" />
+          <path className={styles.dockTick} d="M 86,612 C 188,594 274,598 340,622" />
+          <path className={styles.dockTick} d="M 78,1260 C 198,1240 292,1242 372,1266" />
+          <path className={styles.dockTick} d="M 110,1536 C 208,1518 300,1520 378,1548" />
         </g>
 
         <g className={styles.nodes}>
-          <g transform="translate(42 208)">
-            <circle r="4.6" className={styles.nodeCore} />
-            <circle r="12.2" className={styles.nodeRing} />
+          <g transform="translate(168 208)">
+            <circle r="4.4" className={styles.nodeCore} />
+            <circle r="11.6" className={styles.nodeRing} />
           </g>
-          <g transform="translate(46 520)">
-            <circle r="5.4" className={styles.nodeCore} />
-            <circle r="15.2" className={styles.nodeRingPulse} />
-          </g>
-          <g transform="translate(344 262)">
+          <g transform="translate(362 376)">
             <circle r="4.8" className={styles.nodeCore} />
-            <circle r="13.2" className={styles.nodeRing} />
+            <circle r="13.6" className={styles.nodeRingPulse} />
           </g>
-          <g transform="translate(350 566)">
-            <circle r="5.2" className={styles.nodeCore} />
-            <circle r="14.6" className={styles.nodeRingPulse} />
+          <g transform="translate(30 682)">
+            <circle r="4.8" className={styles.nodeCore} />
+            <circle r="13.8" className={styles.nodeRingPulse} />
           </g>
-          <g transform="translate(272 764)">
-            <circle r="4.2" className={styles.nodeCore} />
-            <circle r="11.4" className={styles.nodeRing} />
+          <g transform="translate(396 1334)">
+            <circle r="4.4" className={styles.nodeCore} />
+            <circle r="12.6" className={styles.nodeRing} />
+          </g>
+          <g transform="translate(52 1610)">
+            <circle r="4.6" className={styles.nodeCore} />
+            <circle r="13.2" className={styles.nodeRingPulse} />
           </g>
         </g>
 
         <g className={styles.travellers}>
-          <g className={styles.pulseGold}>
-            <circle r="2.6" />
-            <circle r="7.1" className={styles.pulseRing} />
+          <g className={styles.traveller}>
+            <circle r="2.2" />
+            <circle r="5.8" className={styles.pulseRing} />
             <animateMotion
-              dur="9s"
+              dur="20s"
               repeatCount="indefinite"
               rotate="auto"
-              path="M 36,86 C 40,202 44,356 48,522 S 50,720 44,820"
+              path="M 28,120
+                    C 54,102 84,96 116,114
+                    C 150,132 164,172 170,220
+                    C 180,292 220,310 298,312
+                    C 340,314 362,336 362,376
+                    L 362,566
+                    C 362,606 344,628 304,628
+                    L 72,628
+                    C 44,628 30,646 30,682
+                    L 30,1226
+                    C 30,1268 48,1288 88,1288
+                    L 354,1288
+                    C 382,1288 396,1304 396,1334
+                    L 396,1498
+                    C 396,1536 374,1554 336,1554
+                    L 110,1554
+                    C 72,1554 52,1572 52,1610
+                    L 52,1810
+                    C 52,1846 72,1866 108,1866
+                    L 344,1866"
             />
           </g>
-          <g className={styles.pulseTeal}>
-            <circle r="2.4" />
-            <circle r="6.4" className={styles.pulseRing} />
+          <g className={styles.traveller}>
+            <circle r="2" />
+            <circle r="5.4" className={styles.pulseRing} />
             <animateMotion
-              dur="10s"
-              begin="-3.2s"
+              dur="20s"
+              begin="-10s"
               repeatCount="indefinite"
               rotate="auto"
-              path="M 304,124 C 360,226 374,390 348,542 S 334,734 362,824"
-            />
-          </g>
-          <g className={styles.pulseGold}>
-            <circle r="2.3" />
-            <circle r="6.2" className={styles.pulseRing} />
-            <animateMotion
-              dur="8.5s"
-              begin="-4.4s"
-              repeatCount="indefinite"
-              rotate="auto"
-              path="M 70,776 C 156,748 242,748 338,770"
+              path="M 28,120
+                    C 54,102 84,96 116,114
+                    C 150,132 164,172 170,220
+                    C 180,292 220,310 298,312
+                    C 340,314 362,336 362,376
+                    L 362,566
+                    C 362,606 344,628 304,628
+                    L 72,628
+                    C 44,628 30,646 30,682
+                    L 30,1226
+                    C 30,1268 48,1288 88,1288
+                    L 354,1288
+                    C 382,1288 396,1304 396,1334
+                    L 396,1498
+                    C 396,1536 374,1554 336,1554
+                    L 110,1554
+                    C 72,1554 52,1572 52,1610
+                    L 52,1810
+                    C 52,1846 72,1866 108,1866
+                    L 344,1866"
             />
           </g>
         </g>
