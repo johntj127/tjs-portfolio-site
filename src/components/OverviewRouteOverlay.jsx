@@ -65,37 +65,6 @@ export default function OverviewRouteOverlay() {
           d={desktopPath}
         />
 
-        <g className={styles.dockingRoutes}>
-          <path
-            className={styles.dockTick}
-            d="M 120,214 C 176,198 232,198 286,214"
-          />
-          <path
-            className={styles.dockTick}
-            d="M 246,296 C 416,284 638,284 916,300"
-          />
-          <path
-            className={styles.dockTick}
-            d="M 178,1256 C 382,1242 636,1244 936,1262"
-          />
-          <path
-            className={styles.dockTick}
-            d="M 120,1344 C 228,1332 322,1334 420,1350"
-          />
-          <path
-            className={styles.dockTick}
-            d="M 450,1388 C 548,1372 646,1372 732,1388"
-          />
-          <path
-            className={styles.dockTick}
-            d="M 790,1388 C 884,1374 968,1376 1048,1396"
-          />
-          <path
-            className={styles.dockTick}
-            d="M 794,1742 C 878,1732 960,1732 1048,1746"
-          />
-        </g>
-
         <g className={styles.nodes}>
           <g transform="translate(114 128)">
             <circle r="4.6" className={styles.nodeCore} />
