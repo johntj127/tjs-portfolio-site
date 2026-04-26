@@ -265,6 +265,30 @@ export default function MapField({ variant = 'overview', className = '' }) {
             </g>
           </g>
 
+          <g className={styles.contentAwareTravellers}>
+            <g className={styles.travelPulseGold}>
+              <circle cx="0" cy="0" r="2.4" />
+              <circle cx="0" cy="0" r="6.4" fill="none" strokeWidth="0.7" />
+              <animateMotion
+                dur="14s"
+                repeatCount="indefinite"
+                rotate="auto"
+                path="M 76,146 C 98,240 92,332 114,430 S 122,616 104,790"
+              />
+            </g>
+            <g className={styles.travelPulseTeal}>
+              <circle cx="0" cy="0" r="1.9" />
+              <circle cx="0" cy="0" r="5.6" fill="none" strokeWidth="0.62" />
+              <animateMotion
+                dur="14s"
+                begin="-6s"
+                repeatCount="indefinite"
+                rotate="auto"
+                path="M 76,146 C 98,240 92,332 114,430 S 122,616 104,790"
+              />
+            </g>
+          </g>
+
           {/* Right-side sweep — follows the open purple negative space */}
           <g className={styles.contentAwareSweep}>
             <path
@@ -299,6 +323,30 @@ export default function MapField({ variant = 'overview', className = '' }) {
             <g transform="translate(934,624)" className={styles.contentAwareNode}>
               <circle cx="0" cy="0" r="3.4" />
               <circle cx="0" cy="0" r="10.2" fill="none" strokeWidth="0.7" />
+            </g>
+          </g>
+
+          <g className={styles.contentAwareTravellers}>
+            <g className={styles.travelPulseGold}>
+              <circle cx="0" cy="0" r="2.5" />
+              <circle cx="0" cy="0" r="6.8" fill="none" strokeWidth="0.72" />
+              <animateMotion
+                dur="16s"
+                repeatCount="indefinite"
+                rotate="auto"
+                path="M 936,104 C 1016,166 1022,318 952,420 S 914,626 972,804"
+              />
+            </g>
+            <g className={styles.travelPulseTeal}>
+              <circle cx="0" cy="0" r="2" />
+              <circle cx="0" cy="0" r="5.8" fill="none" strokeWidth="0.64" />
+              <animateMotion
+                dur="16s"
+                begin="-8s"
+                repeatCount="indefinite"
+                rotate="auto"
+                path="M 878,142 C 964,188 978,298 924,394"
+              />
             </g>
           </g>
 
@@ -339,6 +387,52 @@ export default function MapField({ variant = 'overview', className = '' }) {
               <circle cx="0" cy="0" r="3.2" />
               <circle cx="0" cy="0" r="9.8" fill="none" strokeWidth="0.68" />
             </g>
+          </g>
+
+          <g className={styles.contentAwareTravellers}>
+            <g className={styles.travelPulseGold}>
+              <circle cx="0" cy="0" r="2.3" />
+              <circle cx="0" cy="0" r="6.2" fill="none" strokeWidth="0.68" />
+              <animateMotion
+                dur="18s"
+                repeatCount="indefinite"
+                rotate="auto"
+                path="M 172,774 C 304,722 446,718 582,746 S 842,766 994,732"
+              />
+            </g>
+            <g className={styles.travelPulseTeal}>
+              <circle cx="0" cy="0" r="1.8" />
+              <circle cx="0" cy="0" r="5.2" fill="none" strokeWidth="0.58" />
+              <animateMotion
+                dur="18s"
+                begin="-9s"
+                repeatCount="indefinite"
+                rotate="auto"
+                path="M 244,748 C 378,720 530,720 674,742"
+              />
+            </g>
+          </g>
+
+          {/* Panel-edge register accents — stay in gutters instead of behind copy */}
+          <g className={styles.contentAwareEdgeAccent}>
+            <path
+              d="M 246,506 C 344,488 478,492 608,512"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="0.72"
+              strokeDasharray="4 10"
+              strokeLinecap="round"
+              className={styles.routePathSlow}
+            />
+            <path
+              d="M 246,744 C 384,730 536,732 692,748"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="0.68"
+              strokeDasharray="3 11"
+              strokeLinecap="round"
+              className={styles.routePath}
+            />
           </g>
         </>
       )}

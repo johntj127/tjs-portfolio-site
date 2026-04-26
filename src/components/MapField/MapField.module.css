@@ -96,6 +96,30 @@
   filter: drop-shadow(0 0 10px currentColor);
 }
 
+.contentAwareTravellers {
+  opacity: 0.94;
+}
+
+.travelPulseGold,
+.travelPulseTeal {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.travelPulseGold {
+  color: rgba(200, 152, 42, 0.92);
+  filter: drop-shadow(0 0 6px rgba(200, 152, 42, 0.38));
+}
+
+.travelPulseTeal {
+  color: rgba(79, 195, 247, 0.82);
+  filter: drop-shadow(0 0 6px rgba(79, 195, 247, 0.3));
+}
+
+.contentAwareEdgeAccent {
+  opacity: 0.4;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .routePath,
   .routePathSlow,
@@ -110,5 +134,9 @@
   .hubPulseRing,
   .hubPulseRingSlow {
     opacity: 0.16;
+  }
+
+  .contentAwareTravellers {
+    display: none;
   }
 }
