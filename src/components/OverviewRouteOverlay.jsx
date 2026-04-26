@@ -13,30 +13,38 @@ export default function OverviewRouteOverlay() {
     C 1080,516 1068,522 1048,522
     L 184,522
     C 132,522 104,550 104,608
-    L 104,1200
-    C 104,1254 126,1280 178,1280
-    L 724,1280
-    C 772,1280 800,1302 800,1348
-    L 800,1510
-    C 800,1540 822,1558 858,1560
-    L 1002,1560
-    C 1044,1560 1066,1582 1068,1624
-    L 1072,1710
-    C 1074,1740 1054,1756 1024,1758
-    L 782,1760
-    C 742,1762 718,1778 700,1806
-    L 690,1822
-    C 674,1848 690,1864 720,1864
-    L 1040,1862
-    C 1098,1862 1140,1848 1198,1828`
+    L 104,1234
+    C 104,1270 122,1288 158,1288
+    L 1004,1288
+    C 1042,1288 1060,1268 1060,1232
+    L 1060,1186
+    C 1060,1210 1048,1248 1018,1290
+    C 970,1356 884,1394 776,1400
+    L 474,1404
+    C 444,1404 428,1420 428,1450
+    L 428,1744
+    C 428,1772 412,1788 384,1788
+    L 136,1788
+    C 104,1788 88,1770 88,1738
+    L 88,1398
+    C 88,1372 104,1356 132,1356
+    L 734,1356
+    C 760,1356 774,1370 774,1398
+    L 774,1708
+    C 774,1744 794,1762 832,1762
+    L 1020,1762
+    C 1058,1762 1078,1742 1080,1704
+    L 1080,1402
+    C 1080,1370 1098,1354 1128,1354
+    L 1198,1352`
 
   const mobilePath = `M 30,126
     C 56,112 88,108 118,122
     C 150,136 166,166 174,204
-    C 182,238 202,252 242,254
-    L 352,258
-    C 388,260 406,280 406,314
-    L 406,1526
+    C 188,232 220,244 280,246
+    L 382,248
+    C 400,250 410,266 410,294
+    L 410,1526
     C 406,1562 388,1580 354,1582
     L 118,1586
     C 76,1588 54,1608 54,1650
@@ -64,23 +72,27 @@ export default function OverviewRouteOverlay() {
           />
           <path
             className={styles.dockTick}
-            d="M 244,318 C 412,304 630,304 902,320"
+            d="M 246,296 C 416,284 638,284 916,300"
           />
           <path
             className={styles.dockTick}
-            d="M 192,1248 C 364,1236 552,1238 720,1248"
+            d="M 178,1256 C 382,1242 636,1244 936,1262"
           />
           <path
             className={styles.dockTick}
-            d="M 760,1360 C 850,1348 942,1350 1028,1372"
+            d="M 120,1344 C 228,1332 322,1334 420,1350"
           />
           <path
             className={styles.dockTick}
-            d="M 810,1526 C 892,1512 970,1514 1044,1532"
+            d="M 450,1388 C 548,1372 646,1372 732,1388"
           />
           <path
             className={styles.dockTick}
-            d="M 722,1726 C 824,1710 934,1712 1050,1732"
+            d="M 790,1388 C 884,1374 968,1376 1048,1396"
+          />
+          <path
+            className={styles.dockTick}
+            d="M 794,1742 C 878,1732 960,1732 1048,1746"
           />
         </g>
 
@@ -101,19 +113,19 @@ export default function OverviewRouteOverlay() {
             <circle r="5.2" className={styles.nodeCore} />
             <circle r="14.8" className={styles.nodeRingPulse} />
           </g>
-          <g transform="translate(800 1348)">
+          <g transform="translate(1060 1232)">
             <circle r="4.8" className={styles.nodeCore} />
             <circle r="13.4" className={styles.nodeRing} />
           </g>
-          <g transform="translate(800 1510)">
+          <g transform="translate(428 1450)">
             <circle r="5.1" className={styles.nodeCore} />
             <circle r="14.6" className={styles.nodeRingPulse} />
           </g>
-          <g transform="translate(1068 1624)">
+          <g transform="translate(774 1398)">
             <circle r="4.4" className={styles.nodeCore} />
             <circle r="12.2" className={styles.nodeRing} />
           </g>
-          <g transform="translate(1040 1862)">
+          <g transform="translate(1080 1704)">
             <circle r="4.4" className={styles.nodeCore} />
             <circle r="12.2" className={styles.nodeRing} />
           </g>
@@ -178,15 +190,15 @@ export default function OverviewRouteOverlay() {
             <circle r="4.4" className={styles.nodeCore} />
             <circle r="11.6" className={styles.nodeRing} />
           </g>
-          <g transform="translate(406 314)">
+          <g transform="translate(410 294)">
             <circle r="4.8" className={styles.nodeCore} />
             <circle r="13.6" className={styles.nodeRingPulse} />
           </g>
-          <g transform="translate(406 854)">
+          <g transform="translate(410 854)">
             <circle r="4.8" className={styles.nodeCore} />
             <circle r="13.8" className={styles.nodeRingPulse} />
           </g>
-          <g transform="translate(406 1526)">
+          <g transform="translate(410 1526)">
             <circle r="4.4" className={styles.nodeCore} />
             <circle r="12.6" className={styles.nodeRing} />
           </g>
