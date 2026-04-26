@@ -44,6 +44,10 @@
   opacity: 0.38;
 }
 
+.overviewContentAware {
+  opacity: 0.34;
+}
+
 .subpage {
   opacity: 0.28;
 }
@@ -66,6 +70,22 @@
 .driftA { animation: ambientDriftA 28s ease-in-out infinite; }
 .driftB { animation: ambientDriftB 22s ease-in-out 4s infinite; }
 .driftC { animation: ambientDriftC 18s ease-in-out 9s infinite; }
+
+.contentAwareRoute {
+  opacity: 0.72;
+}
+
+.contentAwareSweep {
+  opacity: 0.62;
+}
+
+.contentAwareLower {
+  opacity: 0.54;
+}
+
+.contentAwareNode {
+  filter: drop-shadow(0 0 8px currentColor);
+}
 
 @media (prefers-reduced-motion: reduce) {
   .routePath,

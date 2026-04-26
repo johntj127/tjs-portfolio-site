@@ -234,7 +234,7 @@ export default function Overview() {
     <div className={styles.overview}>
 
       {/* ── Ambient background field ─────────────────── */}
-      <MapField variant="overview" />
+      <MapField variant="overviewContentAware" />
 
       {/* ── Identity block ───────────────────────────── */}
       <section className={styles.identity} aria-label="Introduction">

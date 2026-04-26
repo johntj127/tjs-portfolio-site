@@ -4,6 +4,8 @@ import styles from './MapField.module.css'
 // Shared decorative route network used by overview and future subpages.
 // Coordinate space: 1060 x 900.
 export default function MapField({ variant = 'overview', className = '' }) {
+  const contentAwareOverview = variant === 'overviewContentAware'
+
   return (
     <svg
       className={[styles.field, styles[variant] ?? styles.overview, className].filter(Boolean).join(' ')}
@@ -217,6 +219,94 @@ export default function MapField({ variant = 'overview', className = '' }) {
         <line x1="150" y1="200" x2="150" y2="214" strokeWidth="0.7" />
         <line x1="1020" y1="640" x2="1034" y2="630" strokeWidth="0.7" />
       </g>
+
+      {contentAwareOverview && (
+        <>
+          {/* Left gutter route — active signal channel beside the dashboard */}
+          <g className={styles.contentAwareRoute}>
+            <path
+              d="M 88,168 C 104,254 96,342 116,430 S 118,610 96,762"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.05"
+              strokeDasharray="4 12"
+              strokeLinecap="round"
+              className={styles.routePathSlow}
+            />
+            <g transform="translate(108,344)" className={styles.contentAwareNode}>
+              <circle cx="0" cy="0" r="3.5" />
+              <circle cx="0" cy="0" r="10" fill="none" strokeWidth="0.75" />
+              <circle cx="0" cy="0" r="16" fill="none" strokeWidth="0.55" className={styles.hubPulseRingSlow} />
+            </g>
+            <g transform="translate(118,520)" className={styles.contentAwareNode}>
+              <circle cx="0" cy="0" r="2.8" />
+              <circle cx="0" cy="0" r="8.5" fill="none" strokeWidth="0.62" />
+            </g>
+            <g transform="translate(102,692)" className={styles.contentAwareNode}>
+              <circle cx="0" cy="0" r="3.2" />
+              <circle cx="0" cy="0" r="9.5" fill="none" strokeWidth="0.7" />
+            </g>
+          </g>
+
+          {/* Right-side sweep — follows the open purple negative space */}
+          <g className={styles.contentAwareSweep}>
+            <path
+              d="M 934,116 C 1008,174 1018,316 950,408 S 910,612 968,774"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.12"
+              strokeDasharray="7 10"
+              strokeLinecap="round"
+              className={styles.routePath}
+            />
+            <path
+              d="M 880,154 C 956,190 970,286 922,374"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="0.82"
+              strokeDasharray="3 13"
+              strokeLinecap="round"
+              className={styles.routePathSlow}
+            />
+            <g transform="translate(944,252)" className={styles.contentAwareNode}>
+              <circle cx="0" cy="0" r="4.5" />
+              <circle cx="0" cy="0" r="14" fill="none" strokeWidth="0.8" />
+              <line x1="-16" y1="0" x2="16" y2="0" strokeWidth="0.6" />
+              <line x1="0" y1="-16" x2="0" y2="16" strokeWidth="0.6" />
+            </g>
+            <g transform="translate(934,624)" className={styles.contentAwareNode}>
+              <circle cx="0" cy="0" r="3.2" />
+              <circle cx="0" cy="0" r="9.5" fill="none" strokeWidth="0.68" />
+            </g>
+          </g>
+
+          {/* Lower connector — routes around the translation matrix base */}
+          <g className={styles.contentAwareLower}>
+            <path
+              d="M 204,764 C 314,714 448,714 582,744 S 842,760 978,724"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="0.96"
+              strokeDasharray="6 11"
+              strokeLinecap="round"
+              className={styles.routePathSlow}
+            />
+            <g transform="translate(258,746)" className={styles.contentAwareNode}>
+              <circle cx="0" cy="0" r="2.6" />
+              <circle cx="0" cy="0" r="8" fill="none" strokeWidth="0.58" />
+            </g>
+            <g transform="translate(622,748)" className={styles.contentAwareNode}>
+              <circle cx="0" cy="0" r="2.6" />
+              <line x1="-8" y1="0" x2="8" y2="0" strokeWidth="0.55" />
+              <line x1="0" y1="-8" x2="0" y2="8" strokeWidth="0.55" />
+            </g>
+            <g transform="translate(908,736)" className={styles.contentAwareNode}>
+              <circle cx="0" cy="0" r="3" />
+              <circle cx="0" cy="0" r="9" fill="none" strokeWidth="0.64" />
+            </g>
+          </g>
+        </>
+      )}
     </svg>
   )
 }
