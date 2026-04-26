@@ -42,6 +42,19 @@ export default function AppShell() {
   }, [drawerOpen])
 
   useEffect(() => {
+    function handleKeyDown(event) {
+      if (event.key === 'Escape') {
+        setDrawerOpen(false)
+      }
+    }
+
+    if (!drawerOpen) return undefined
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [drawerOpen])
+
+  useEffect(() => {
     if (location.pathname === displayPath) {
       setDisplayOutlet(outlet)
       return
@@ -68,17 +81,18 @@ export default function AppShell() {
 
       {/* ── Mobile top bar ──────────────────────────────── */}
       <div className={styles.topBar} role="banner">
-        <span className={styles.topBarMark} aria-hidden="true">TJ</span>
         <button
           className={styles.hamburger}
           onClick={() => setDrawerOpen(true)}
           aria-label="Open navigation menu"
           aria-expanded={drawerOpen}
+          aria-controls="mobile-navigation-drawer"
         >
           <span className={styles.hamburgerLine} />
           <span className={styles.hamburgerLine} />
           <span className={styles.hamburgerLine} />
         </button>
+        <span className={styles.topBarMark} aria-hidden="true">TJ</span>
       </div>
 
       {/* ── Mobile drawer ───────────────────────────────── */}
@@ -91,6 +105,7 @@ export default function AppShell() {
           aria-label="Navigation menu"
         >
           <aside
+            id="mobile-navigation-drawer"
             className={styles.drawer}
             onClick={e => e.stopPropagation()}
           >

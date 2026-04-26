@@ -37,6 +37,12 @@
     filter 240ms ease;
 }
 
+.mediaImageContain {
+  object-fit: contain;
+  background: rgba(5, 8, 14, 0.9);
+  padding: 10px;
+}
+
 .mediaVeil,
 .mediaFrame {
   position: absolute;
@@ -101,6 +107,11 @@
 .card:focus-visible .mediaImage {
   transform: scale(1.035);
   filter: saturate(0.94) brightness(0.9) contrast(1.04);
+}
+
+.card:hover .mediaImageContain,
+.card:focus-visible .mediaImageContain {
+  transform: scale(1.018);
 }
 
 .card:hover::before {

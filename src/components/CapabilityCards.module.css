@@ -1,0 +1,111 @@
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-top: 48px;
+}
+
+.card {
+  appearance: none;
+  width: 100%;
+  padding: 18px 16px 16px;
+  border: 1px solid rgba(200, 152, 42, 0.14);
+  border-top: 1px solid rgba(200, 152, 42, 0.32);
+  background: rgba(255, 255, 255, 0.02);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  animation: revealUp 300ms ease-out both;
+  transition:
+    border-color var(--transition-hover),
+    background var(--transition-hover),
+    transform var(--transition-hover),
+    box-shadow var(--transition-hover);
+}
+
+.card:hover {
+  border-color: rgba(200, 152, 42, 0.3);
+  border-top-color: rgba(200, 152, 42, 0.62);
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-1px);
+  box-shadow: inset 0 1px 0 rgba(200, 152, 42, 0.06);
+}
+
+.card:focus-visible {
+  outline: 2px solid rgba(79, 195, 247, 0.8);
+  outline-offset: 3px;
+  border-color: rgba(79, 195, 247, 0.5);
+  border-top-color: rgba(200, 152, 42, 0.72);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  color: var(--accent-gold);
+  opacity: 0.82;
+  margin-bottom: 12px;
+}
+
+.icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  color: rgba(200, 152, 42, 0.96);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  line-height: 1.35;
+  margin-bottom: 8px;
+}
+
+.body {
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  color: rgba(220, 224, 233, 0.78);
+  line-height: 1.62;
+}
+
+.hint {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: rgba(79, 195, 247, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+@media (max-width: 900px) {
+  .section {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .section {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: border-color var(--transition-hover), background var(--transition-hover), box-shadow var(--transition-hover);
+  }
+
+  .card:hover {
+    transform: none;
+  }
+}

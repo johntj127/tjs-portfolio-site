@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import MapField from '../components/MapField/MapField.jsx'
 import projectsData from '../content/projects.json'
 import ProjectCard from '../components/ProjectCard.jsx'
 import styles from './Projects.module.css'
@@ -62,9 +63,10 @@ export default function Projects() {
 
   return (
     <div className={styles.projects}>
+      <MapField variant="subpage" className={styles.mapField} />
 
       {/* ── Tier 1 — Featured ──────────────────────── */}
-      <section>
+      <section className={styles.heroSection}>
         <h1 className={styles.pageTitle}>Projects</h1>
         <p className={styles.tierLabel}>Featured</p>
         <div className={styles.grid}>
@@ -80,6 +82,7 @@ export default function Projects() {
               imageSrc={p.cardImage ? import.meta.env.BASE_URL + p.cardImage : undefined}
               imageAlt={p.cardImageAlt ?? ''}
               imagePosition={p.cardImagePosition}
+              imageFit={p.cardImageFit}
             />
           ))}
         </div>
@@ -103,6 +106,7 @@ export default function Projects() {
               imageSrc={p.cardImage ? import.meta.env.BASE_URL + p.cardImage : undefined}
               imageAlt={p.cardImageAlt ?? ''}
               imagePosition={p.cardImagePosition}
+              imageFit={p.cardImageFit}
             />
           ))}
         </div>

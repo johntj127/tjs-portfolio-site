@@ -17,6 +17,7 @@ export default function ProjectCard({
   imageSrc,
   imageAlt = '',
   imagePosition,
+  imageFit,
 }) {
   const navigate = useNavigate()
 
@@ -40,7 +41,10 @@ export default function ProjectCard({
           <img
             src={imageSrc}
             alt={imageAlt}
-            className={styles.mediaImage}
+            className={[
+              styles.mediaImage,
+              imageFit === 'contain' ? styles.mediaImageContain : '',
+            ].filter(Boolean).join(' ')}
             style={imagePosition ? { objectPosition: imagePosition } : undefined}
             loading="lazy"
           />

@@ -1,6 +1,32 @@
 .detail {
+  position: relative;
   padding: 48px 48px 72px;
   max-width: 780px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.detail::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(74, 168, 196, 0.06), transparent 28%),
+    radial-gradient(circle at 82% 72%, rgba(108, 88, 178, 0.05), transparent 34%);
+}
+
+.detail > :not(.mapField) {
+  position: relative;
+  z-index: 1;
+}
+
+.mapField {
+  inset: -6% -10% -10% -10%;
+  opacity: 0.34;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.8) 38%, rgba(0, 0, 0, 1));
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.8) 38%, rgba(0, 0, 0, 1));
 }
 
 /* ── Back navigation ─────────────────────────────────────────── */
@@ -309,4 +335,5 @@
 /* ── Responsive ──────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .detail { padding: 36px 24px 56px; }
+  .mapField { inset: 0 -12% -14% -12%; }
 }

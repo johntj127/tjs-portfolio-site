@@ -1,5 +1,6 @@
 import React from 'react'
 import { useParams, Link } from 'react-router-dom'
+import MapField from '../components/MapField/MapField.jsx'
 import projectsData from '../content/projects.json'
 import styles from './ProjectDetail.module.css'
 
@@ -68,6 +69,7 @@ export default function ProjectDetail() {
 
   return (
     <article className={styles.detail}>
+      <MapField variant="subpage" className={styles.mapField} />
 
       {/* ── Back nav ──────────────────────────────── */}
       <Link to="/work" className={styles.back}>← Projects</Link>

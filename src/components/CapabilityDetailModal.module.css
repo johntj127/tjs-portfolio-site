@@ -1,0 +1,314 @@
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalRiseIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(28px, 6vh, 64px) 28px 28px;
+  background:
+    radial-gradient(circle at 16% 12%, rgba(0, 128, 185, 0.18), transparent 30%),
+    radial-gradient(circle at 82% 18%, rgba(200, 152, 42, 0.10), transparent 28%),
+    radial-gradient(circle at 84% 78%, rgba(80, 18, 185, 0.2), transparent 30%),
+    linear-gradient(180deg, rgba(5, 8, 15, 0.7), rgba(5, 8, 15, 0.88)),
+    rgba(5, 8, 15, 0.82);
+  backdrop-filter: blur(12px) saturate(1.04);
+  -webkit-backdrop-filter: blur(12px) saturate(1.04);
+  animation: modalFadeIn 150ms ease-out both;
+}
+
+.dialog {
+  position: relative;
+  width: min(920px, 100%);
+  max-height: calc(100vh - clamp(56px, 10vh, 92px));
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  border: 1px solid rgba(200, 152, 42, 0.18);
+  border-top-color: rgba(200, 152, 42, 0.46);
+  background:
+    radial-gradient(circle at 78% 18%, rgba(79, 195, 247, 0.08), transparent 22%),
+    radial-gradient(circle at 16% 80%, rgba(80, 18, 185, 0.1), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.012)),
+    rgba(8, 12, 23, 0.96);
+  box-shadow:
+    0 28px 96px rgba(0, 0, 0, 0.56),
+    inset 0 1px 0 rgba(200, 152, 42, 0.08);
+  animation: modalRiseIn 180ms ease-out both;
+}
+
+.dialog::before,
+.dialog::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+
+.dialog::before {
+  inset: 10px;
+  border: 1px solid rgba(200, 152, 42, 0.08);
+}
+
+.dialog::after {
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 4px;
+  background:
+    linear-gradient(90deg, rgba(79, 195, 247, 0.82), rgba(200, 152, 42, 0.82) 45%, rgba(200, 152, 42, 0.18) 100%);
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 24px 28px 18px;
+  background:
+    linear-gradient(180deg, rgba(8, 12, 23, 0.98), rgba(8, 12, 23, 0.94));
+  box-shadow: 0 1px 0 rgba(200, 152, 42, 0.08);
+}
+
+.header::before,
+.header::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: rgba(200, 152, 42, 0.34);
+  border-style: solid;
+  opacity: 0.78;
+}
+
+.header::before {
+  top: 12px;
+  left: 12px;
+  border-width: 1px 0 0 1px;
+}
+
+.header::after {
+  right: 12px;
+  bottom: 12px;
+  border-width: 0 1px 1px 0;
+}
+
+.titleWrap {
+  max-width: 760px;
+}
+
+.kicker {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: rgba(79, 195, 247, 0.76);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  line-height: 1.06;
+  color: var(--text-primary);
+}
+
+.close {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(200, 152, 42, 0.18);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-dim);
+  cursor: pointer;
+  transition:
+    color var(--transition-hover),
+    border-color var(--transition-hover),
+    background var(--transition-hover);
+}
+
+.close:hover {
+  color: var(--text-primary);
+  border-color: rgba(200, 152, 42, 0.42);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.close:focus-visible,
+.cta:focus-visible,
+.projectLink:focus-visible {
+  outline: 2px solid rgba(79, 195, 247, 0.8);
+  outline-offset: 3px;
+}
+
+.translation {
+  margin-top: 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.74;
+  color: rgba(233, 236, 244, 0.88);
+  max-width: 760px;
+}
+
+.body {
+  overflow: auto;
+  position: relative;
+  padding: 22px 28px 24px;
+}
+
+.body::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 14% 16%, rgba(79, 195, 247, 0.05), transparent 18%),
+    linear-gradient(120deg, transparent 0 58%, rgba(200, 152, 42, 0.05) 58% 59%, transparent 59% 100%);
+}
+
+.body::after {
+  content: '';
+  position: absolute;
+  right: 34px;
+  top: 30px;
+  width: 140px;
+  height: 140px;
+  border: 1px solid rgba(200, 152, 42, 0.08);
+  border-radius: 50%;
+  opacity: 0.22;
+  box-shadow:
+    0 0 0 14px rgba(200, 152, 42, 0.02),
+    0 0 0 28px rgba(79, 195, 247, 0.015);
+}
+
+.grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr);
+  gap: 26px;
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(200, 152, 42, 0.12);
+}
+
+.sectionTitle {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: rgba(200, 152, 42, 0.86);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: 12px;
+}
+
+.list {
+  margin: 0;
+  padding-left: 18px;
+  color: rgba(220, 224, 233, 0.8);
+}
+
+.list li {
+  margin-bottom: 10px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.66;
+}
+
+.projectLink,
+.cta {
+  color: rgba(79, 195, 247, 0.88);
+  text-decoration: none;
+}
+
+.projectLink:hover,
+.cta:hover {
+  color: var(--text-primary);
+}
+
+.footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(200, 152, 42, 0.12);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid rgba(200, 152, 42, 0.22);
+  background:
+    linear-gradient(90deg, rgba(79, 195, 247, 0.12), rgba(79, 195, 247, 0) 48%),
+    rgba(200, 152, 42, 0.06);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+@media (max-width: 760px) {
+  .overlay {
+    padding: 16px;
+    align-items: flex-start;
+  }
+
+  .dialog {
+    max-height: calc(100vh - 32px);
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .header {
+    padding: 20px 18px 16px;
+  }
+
+  .body {
+    padding: 18px 18px 20px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .body::after {
+    right: 16px;
+    top: 22px;
+    width: 110px;
+    height: 110px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .dialog {
+    animation: none;
+  }
+}
