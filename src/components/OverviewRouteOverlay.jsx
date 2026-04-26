@@ -2,6 +2,44 @@ import React from 'react'
 import styles from './OverviewRouteOverlay.module.css'
 
 export default function OverviewRouteOverlay() {
+  const desktopPath = `M -34,248
+    C 8,228 44,182 88,144
+    C 128,108 188,102 238,124
+    C 286,146 306,188 316,234
+    C 326,274 352,288 404,292
+    L 986,292
+    C 1050,292 1080,320 1080,374
+    L 1080,506
+    C 1080,516 1068,522 1048,522
+    L 184,522
+    C 132,522 104,550 104,608
+    L 104,1200
+    C 104,1254 126,1280 178,1280
+    L 1000,1280
+    C 1060,1280 1088,1308 1088,1366
+    L 1088,1470
+    C 1088,1516 1068,1540 1026,1544
+    L 812,1548
+    C 752,1548 718,1566 698,1610
+    L 664,1682
+    C 644,1724 664,1752 706,1756
+    L 1034,1760
+    C 1092,1760 1134,1786 1198,1828`
+
+  const mobilePath = `M 30,126
+    C 56,112 88,108 118,122
+    C 150,136 166,166 174,204
+    C 182,238 202,252 242,254
+    L 352,258
+    C 388,260 406,280 406,314
+    L 406,1526
+    C 406,1562 388,1580 354,1582
+    L 118,1586
+    C 76,1588 54,1608 54,1650
+    L 54,1828
+    C 54,1864 74,1882 110,1884
+    L 352,1888`
+
   return (
     <div className={styles.overlay} aria-hidden="true">
       <svg
@@ -12,50 +50,33 @@ export default function OverviewRouteOverlay() {
       >
         <path
           className={styles.primaryRoute}
-          d="M -26,236
-             C 24,214 70,168 118,126
-             C 162,88 230,82 280,120
-             C 332,158 344,212 414,230
-             C 558,268 760,252 960,246
-             C 1038,244 1078,272 1084,334
-             L 1090,556
-             C 1092,618 1058,646 988,646
-             L 156,646
-             C 110,646 92,674 92,726
-             L 92,1126
-             C 92,1184 116,1212 176,1212
-             L 1022,1212
-             C 1070,1212 1096,1240 1098,1292
-             L 1104,1426
-             C 1108,1492 1082,1528 1022,1538
-             C 922,1554 836,1540 760,1516
-             C 706,1498 688,1520 688,1578
-             L 688,1658
-             C 688,1718 716,1750 770,1750
-             L 1022,1750
-             C 1094,1750 1142,1778 1208,1828"
+          d={desktopPath}
         />
 
         <g className={styles.dockingRoutes}>
           <path
             className={styles.dockTick}
-            d="M 116,214 C 190,198 266,196 346,214"
+            d="M 120,214 C 176,198 232,198 286,214"
           />
           <path
             className={styles.dockTick}
-            d="M 214,604 C 384,586 626,586 878,612"
+            d="M 244,318 C 412,304 630,304 902,320"
           />
           <path
             className={styles.dockTick}
-            d="M 188,1186 C 392,1166 646,1168 904,1198"
+            d="M 194,1248 C 398,1236 648,1238 928,1258"
           />
           <path
             className={styles.dockTick}
-            d="M 446,1514 C 520,1498 584,1502 652,1528"
+            d="M 176,1252 C 384,1236 644,1238 930,1260"
           />
           <path
             className={styles.dockTick}
-            d="M 760,1498 C 874,1476 970,1482 1054,1514"
+            d="M 812,1524 C 904,1508 978,1510 1054,1530"
+          />
+          <path
+            className={styles.dockTick}
+            d="M 676,1718 C 790,1698 916,1702 1038,1728"
           />
         </g>
 
@@ -64,27 +85,27 @@ export default function OverviewRouteOverlay() {
             <circle r="4.6" className={styles.nodeCore} />
             <circle r="11.8" className={styles.nodeRing} />
           </g>
-          <g transform="translate(430 232)">
+          <g transform="translate(316 234)">
             <circle r="4.2" className={styles.nodeCore} />
             <circle r="10.8" className={styles.nodeRing} />
           </g>
-          <g transform="translate(1088 338)">
+          <g transform="translate(1080 374)">
             <circle r="5" className={styles.nodeCore} />
             <circle r="14" className={styles.nodeRingPulse} />
           </g>
-          <g transform="translate(92 726)">
+          <g transform="translate(104 608)">
             <circle r="5.2" className={styles.nodeCore} />
             <circle r="14.8" className={styles.nodeRingPulse} />
           </g>
-          <g transform="translate(1098 1292)">
+          <g transform="translate(1088 1366)">
             <circle r="4.8" className={styles.nodeCore} />
             <circle r="13.4" className={styles.nodeRing} />
           </g>
-          <g transform="translate(688 1578)">
+          <g transform="translate(698 1610)">
             <circle r="5.1" className={styles.nodeCore} />
             <circle r="14.6" className={styles.nodeRingPulse} />
           </g>
-          <g transform="translate(1024 1750)">
+          <g transform="translate(1034 1760)">
             <circle r="4.4" className={styles.nodeCore} />
             <circle r="12.2" className={styles.nodeRing} />
           </g>
@@ -98,28 +119,7 @@ export default function OverviewRouteOverlay() {
               dur="18s"
               repeatCount="indefinite"
               rotate="auto"
-              path="M -26,236
-                    C 24,214 70,168 118,126
-                    C 162,88 230,82 280,120
-                    C 332,158 344,212 414,230
-                    C 558,268 760,252 960,246
-                    C 1038,244 1078,272 1084,334
-                    L 1090,556
-                    C 1092,618 1058,646 988,646
-                    L 156,646
-                    C 110,646 92,674 92,726
-                    L 92,1126
-                    C 92,1184 116,1212 176,1212
-                    L 1022,1212
-                    C 1070,1212 1096,1240 1098,1292
-                    L 1104,1426
-                    C 1108,1492 1082,1528 1022,1538
-                    C 922,1554 836,1540 760,1516
-                    C 706,1498 688,1520 688,1578
-                    L 688,1658
-                    C 688,1718 716,1750 770,1750
-                    L 1022,1750
-                    C 1094,1750 1142,1778 1208,1828"
+              path={desktopPath}
             />
           </g>
           <g className={styles.traveller}>
@@ -130,28 +130,7 @@ export default function OverviewRouteOverlay() {
               begin="-6s"
               repeatCount="indefinite"
               rotate="auto"
-              path="M -26,236
-                    C 24,214 70,168 118,126
-                    C 162,88 230,82 280,120
-                    C 332,158 344,212 414,230
-                    C 558,268 760,252 960,246
-                    C 1038,244 1078,272 1084,334
-                    L 1090,556
-                    C 1092,618 1058,646 988,646
-                    L 156,646
-                    C 110,646 92,674 92,726
-                    L 92,1126
-                    C 92,1184 116,1212 176,1212
-                    L 1022,1212
-                    C 1070,1212 1096,1240 1098,1292
-                    L 1104,1426
-                    C 1108,1492 1082,1528 1022,1538
-                    C 922,1554 836,1540 760,1516
-                    C 706,1498 688,1520 688,1578
-                    L 688,1658
-                    C 688,1718 716,1750 770,1750
-                    L 1022,1750
-                    C 1094,1750 1142,1778 1208,1828"
+              path={desktopPath}
             />
           </g>
           <g className={styles.traveller}>
@@ -162,28 +141,7 @@ export default function OverviewRouteOverlay() {
               begin="-12s"
               repeatCount="indefinite"
               rotate="auto"
-              path="M -26,236
-                    C 24,214 70,168 118,126
-                    C 162,88 230,82 280,120
-                    C 332,158 344,212 414,230
-                    C 558,268 760,252 960,246
-                    C 1038,244 1078,272 1084,334
-                    L 1090,556
-                    C 1092,618 1058,646 988,646
-                    L 156,646
-                    C 110,646 92,674 92,726
-                    L 92,1126
-                    C 92,1184 116,1212 176,1212
-                    L 1022,1212
-                    C 1070,1212 1096,1240 1098,1292
-                    L 1104,1426
-                    C 1108,1492 1082,1528 1022,1538
-                    C 922,1554 836,1540 760,1516
-                    C 706,1498 688,1520 688,1578
-                    L 688,1658
-                    C 688,1718 716,1750 770,1750
-                    L 1022,1750
-                    C 1094,1750 1142,1778 1208,1828"
+              path={desktopPath}
             />
           </g>
         </g>
@@ -197,53 +155,34 @@ export default function OverviewRouteOverlay() {
       >
         <path
           className={styles.primaryRoute}
-          d="M 28,120
-             C 54,102 84,96 116,114
-             C 150,132 164,172 170,220
-             C 180,292 220,310 298,312
-             C 340,314 362,336 362,376
-             L 362,566
-             C 362,606 344,628 304,628
-             L 72,628
-             C 44,628 30,646 30,682
-             L 30,1226
-             C 30,1268 48,1288 88,1288
-             L 354,1288
-             C 382,1288 396,1304 396,1334
-             L 396,1498
-             C 396,1536 374,1554 336,1554
-             L 110,1554
-             C 72,1554 52,1572 52,1610
-             L 52,1810
-             C 52,1846 72,1866 108,1866
-             L 344,1866"
+          d={mobilePath}
         />
 
         <g className={styles.dockingRoutes}>
-          <path className={styles.dockTick} d="M 76,300 C 142,286 212,288 292,306" />
-          <path className={styles.dockTick} d="M 86,612 C 188,594 274,598 340,622" />
-          <path className={styles.dockTick} d="M 78,1260 C 198,1240 292,1242 372,1266" />
-          <path className={styles.dockTick} d="M 110,1536 C 208,1518 300,1520 378,1548" />
+          <path className={styles.dockTick} d="M 304,454 C 340,454 366,456 394,466" />
+          <path className={styles.dockTick} d="M 300,792 C 340,792 370,796 400,808" />
+          <path className={styles.dockTick} d="M 300,1362 C 340,1362 372,1368 402,1382" />
+          <path className={styles.dockTick} d="M 124,1562 C 212,1548 294,1550 378,1570" />
         </g>
 
         <g className={styles.nodes}>
-          <g transform="translate(168 208)">
+          <g transform="translate(174 204)">
             <circle r="4.4" className={styles.nodeCore} />
             <circle r="11.6" className={styles.nodeRing} />
           </g>
-          <g transform="translate(362 376)">
+          <g transform="translate(406 314)">
             <circle r="4.8" className={styles.nodeCore} />
             <circle r="13.6" className={styles.nodeRingPulse} />
           </g>
-          <g transform="translate(30 682)">
+          <g transform="translate(406 854)">
             <circle r="4.8" className={styles.nodeCore} />
             <circle r="13.8" className={styles.nodeRingPulse} />
           </g>
-          <g transform="translate(396 1334)">
+          <g transform="translate(406 1526)">
             <circle r="4.4" className={styles.nodeCore} />
             <circle r="12.6" className={styles.nodeRing} />
           </g>
-          <g transform="translate(52 1610)">
+          <g transform="translate(54 1650)">
             <circle r="4.6" className={styles.nodeCore} />
             <circle r="13.2" className={styles.nodeRingPulse} />
           </g>
@@ -257,26 +196,7 @@ export default function OverviewRouteOverlay() {
               dur="20s"
               repeatCount="indefinite"
               rotate="auto"
-              path="M 28,120
-                    C 54,102 84,96 116,114
-                    C 150,132 164,172 170,220
-                    C 180,292 220,310 298,312
-                    C 340,314 362,336 362,376
-                    L 362,566
-                    C 362,606 344,628 304,628
-                    L 72,628
-                    C 44,628 30,646 30,682
-                    L 30,1226
-                    C 30,1268 48,1288 88,1288
-                    L 354,1288
-                    C 382,1288 396,1304 396,1334
-                    L 396,1498
-                    C 396,1536 374,1554 336,1554
-                    L 110,1554
-                    C 72,1554 52,1572 52,1610
-                    L 52,1810
-                    C 52,1846 72,1866 108,1866
-                    L 344,1866"
+              path={mobilePath}
             />
           </g>
           <g className={styles.traveller}>
@@ -287,26 +207,7 @@ export default function OverviewRouteOverlay() {
               begin="-10s"
               repeatCount="indefinite"
               rotate="auto"
-              path="M 28,120
-                    C 54,102 84,96 116,114
-                    C 150,132 164,172 170,220
-                    C 180,292 220,310 298,312
-                    C 340,314 362,336 362,376
-                    L 362,566
-                    C 362,606 344,628 304,628
-                    L 72,628
-                    C 44,628 30,646 30,682
-                    L 30,1226
-                    C 30,1268 48,1288 88,1288
-                    L 354,1288
-                    C 382,1288 396,1304 396,1334
-                    L 396,1498
-                    C 396,1536 374,1554 336,1554
-                    L 110,1554
-                    C 72,1554 52,1572 52,1610
-                    L 52,1810
-                    C 52,1846 72,1866 108,1866
-                    L 344,1866"
+              path={mobilePath}
             />
           </g>
         </g>
