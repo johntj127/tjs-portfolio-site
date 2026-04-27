@@ -1,137 +1,289 @@
-import React from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import styles from './OverviewRouteOverlay.module.css'
 
-export default function OverviewRouteOverlay() {
-  const desktopPath = `M -42,248
-    C 14,220 54,174 102,138
-    C 150,104 214,108 254,144
-    C 292,180 302,236 286,292
-    C 268,346 226,388 160,418
-    L 1040,418
-    C 1080,418 1100,438 1100,478
-    L 1100,730
-    C 1100,770 1080,790 1040,790
-    L 168,790
-    C 124,790 102,812 102,856
-    L 102,1298
-    C 102,1342 124,1364 168,1364
-    L 1044,1364
-    C 1084,1364 1104,1384 1104,1424
-    L 1104,1494
-    C 1104,1530 1086,1548 1050,1548
-    L 168,1548
-    C 124,1548 102,1570 102,1614
-    L 102,1878
-    C 102,1918 122,1938 162,1938
-    L 420,1938
-    C 458,1938 478,1918 478,1880
-    L 478,1558
-    C 478,1520 498,1500 536,1500
-    L 760,1500
-    C 798,1500 818,1520 818,1558
-    L 818,1880
-    C 818,1918 838,1938 876,1938
-    L 1092,1938
-    C 1130,1938 1158,1920 1188,1888
-    L 1188,1568
-    C 1188,1528 1208,1508 1248,1508`
+const MOBILE_PATH = `M 26,132
+  C 56,112 96,108 128,122
+  C 156,136 172,164 172,198
+  C 172,232 158,258 132,276
+  C 94,302 68,338 58,386
+  C 52,418 50,458 50,510
+  L 50,1676
+  C 50,1710 68,1728 102,1730
+  L 332,1738`
 
-  const mobilePath = `M 26,132
-    C 56,112 96,108 128,122
-    C 156,136 172,164 172,198
-    C 172,232 158,258 132,276
-    C 94,302 68,338 58,386
-    C 52,418 50,458 50,510
-    L 50,1676
-    C 50,1710 68,1728 102,1730
-    L 332,1738`
+const MOBILE_NODES = [
+  { x: 172, y: 198, pulse: false, core: 4.4, ring: 11.6 },
+  { x: 50, y: 510, pulse: true, core: 4.8, ring: 13.6 },
+  { x: 50, y: 968, pulse: true, core: 4.8, ring: 13.8 },
+  { x: 50, y: 1676, pulse: false, core: 4.4, ring: 12.6 },
+  { x: 102, y: 1730, pulse: true, core: 4.6, ring: 13.2 },
+]
+
+function point(x, y) {
+  return { x: Math.round(x * 10) / 10, y: Math.round(y * 10) / 10 }
+}
+
+function relRect(element, origin) {
+  const rect = element.getBoundingClientRect()
+  return {
+    left: rect.left - origin.left,
+    right: rect.right - origin.left,
+    top: rect.top - origin.top,
+    bottom: rect.bottom - origin.top,
+    width: rect.width,
+    height: rect.height,
+  }
+}
+
+function distance(a, b) {
+  return Math.hypot(b.x - a.x, b.y - a.y)
+}
+
+function insetPoint(from, to, amount) {
+  const len = distance(from, to) || 1
+  return point(to.x - ((to.x - from.x) / len) * amount, to.y - ((to.y - from.y) / len) * amount)
+}
+
+function outsetPoint(from, to, amount) {
+  const len = distance(from, to) || 1
+  return point(from.x + ((to.x - from.x) / len) * amount, from.y + ((to.y - from.y) / len) * amount)
+}
+
+function buildRoundedPath(points, radius = 24) {
+  if (!points.length) return ''
+  if (points.length === 1) return `M ${points[0].x},${points[0].y}`
+
+  let path = `M ${points[0].x},${points[0].y}`
+
+  for (let i = 1; i < points.length - 1; i += 1) {
+    const prev = points[i - 1]
+    const current = points[i]
+    const next = points[i + 1]
+    const limit = Math.min(radius, distance(prev, current) / 2, distance(current, next) / 2)
+
+    if (!Number.isFinite(limit) || limit <= 0.5) {
+      path += ` L ${current.x},${current.y}`
+      continue
+    }
+
+    const before = insetPoint(prev, current, limit)
+    const after = outsetPoint(current, next, limit)
+    path += ` L ${before.x},${before.y}`
+    path += ` Q ${current.x},${current.y} ${after.x},${after.y}`
+  }
+
+  const last = points[points.length - 1]
+  path += ` L ${last.x},${last.y}`
+  return path
+}
+
+function buildDesktopGeometry(overlayElement) {
+  const root = overlayElement.parentElement
+  if (!root) return null
+
+  const hero = root.querySelector('section[aria-label="Introduction"]')
+  const capabilityRow = root.querySelector('section[aria-label="Core capabilities"]')
+  const translationHeading = root.querySelector('#game-production-translation')
+  const translationPanel = translationHeading?.closest('section')
+  const featured = root.querySelector('section[aria-label="Featured work"]')
+  const cards = featured ? [...featured.querySelectorAll('article[role="button"]')] : []
+
+  if (!hero || !capabilityRow || !translationPanel || !featured || cards.length < 3) {
+    return null
+  }
+
+  const overlayRect = overlayElement.getBoundingClientRect()
+  const heroRect = relRect(hero, overlayRect)
+  const capRect = relRect(capabilityRow, overlayRect)
+  const translationRect = relRect(translationPanel, overlayRect)
+  const featuredRect = relRect(featured, overlayRect)
+  const [firstCard, secondCard, thirdCard] = cards.map((card) => relRect(card, overlayRect))
+
+  const width = overlayRect.width
+  const height = overlayRect.height
+
+  const heroStart = point(Math.max(18, heroRect.left - 82), heroRect.top + 66)
+  const heroOuter = point(heroRect.left - 26, heroRect.top + 18)
+  const heroLead = point(heroRect.left + 18, heroRect.top + 20)
+  const heroDrop = point(heroRect.left + 18, capRect.top - 48)
+
+  const cardsTopLeft = point(capRect.left - 26, capRect.top - 40)
+  const cardsTopRight = point(capRect.right + 30, capRect.top - 40)
+  const cardsRightLower = point(capRect.right + 30, capRect.bottom + 32)
+  const cardsBottomLeft = point(translationRect.left - 30, capRect.bottom + 32)
+
+  const translationLeft = point(translationRect.left - 30, translationRect.top + 10)
+  const translationLowerLeft = point(translationRect.left - 30, translationRect.bottom + 30)
+  const translationBottomRun = point(firstCard.left - 34, translationRect.bottom + 30)
+
+  const featuredApproach = point(firstCard.left - 34, firstCard.top - 28)
+  const featuredLeft = point(firstCard.left - 34, firstCard.bottom + 28)
+  const gutter12X = point((firstCard.right + secondCard.left) / 2, firstCard.bottom + 28)
+  const secondTopGutter = point((firstCard.right + secondCard.left) / 2, secondCard.top - 26)
+  const secondOuterRight = point(secondCard.right + 28, secondCard.top - 26)
+  const secondLowerRight = point(secondCard.right + 28, secondCard.bottom + 28)
+  const gutter23Lower = point((secondCard.right + thirdCard.left) / 2, secondCard.bottom + 28)
+  const thirdTopGutter = point((secondCard.right + thirdCard.left) / 2, thirdCard.top - 26)
+  const thirdOuterRight = point(thirdCard.right + 30, thirdCard.top - 26)
+  const thirdLowerRight = point(thirdCard.right + 30, thirdCard.bottom + 24)
+  const exit = point(Math.min(width - 22, thirdCard.right + 88), thirdCard.bottom + 24)
+
+  const routePoints = [
+    heroStart,
+    heroOuter,
+    heroLead,
+    heroDrop,
+    cardsTopLeft,
+    cardsTopRight,
+    cardsRightLower,
+    cardsBottomLeft,
+    translationLeft,
+    translationLowerLeft,
+    translationBottomRun,
+    featuredApproach,
+    featuredLeft,
+    gutter12X,
+    secondTopGutter,
+    secondOuterRight,
+    secondLowerRight,
+    gutter23Lower,
+    thirdTopGutter,
+    thirdOuterRight,
+    thirdLowerRight,
+    exit,
+  ]
+
+  return {
+    width,
+    height,
+    path: buildRoundedPath(routePoints, 24),
+    nodes: [
+      { x: heroOuter.x, y: heroOuter.y, pulse: false, core: 4.6, ring: 11.8 },
+      { x: cardsTopRight.x, y: cardsTopRight.y, pulse: true, core: 5, ring: 14 },
+      { x: translationLeft.x, y: translationLeft.y, pulse: true, core: 5.1, ring: 14.6 },
+      { x: translationBottomRun.x, y: translationBottomRun.y, pulse: false, core: 4.4, ring: 12.2 },
+      { x: secondOuterRight.x, y: secondOuterRight.y, pulse: false, core: 4.4, ring: 12.2 },
+      { x: thirdOuterRight.x, y: thirdOuterRight.y, pulse: true, core: 4.8, ring: 13.4 },
+      { x: exit.x, y: exit.y, pulse: false, core: 4.4, ring: 12.2 },
+    ],
+  }
+}
+
+export default function OverviewRouteOverlay() {
+  const overlayRef = useRef(null)
+  const rafRef = useRef(0)
+  const [desktopGeometry, setDesktopGeometry] = useState(null)
+
+  useEffect(() => {
+    const overlayElement = overlayRef.current
+    if (!overlayElement) return undefined
+
+    const root = overlayElement.parentElement
+    if (!root) return undefined
+
+    const measure = () => {
+      rafRef.current = 0
+      setDesktopGeometry(buildDesktopGeometry(overlayElement))
+    }
+
+    const scheduleMeasure = () => {
+      if (rafRef.current) return
+      rafRef.current = window.requestAnimationFrame(measure)
+    }
+
+    scheduleMeasure()
+
+    const observer = new ResizeObserver(scheduleMeasure)
+    observer.observe(root)
+
+    const elements = [
+      root.querySelector('section[aria-label="Introduction"]'),
+      root.querySelector('section[aria-label="Core capabilities"]'),
+      root.querySelector('#game-production-translation')?.closest('section'),
+      root.querySelector('section[aria-label="Featured work"]'),
+      ...root.querySelectorAll('article[role="button"]'),
+    ].filter(Boolean)
+
+    elements.forEach((element) => observer.observe(element))
+    window.addEventListener('resize', scheduleMeasure)
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', scheduleMeasure)
+      if (rafRef.current) {
+        window.cancelAnimationFrame(rafRef.current)
+      }
+    }
+  }, [])
+
+  const desktopViewBox = useMemo(() => {
+    if (!desktopGeometry) return '0 0 1200 1900'
+    return `0 0 ${Math.max(1200, desktopGeometry.width)} ${Math.max(1900, desktopGeometry.height)}`
+  }, [desktopGeometry])
 
   return (
-    <div className={styles.overlay} aria-hidden="true">
+    <div ref={overlayRef} className={styles.overlay} aria-hidden="true">
       <svg
         className={styles.desktop}
-        viewBox="0 0 1200 1900"
+        viewBox={desktopViewBox}
         preserveAspectRatio="none"
         focusable="false"
       >
-        <path
-          className={styles.primaryRoute}
-          d={desktopPath}
-        />
+        {desktopGeometry && (
+          <>
+            <path
+              className={styles.primaryRoute}
+              d={desktopGeometry.path}
+            />
 
-        <g className={styles.nodes}>
-          <g transform="translate(108 136)">
-            <circle r="4.6" className={styles.nodeCore} />
-            <circle r="11.8" className={styles.nodeRing} />
-          </g>
-          <g transform="translate(160 418)">
-            <circle r="4.2" className={styles.nodeCore} />
-            <circle r="10.8" className={styles.nodeRing} />
-          </g>
-          <g transform="translate(1100 478)">
-            <circle r="5" className={styles.nodeCore} />
-            <circle r="14" className={styles.nodeRingPulse} />
-          </g>
-          <g transform="translate(102 856)">
-            <circle r="5.2" className={styles.nodeCore} />
-            <circle r="14.8" className={styles.nodeRingPulse} />
-          </g>
-          <g transform="translate(1044 1364)">
-            <circle r="4.8" className={styles.nodeCore} />
-            <circle r="13.4" className={styles.nodeRing} />
-          </g>
-          <g transform="translate(168 1548)">
-            <circle r="5.1" className={styles.nodeCore} />
-            <circle r="14.6" className={styles.nodeRingPulse} />
-          </g>
-          <g transform="translate(478 1558)">
-            <circle r="4.4" className={styles.nodeCore} />
-            <circle r="12.2" className={styles.nodeRing} />
-          </g>
-          <g transform="translate(818 1558)">
-            <circle r="4.4" className={styles.nodeCore} />
-            <circle r="12.2" className={styles.nodeRing} />
-          </g>
-          <g transform="translate(1188 1888)">
-            <circle r="4.4" className={styles.nodeCore} />
-            <circle r="12.2" className={styles.nodeRing} />
-          </g>
-        </g>
+            <g className={styles.nodes}>
+              {desktopGeometry.nodes.map((node, index) => (
+                <g key={`${node.x}-${node.y}-${index}`} transform={`translate(${node.x} ${node.y})`}>
+                  <circle r={node.core} className={styles.nodeCore} />
+                  <circle
+                    r={node.ring}
+                    className={node.pulse ? styles.nodeRingPulse : styles.nodeRing}
+                  />
+                </g>
+              ))}
+            </g>
 
-        <g className={styles.travellers}>
-          <g className={styles.traveller}>
-            <circle r="2.4" />
-            <circle r="6.6" className={styles.pulseRing} />
-            <animateMotion
-              dur="18s"
-              repeatCount="indefinite"
-              rotate="auto"
-              path={desktopPath}
-            />
-          </g>
-          <g className={styles.traveller}>
-            <circle r="2.1" />
-            <circle r="5.9" className={styles.pulseRing} />
-            <animateMotion
-              dur="18s"
-              begin="-6s"
-              repeatCount="indefinite"
-              rotate="auto"
-              path={desktopPath}
-            />
-          </g>
-          <g className={styles.traveller}>
-            <circle r="2.3" />
-            <circle r="6.2" className={styles.pulseRing} />
-            <animateMotion
-              dur="18s"
-              begin="-12s"
-              repeatCount="indefinite"
-              rotate="auto"
-              path={desktopPath}
-            />
-          </g>
-        </g>
+            <g className={styles.travellers}>
+              <g className={styles.traveller}>
+                <circle r="2.4" />
+                <circle r="6.6" className={styles.pulseRing} />
+                <animateMotion
+                  dur="18s"
+                  repeatCount="indefinite"
+                  rotate="auto"
+                  path={desktopGeometry.path}
+                />
+              </g>
+              <g className={styles.traveller}>
+                <circle r="2.1" />
+                <circle r="5.9" className={styles.pulseRing} />
+                <animateMotion
+                  dur="18s"
+                  begin="-6s"
+                  repeatCount="indefinite"
+                  rotate="auto"
+                  path={desktopGeometry.path}
+                />
+              </g>
+              <g className={styles.traveller}>
+                <circle r="2.3" />
+                <circle r="6.2" className={styles.pulseRing} />
+                <animateMotion
+                  dur="18s"
+                  begin="-12s"
+                  repeatCount="indefinite"
+                  rotate="auto"
+                  path={desktopGeometry.path}
+                />
+              </g>
+            </g>
+          </>
+        )}
       </svg>
 
       <svg
@@ -142,7 +294,7 @@ export default function OverviewRouteOverlay() {
       >
         <path
           className={styles.primaryRoute}
-          d={mobilePath}
+          d={MOBILE_PATH}
         />
 
         <g className={styles.dockingRoutes}>
@@ -153,26 +305,15 @@ export default function OverviewRouteOverlay() {
         </g>
 
         <g className={styles.nodes}>
-          <g transform="translate(172 198)">
-            <circle r="4.4" className={styles.nodeCore} />
-            <circle r="11.6" className={styles.nodeRing} />
-          </g>
-          <g transform="translate(50 510)">
-            <circle r="4.8" className={styles.nodeCore} />
-            <circle r="13.6" className={styles.nodeRingPulse} />
-          </g>
-          <g transform="translate(50 968)">
-            <circle r="4.8" className={styles.nodeCore} />
-            <circle r="13.8" className={styles.nodeRingPulse} />
-          </g>
-          <g transform="translate(50 1676)">
-            <circle r="4.4" className={styles.nodeCore} />
-            <circle r="12.6" className={styles.nodeRing} />
-          </g>
-          <g transform="translate(102 1730)">
-            <circle r="4.6" className={styles.nodeCore} />
-            <circle r="13.2" className={styles.nodeRingPulse} />
-          </g>
+          {MOBILE_NODES.map((node, index) => (
+            <g key={`${node.x}-${node.y}-${index}`} transform={`translate(${node.x} ${node.y})`}>
+              <circle r={node.core} className={styles.nodeCore} />
+              <circle
+                r={node.ring}
+                className={node.pulse ? styles.nodeRingPulse : styles.nodeRing}
+              />
+            </g>
+          ))}
         </g>
 
         <g className={styles.travellers}>
@@ -183,7 +324,7 @@ export default function OverviewRouteOverlay() {
               dur="20s"
               repeatCount="indefinite"
               rotate="auto"
-              path={mobilePath}
+              path={MOBILE_PATH}
             />
           </g>
           <g className={styles.traveller}>
@@ -194,7 +335,7 @@ export default function OverviewRouteOverlay() {
               begin="-10s"
               repeatCount="indefinite"
               rotate="auto"
-              path={mobilePath}
+              path={MOBILE_PATH}
             />
           </g>
         </g>
