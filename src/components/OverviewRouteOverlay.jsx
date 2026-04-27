@@ -156,11 +156,12 @@ function buildDesktopGeometry(overlayElement) {
   const featuredLeftX = firstCard.left - DESKTOP_PADDING.featuredLeft
   const featuredBottomY = Math.max(firstCard.bottom, thirdCard.bottom) + DESKTOP_PADDING.featuredBottom
   const featuredRightX = thirdCard.right + DESKTOP_PADDING.featuredRight
-  const featuredTopLeft = point(featuredLeftX, featuredTopY)
-  const featuredLeftBottom = point(featuredLeftX, featuredBottomY)
-  const featuredRightBottom = point(featuredRightX, featuredBottomY)
-  const featuredRightTop = point(featuredRightX, featuredTopY + 6)
-  const featuredExit = point(Math.min(width - 30, featuredRightX + 78), featuredTopY + 6)
+  const featuredTopLeftOuter = point(featuredLeftX, featuredTopY + 26)
+  const featuredTopLeftCorner = point(featuredLeftX, featuredTopY)
+  const featuredTopRun = point(featuredLeftX + 124, featuredTopY)
+  const featuredRightTop = point(featuredRightX, featuredTopY + 12)
+  const featuredRightBottom = point(featuredRightX, featuredBottomY - 10)
+  const featuredBottomRun = point(featuredLeftX + 96, featuredBottomY)
 
   const heroPoints = dedupePoints([
     clampPoint(avatarStart, width, height),
@@ -184,11 +185,12 @@ function buildDesktopGeometry(overlayElement) {
   ])
 
   const featuredPoints = dedupePoints([
-    clampPoint(featuredTopLeft, width, height),
-    clampPoint(featuredLeftBottom, width, height),
-    clampPoint(featuredRightBottom, width, height),
+    clampPoint(featuredTopLeftOuter, width, height),
+    clampPoint(featuredTopLeftCorner, width, height),
+    clampPoint(featuredTopRun, width, height),
     clampPoint(featuredRightTop, width, height),
-    clampPoint(featuredExit, width, height),
+    clampPoint(featuredRightBottom, width, height),
+    clampPoint(featuredBottomRun, width, height),
   ])
 
   return {
@@ -232,10 +234,10 @@ function buildDesktopGeometry(overlayElement) {
         travellerDuration: '20s',
         travellerOffset: '-10s',
         nodes: [
-          { x: featuredPoints[0].x, y: featuredPoints[0].y, pulse: false, core: 4.2, ring: 11.6 },
-          { x: featuredPoints[1].x, y: featuredPoints[1].y, pulse: false, core: 4.4, ring: 12.2 },
+          { x: featuredPoints[1].x, y: featuredPoints[1].y, pulse: false, core: 4.2, ring: 11.6 },
           { x: featuredPoints[3].x, y: featuredPoints[3].y, pulse: true, core: 4.8, ring: 13.4 },
-          { x: featuredPoints[4].x, y: featuredPoints[4].y, pulse: false, core: 4.2, ring: 11.8 },
+          { x: featuredPoints[4].x, y: featuredPoints[4].y, pulse: false, core: 4.4, ring: 12.2 },
+          { x: featuredPoints[5].x, y: featuredPoints[5].y, pulse: false, core: 4.2, ring: 11.8 },
         ],
       },
     ],
