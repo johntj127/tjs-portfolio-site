@@ -136,68 +136,108 @@ function buildDesktopGeometry(overlayElement) {
     avatarRect.left - DESKTOP_PADDING.heroExitX,
     avatarRect.bottom + DESKTOP_PADDING.heroExitY
   )
-  const heroRunway = point(
-    capRect.left - DESKTOP_PADDING.heroRunwayX,
-    capRect.top - DESKTOP_PADDING.heroRunwayY
+  const heroLower = point(
+    avatarRect.left - DESKTOP_PADDING.heroRunwayX,
+    Math.min(capRect.top - DESKTOP_PADDING.heroRunwayY, heroRect.bottom + 22)
   )
+  const heroTail = point(heroLower.x + 112, heroLower.y)
 
-  const cardsTopLeft = point(capRect.left - 32, capRect.top - DESKTOP_PADDING.cardsTop)
+  const cardsTopLeft = point(capRect.left - 34, capRect.top - DESKTOP_PADDING.cardsTop)
   const cardsTopRight = point(capRect.right + DESKTOP_PADDING.cardsRight, capRect.top - DESKTOP_PADDING.cardsTop)
   const cardsRightLower = point(capRect.right + DESKTOP_PADDING.cardsRight, capRect.bottom + DESKTOP_PADDING.cardsBottom)
+  const cardsBottomLeft = point(capRect.left - 22, capRect.bottom + DESKTOP_PADDING.cardsBottom)
 
-  const cardsToTranslationY = Math.min(
-    translationRect.top - DESKTOP_PADDING.translationTop,
-    capRect.bottom + DESKTOP_PADDING.cardsBottom
-  )
-  const cardsBottomLeft = point(translationRect.left - DESKTOP_PADDING.translationLeft, cardsToTranslationY)
-
-  const translationLeftTop = point(
-    translationRect.left - DESKTOP_PADDING.translationLeft,
-    translationRect.top - 18
-  )
+  const translationLeftTop = point(translationRect.left - DESKTOP_PADDING.translationLeft, translationRect.top + 10)
+  const translationCorner = point(translationRect.left - DESKTOP_PADDING.translationLeft, translationRect.top - 18)
   const translationLeftBottom = point(translationRect.left - DESKTOP_PADDING.translationLeft, translationRect.bottom + DESKTOP_PADDING.translationBottom)
+  const translationBottomShort = point(translationRect.left + 84, translationRect.bottom + DESKTOP_PADDING.translationBottom)
+
   const featuredTopY = firstCard.top - DESKTOP_PADDING.featuredTop
   const featuredLeftX = firstCard.left - DESKTOP_PADDING.featuredLeft
   const featuredBottomY = Math.max(firstCard.bottom, thirdCard.bottom) + DESKTOP_PADDING.featuredBottom
   const featuredRightX = thirdCard.right + DESKTOP_PADDING.featuredRight
-  const translationBottomRun = point(featuredLeftX, translationRect.bottom + DESKTOP_PADDING.translationBottom)
-
-  const featuredApproach = point(featuredLeftX, featuredTopY)
+  const featuredTopLeft = point(featuredLeftX, featuredTopY)
   const featuredLeftBottom = point(featuredLeftX, featuredBottomY)
   const featuredRightBottom = point(featuredRightX, featuredBottomY)
   const featuredRightTop = point(featuredRightX, featuredTopY + 6)
-  const exit = point(Math.min(width - 30, featuredRightX + 86), featuredTopY + 6)
+  const featuredExit = point(Math.min(width - 30, featuredRightX + 78), featuredTopY + 6)
 
-  const routePoints = dedupePoints([
+  const heroPoints = dedupePoints([
     clampPoint(avatarStart, width, height),
     clampPoint(avatarExit, width, height),
-    clampPoint(heroRunway, width, height),
+    clampPoint(heroLower, width, height),
+    clampPoint(heroTail, width, height),
+  ])
+
+  const capabilityPoints = dedupePoints([
     clampPoint(cardsTopLeft, width, height),
     clampPoint(cardsTopRight, width, height),
     clampPoint(cardsRightLower, width, height),
     clampPoint(cardsBottomLeft, width, height),
+  ])
+
+  const translationPoints = dedupePoints([
+    clampPoint(translationCorner, width, height),
     clampPoint(translationLeftTop, width, height),
     clampPoint(translationLeftBottom, width, height),
-    clampPoint(translationBottomRun, width, height),
-    clampPoint(featuredApproach, width, height),
+    clampPoint(translationBottomShort, width, height),
+  ])
+
+  const featuredPoints = dedupePoints([
+    clampPoint(featuredTopLeft, width, height),
     clampPoint(featuredLeftBottom, width, height),
     clampPoint(featuredRightBottom, width, height),
     clampPoint(featuredRightTop, width, height),
-    clampPoint(exit, width, height),
+    clampPoint(featuredExit, width, height),
   ])
 
   return {
     width,
     height,
-    path: buildRoundedPath(routePoints, 24),
-    nodes: [
-      { x: avatarStart.x, y: avatarStart.y, pulse: false, core: 4.6, ring: 11.8 },
-      { x: cardsTopRight.x, y: cardsTopRight.y, pulse: true, core: 5, ring: 14 },
-      { x: translationLeftBottom.x, y: translationLeftBottom.y, pulse: true, core: 5.1, ring: 14.6 },
-      { x: translationBottomRun.x, y: translationBottomRun.y, pulse: false, core: 4.4, ring: 12.2 },
-      { x: featuredLeftBottom.x, y: featuredLeftBottom.y, pulse: false, core: 4.4, ring: 12.2 },
-      { x: featuredRightTop.x, y: featuredRightTop.y, pulse: true, core: 4.8, ring: 13.4 },
-      { x: exit.x, y: exit.y, pulse: false, core: 4.4, ring: 12.2 },
+    segments: [
+      {
+        key: 'hero',
+        path: buildRoundedPath(heroPoints, 22),
+        travellerDuration: '14s',
+        travellerOffset: '-4s',
+        nodes: [
+          { x: heroPoints[0].x, y: heroPoints[0].y, pulse: false, core: 4.4, ring: 11.2 },
+          { x: heroPoints[1].x, y: heroPoints[1].y, pulse: true, core: 4.8, ring: 13.2 },
+        ],
+      },
+      {
+        key: 'capability',
+        path: buildRoundedPath(capabilityPoints, 26),
+        travellerDuration: '18s',
+        travellerOffset: '-6s',
+        nodes: [
+          { x: capabilityPoints[1].x, y: capabilityPoints[1].y, pulse: true, core: 5, ring: 14 },
+          { x: capabilityPoints[3].x, y: capabilityPoints[3].y, pulse: false, core: 4.4, ring: 12 },
+        ],
+      },
+      {
+        key: 'translation',
+        path: buildRoundedPath(translationPoints, 18),
+        travellerDuration: '16s',
+        travellerOffset: '-8s',
+        className: styles.translationRoute,
+        nodes: [
+          { x: translationPoints[1].x, y: translationPoints[1].y, pulse: false, core: 4.2, ring: 11.4 },
+          { x: translationPoints[2].x, y: translationPoints[2].y, pulse: true, core: 4.8, ring: 13.2 },
+        ],
+      },
+      {
+        key: 'featured',
+        path: buildRoundedPath(featuredPoints, 28),
+        travellerDuration: '20s',
+        travellerOffset: '-10s',
+        nodes: [
+          { x: featuredPoints[0].x, y: featuredPoints[0].y, pulse: false, core: 4.2, ring: 11.6 },
+          { x: featuredPoints[1].x, y: featuredPoints[1].y, pulse: false, core: 4.4, ring: 12.2 },
+          { x: featuredPoints[3].x, y: featuredPoints[3].y, pulse: true, core: 4.8, ring: 13.4 },
+          { x: featuredPoints[4].x, y: featuredPoints[4].y, pulse: false, core: 4.2, ring: 11.8 },
+        ],
+      },
     ],
   }
 }
@@ -321,59 +361,42 @@ export default function OverviewRouteOverlay() {
         preserveAspectRatio="none"
         focusable="false"
       >
-        {desktopGeometry && (
+        {desktopGeometry?.segments && (
           <>
-            <path
-              className={styles.primaryRoute}
-              d={desktopGeometry.path}
-            />
+            {desktopGeometry.segments.map((segment) => (
+              <g key={segment.key} className={segment.className}>
+                <path
+                  className={styles.primaryRoute}
+                  d={segment.path}
+                />
 
-            <g className={styles.nodes}>
-              {desktopGeometry.nodes.map((node, index) => (
-                <g key={`${node.x}-${node.y}-${index}`} transform={`translate(${node.x} ${node.y})`}>
-                  <circle r={node.core} className={styles.nodeCore} />
-                  <circle
-                    r={node.ring}
-                    className={node.pulse ? styles.nodeRingPulse : styles.nodeRing}
-                  />
+                <g className={styles.nodes}>
+                  {segment.nodes.map((node, index) => (
+                    <g key={`${segment.key}-${node.x}-${node.y}-${index}`} transform={`translate(${node.x} ${node.y})`}>
+                      <circle r={node.core} className={styles.nodeCore} />
+                      <circle
+                        r={node.ring}
+                        className={node.pulse ? styles.nodeRingPulse : styles.nodeRing}
+                      />
+                    </g>
+                  ))}
                 </g>
-              ))}
-            </g>
 
-            <g className={styles.travellers}>
-              <g className={styles.traveller}>
-                <circle r="2.4" />
-                <circle r="6.6" className={styles.pulseRing} />
-                <animateMotion
-                  dur="18s"
-                  repeatCount="indefinite"
-                  rotate="auto"
-                  path={desktopGeometry.path}
-                />
+                <g className={styles.travellers}>
+                  <g className={styles.traveller}>
+                    <circle r="2.2" />
+                    <circle r="5.8" className={styles.pulseRing} />
+                    <animateMotion
+                      dur={segment.travellerDuration}
+                      begin={segment.travellerOffset}
+                      repeatCount="indefinite"
+                      rotate="auto"
+                      path={segment.path}
+                    />
+                  </g>
+                </g>
               </g>
-              <g className={styles.traveller}>
-                <circle r="2.1" />
-                <circle r="5.9" className={styles.pulseRing} />
-                <animateMotion
-                  dur="18s"
-                  begin="-6s"
-                  repeatCount="indefinite"
-                  rotate="auto"
-                  path={desktopGeometry.path}
-                />
-              </g>
-              <g className={styles.traveller}>
-                <circle r="2.3" />
-                <circle r="6.2" className={styles.pulseRing} />
-                <animateMotion
-                  dur="18s"
-                  begin="-12s"
-                  repeatCount="indefinite"
-                  rotate="auto"
-                  path={desktopGeometry.path}
-                />
-              </g>
-            </g>
+            ))}
           </>
         )}
       </svg>

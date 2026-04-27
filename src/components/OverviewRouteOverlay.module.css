@@ -109,6 +109,10 @@
   stroke-width: 0.66;
 }
 
+.translationRoute {
+  opacity: 0.72;
+}
+
 @media (max-width: 1120px) {
   .overlay {
     inset: -18px -26px -20px -72px;
