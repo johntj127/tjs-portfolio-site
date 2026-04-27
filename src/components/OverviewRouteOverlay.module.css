@@ -1,16 +1,23 @@
-@keyframes journeyFlow {
-  from { stroke-dashoffset: 88; }
+@keyframes signalPulseTravel {
+  from { stroke-dashoffset: 66; }
   to { stroke-dashoffset: 0; }
 }
 
-@keyframes journeyDockFlow {
-  from { stroke-dashoffset: 36; }
-  to { stroke-dashoffset: 0; }
+@keyframes avatarHaloPulse {
+  0%, 100% { opacity: 0.14; transform: scale(0.96); }
+  45% { opacity: 0.32; transform: scale(1.04); }
 }
 
-@keyframes journeyNodePulse {
+@keyframes nodePing {
   0%, 100% { opacity: 0.18; transform: scale(0.96); }
-  45% { opacity: 0.66; transform: scale(1.05); }
+  42% { opacity: 0.72; transform: scale(1.06); }
+}
+
+@keyframes telemetryDrift {
+  0% { opacity: 0; transform: translateY(0); }
+  12% { opacity: 0.24; }
+  72% { opacity: 0.52; }
+  100% { opacity: 0; transform: translateY(calc(var(--drift, 72px) * -1)); }
 }
 
 @keyframes travellerGlow {
@@ -31,7 +38,7 @@
   width: 100%;
   height: 100%;
   overflow: visible;
-  color: rgba(200, 152, 42, 0.94);
+  color: rgba(202, 154, 48, 0.9);
   fill: none;
   stroke: currentColor;
 }
@@ -40,7 +47,23 @@
   display: none;
 }
 
-.primaryRoute,
+.heroSegment {
+  color: rgba(205, 160, 58, 0.92);
+}
+
+.capabilitySegment {
+  color: rgba(197, 150, 44, 0.8);
+}
+
+.translationSegment {
+  color: rgba(120, 182, 198, 0.46);
+}
+
+.featuredSegment {
+  color: rgba(204, 158, 56, 0.78);
+}
+
+.channelTrace,
 .dockTick {
   fill: none;
   stroke-linecap: round;
@@ -48,69 +71,111 @@
   vector-effect: non-scaling-stroke;
 }
 
-.primaryRoute {
-  stroke-width: 1.35;
-  stroke-dasharray: 8 9;
-  opacity: 0.84;
-  animation: journeyFlow 7.6s linear infinite;
-}
-
-.dockingRoutes {
-  opacity: 0.58;
+.channelTrace {
+  stroke-width: 1.2;
+  stroke-dasharray: 7 11;
+  opacity: 0.6;
+  animation: signalPulseTravel 9.4s linear infinite;
 }
 
 .dockTick {
-  stroke-width: 0.9;
+  stroke-width: 0.84;
   stroke-dasharray: 3 10;
-  animation: journeyDockFlow 9.8s linear infinite;
+  opacity: 0.52;
+  animation: signalPulseTravel 11.8s linear infinite;
+}
+
+.avatarOrigin {
+  color: rgba(111, 195, 214, 0.48);
+}
+
+.avatarHalo,
+.avatarHaloSecondary {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  animation: avatarHaloPulse 5.8s ease-in-out infinite;
+}
+
+.avatarHalo {
+  stroke-width: 0.9;
+  stroke-dasharray: 24 126 18 34;
+}
+
+.avatarHaloSecondary {
+  stroke-width: 0.66;
+  stroke-dasharray: 18 152 10 30;
+  opacity: 0.62;
+  animation-delay: -2.1s;
 }
 
 .nodes {
-  color: rgba(200, 152, 42, 0.9);
+  color: rgba(204, 160, 60, 0.82);
 }
 
 .nodeCore {
   fill: currentColor;
   stroke: none;
-  filter: drop-shadow(0 0 7px rgba(200, 152, 42, 0.42));
+  filter: drop-shadow(0 0 7px rgba(204, 160, 60, 0.34));
 }
 
 .nodeRing {
   fill: none;
   stroke: currentColor;
-  stroke-width: 0.82;
-  opacity: 0.56;
+  stroke-width: 0.76;
+  opacity: 0.5;
 }
 
 .nodeRingPulse {
   fill: none;
   stroke: currentColor;
-  stroke-width: 0.88;
-  opacity: 0.62;
-  animation: journeyNodePulse 4.8s ease-in-out infinite;
+  stroke-width: 0.82;
+  opacity: 0.56;
+  animation: nodePing 4.8s ease-in-out infinite;
 }
 
 .travellers {
-  opacity: 0.96;
+  opacity: 0.86;
 }
 
 .traveller {
-  color: rgba(200, 152, 42, 0.96);
+  color: rgba(203, 158, 56, 0.94);
   fill: currentColor;
   stroke: currentColor;
-  filter: drop-shadow(0 0 8px rgba(200, 152, 42, 0.48));
+  filter: drop-shadow(0 0 8px rgba(204, 160, 60, 0.4));
   transform-box: fill-box;
   transform-origin: center;
-  animation: travellerGlow 3.4s ease-in-out infinite;
+  animation: travellerGlow 3.8s ease-in-out infinite;
 }
 
 .pulseRing {
   fill: none;
-  stroke-width: 0.66;
+  stroke-width: 0.62;
 }
 
-.translationRoute {
-  opacity: 0.72;
+.telemetryField {
+  opacity: 0.74;
+}
+
+.telemetryMote {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: telemetryDrift var(--duration, 12s) linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+.telemetryMote circle {
+  fill: currentColor;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+.goldMote {
+  color: rgba(204, 160, 60, 0.52);
+}
+
+.tealMote {
+  color: rgba(110, 194, 212, 0.46);
 }
 
 @media (max-width: 1120px) {
@@ -132,25 +197,32 @@
     display: block;
   }
 
-  .primaryRoute {
-    stroke-width: 1.18;
-    stroke-dasharray: 7 10;
-    opacity: 0.72;
-    animation-duration: 9.2s;
+  .channelTrace {
+    stroke-width: 1.04;
+    stroke-dasharray: 6 10;
+    opacity: 0.54;
+    animation-duration: 10.8s;
   }
 
   .dockTick {
-    stroke-width: 0.78;
-    opacity: 0.72;
-    animation-duration: 11.2s;
+    stroke-width: 0.74;
+    opacity: 0.44;
+    animation-duration: 12.6s;
+  }
+
+  .telemetryField {
+    opacity: 0.62;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .primaryRoute,
+  .channelTrace,
   .dockTick,
+  .avatarHalo,
+  .avatarHaloSecondary,
   .nodeRingPulse,
-  .traveller {
+  .traveller,
+  .telemetryMote {
     animation: none;
   }
 

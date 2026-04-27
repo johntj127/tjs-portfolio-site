@@ -1,21 +1,26 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import styles from './OverviewRouteOverlay.module.css'
 
-const DESKTOP_PADDING = {
-  heroExitX: 18,
-  heroExitY: 30,
-  heroRunwayX: 74,
-  heroRunwayY: 62,
-  cardsTop: 56,
-  cardsRight: 52,
-  cardsBottom: 52,
-  translationLeft: 58,
-  translationTop: 34,
-  translationBottom: 54,
-  featuredLeft: 54,
-  featuredTop: 36,
-  featuredBottom: 40,
+const DESKTOP = {
+  heroOrbitX: 26,
+  heroOrbitY: 18,
+  heroEmitterDrop: 26,
+  capTop: 42,
+  capRight: 42,
+  capBottom: 54,
+  translationLeft: 52,
+  translationTop: 18,
+  featuredLeft: 52,
+  featuredTop: 28,
   featuredRight: 58,
+  featuredBottom: 36,
+}
+
+const MOBILE = {
+  laneInset: 20,
+  capTick: 44,
+  translationTick: 58,
+  featuredTick: 62,
 }
 
 function point(x, y) {
@@ -59,7 +64,7 @@ function clampPoint(p, width, height, padding = 12) {
   )
 }
 
-function dedupePoints(points, minDistance = 18) {
+function dedupePoints(points, minDistance = 14) {
   return points.reduce((acc, current) => {
     if (!acc.length) {
       acc.push(current)
@@ -77,7 +82,7 @@ function dedupePoints(points, minDistance = 18) {
   }, [])
 }
 
-function buildRoundedPath(points, radius = 24) {
+function buildRoundedPath(points, radius = 22) {
   if (!points.length) return ''
   if (points.length === 1) return `M ${points[0].x},${points[0].y}`
 
@@ -105,7 +110,7 @@ function buildRoundedPath(points, radius = 24) {
   return path
 }
 
-function buildDesktopGeometry(overlayElement) {
+function measureSections(overlayElement) {
   const root = overlayElement.parentElement
   if (!root) return null
 
@@ -122,183 +127,226 @@ function buildDesktopGeometry(overlayElement) {
   }
 
   const overlayRect = overlayElement.getBoundingClientRect()
-  const heroRect = relRect(hero, overlayRect)
-  const avatarRect = relRect(avatar, overlayRect)
-  const capRect = relRect(capabilityRow, overlayRect)
-  const translationRect = relRect(translationPanel, overlayRect)
-  const [firstCard, , thirdCard] = cards.map((card) => relRect(card, overlayRect))
+  return {
+    width: overlayRect.width,
+    height: overlayRect.height,
+    hero: relRect(hero, overlayRect),
+    avatar: relRect(avatar, overlayRect),
+    capability: relRect(capabilityRow, overlayRect),
+    translation: relRect(translationPanel, overlayRect),
+    featured: relRect(featured, overlayRect),
+    cards: cards.map((card) => relRect(card, overlayRect)),
+  }
+}
 
-  const width = overlayRect.width
-  const height = overlayRect.height
+function buildDesktopSignalGeometry(measured) {
+  if (!measured) return null
 
-  const avatarStart = point(avatarRect.left + avatarRect.width * 0.42, avatarRect.bottom + 8)
-  const avatarExit = point(
-    avatarRect.left - DESKTOP_PADDING.heroExitX,
-    avatarRect.bottom + DESKTOP_PADDING.heroExitY
-  )
-  const heroLower = point(
-    avatarRect.left - DESKTOP_PADDING.heroRunwayX,
-    Math.min(capRect.top - DESKTOP_PADDING.heroRunwayY, heroRect.bottom + 22)
-  )
-  const heroTail = point(heroLower.x + 112, heroLower.y)
+  const { width, height, hero, avatar, capability, translation, cards } = measured
+  const [firstCard, , thirdCard] = cards
 
-  const cardsTopLeft = point(capRect.left - 34, capRect.top - DESKTOP_PADDING.cardsTop)
-  const cardsTopRight = point(capRect.right + DESKTOP_PADDING.cardsRight, capRect.top - DESKTOP_PADDING.cardsTop)
-  const cardsRightLower = point(capRect.right + DESKTOP_PADDING.cardsRight, capRect.bottom + DESKTOP_PADDING.cardsBottom)
-  const cardsBottomLeft = point(capRect.left - 22, capRect.bottom + DESKTOP_PADDING.cardsBottom)
+  const avatarCenter = point(avatar.left + avatar.width * 0.5, avatar.top + avatar.height * 0.52)
+  const avatarOrigin = clampPoint(point(avatar.left + avatar.width * 0.18, avatar.bottom + 10), width, height)
 
-  const translationLeftTop = point(translationRect.left - DESKTOP_PADDING.translationLeft, translationRect.top + 10)
-  const translationCorner = point(translationRect.left - DESKTOP_PADDING.translationLeft, translationRect.top - 18)
-  const translationLeftBottom = point(translationRect.left - DESKTOP_PADDING.translationLeft, translationRect.bottom + DESKTOP_PADDING.translationBottom)
-  const translationBottomShort = point(translationRect.left + 84, translationRect.bottom + DESKTOP_PADDING.translationBottom)
+  const heroOrbit = buildRoundedPath(dedupePoints([
+    clampPoint(point(avatar.left - DESKTOP.heroOrbitX, avatar.top + avatar.height * 0.18), width, height),
+    clampPoint(point(avatar.left - DESKTOP.heroOrbitX, avatar.bottom + avatar.height * 0.08), width, height),
+    clampPoint(point(avatar.left + avatar.width * 0.3, avatar.bottom + DESKTOP.heroEmitterDrop), width, height),
+    clampPoint(point(avatar.left + avatar.width * 0.62, avatar.bottom + 20), width, height),
+  ]), 18)
 
-  const featuredTopY = firstCard.top - DESKTOP_PADDING.featuredTop
-  const featuredLeftX = firstCard.left - DESKTOP_PADDING.featuredLeft
-  const featuredBottomY = Math.max(firstCard.bottom, thirdCard.bottom) + DESKTOP_PADDING.featuredBottom
-  const featuredRightX = thirdCard.right + DESKTOP_PADDING.featuredRight
-  const featuredTopLeftOuter = point(featuredLeftX, featuredTopY + 26)
-  const featuredTopLeftCorner = point(featuredLeftX, featuredTopY)
-  const featuredTopRun = point(featuredLeftX + 124, featuredTopY)
-  const featuredRightTop = point(featuredRightX, featuredTopY + 12)
-  const featuredRightBottom = point(featuredRightX, featuredBottomY - 10)
-  const featuredBottomRun = point(featuredLeftX + 96, featuredBottomY)
+  const capabilityAccent = buildRoundedPath(dedupePoints([
+    clampPoint(point(capability.left - 18, capability.top - DESKTOP.capTop), width, height),
+    clampPoint(point(capability.right + DESKTOP.capRight, capability.top - DESKTOP.capTop), width, height),
+    clampPoint(point(capability.right + DESKTOP.capRight, capability.bottom + DESKTOP.capBottom - 18), width, height),
+    clampPoint(point(capability.left + 54, capability.bottom + DESKTOP.capBottom), width, height),
+  ]), 24)
 
-  const heroPoints = dedupePoints([
-    clampPoint(avatarStart, width, height),
-    clampPoint(avatarExit, width, height),
-    clampPoint(heroLower, width, height),
-    clampPoint(heroTail, width, height),
-  ])
+  const translationAccent = buildRoundedPath(dedupePoints([
+    clampPoint(point(translation.left - DESKTOP.translationLeft, translation.top - DESKTOP.translationTop), width, height),
+    clampPoint(point(translation.left - DESKTOP.translationLeft, translation.top + 78), width, height),
+    clampPoint(point(translation.left - 26, translation.top + 78), width, height),
+  ]), 16)
 
-  const capabilityPoints = dedupePoints([
-    clampPoint(cardsTopLeft, width, height),
-    clampPoint(cardsTopRight, width, height),
-    clampPoint(cardsRightLower, width, height),
-    clampPoint(cardsBottomLeft, width, height),
-  ])
+  const featuredTop = firstCard.top - DESKTOP.featuredTop
+  const featuredLeft = firstCard.left - DESKTOP.featuredLeft
+  const featuredRight = thirdCard.right + DESKTOP.featuredRight
+  const featuredBottom = Math.max(firstCard.bottom, thirdCard.bottom) + DESKTOP.featuredBottom
 
-  const translationPoints = dedupePoints([
-    clampPoint(translationCorner, width, height),
-    clampPoint(translationLeftTop, width, height),
-    clampPoint(translationLeftBottom, width, height),
-    clampPoint(translationBottomShort, width, height),
-  ])
-
-  const featuredPoints = dedupePoints([
-    clampPoint(featuredTopLeftOuter, width, height),
-    clampPoint(featuredTopLeftCorner, width, height),
-    clampPoint(featuredTopRun, width, height),
-    clampPoint(featuredRightTop, width, height),
-    clampPoint(featuredRightBottom, width, height),
-    clampPoint(featuredBottomRun, width, height),
-  ])
+  const featuredAccent = buildRoundedPath(dedupePoints([
+    clampPoint(point(featuredLeft, featuredTop + 22), width, height),
+    clampPoint(point(featuredLeft, featuredTop), width, height),
+    clampPoint(point(featuredLeft + 116, featuredTop), width, height),
+    clampPoint(point(featuredRight, featuredTop + 12), width, height),
+    clampPoint(point(featuredRight, featuredBottom - 18), width, height),
+    clampPoint(point(featuredLeft + 96, featuredBottom), width, height),
+  ]), 28)
 
   return {
     width,
     height,
+    avatarCenter,
+    avatarOrigin,
+    motes: [
+      { x: Math.max(20, hero.left - 38), y: hero.top + 86, drift: 82, delay: '0s', duration: '10.2s', size: 2.2, tint: 'gold' },
+      { x: Math.max(24, capability.left - 46), y: capability.top + 154, drift: 110, delay: '-3.2s', duration: '13.4s', size: 2.6, tint: 'teal' },
+      { x: capability.right + 54, y: capability.top + 118, drift: 94, delay: '-2.1s', duration: '12.4s', size: 2.1, tint: 'gold' },
+      { x: firstCard.left - 38, y: firstCard.top + 124, drift: 74, delay: '-5.2s', duration: '11.6s', size: 2.4, tint: 'teal' },
+      { x: thirdCard.right + 46, y: thirdCard.top + 92, drift: 88, delay: '-7.1s', duration: '12.8s', size: 2.2, tint: 'gold' },
+    ],
     segments: [
       {
         key: 'hero',
-        path: buildRoundedPath(heroPoints, 22),
-        travellerDuration: '14s',
-        travellerOffset: '-4s',
+        className: styles.heroSegment,
+        paths: [
+          { d: heroOrbit, travellerDuration: '11.8s', travellerOffset: '-2.8s' },
+        ],
         nodes: [
-          { x: heroPoints[0].x, y: heroPoints[0].y, pulse: false, core: 4.4, ring: 11.2 },
-          { x: heroPoints[1].x, y: heroPoints[1].y, pulse: true, core: 4.8, ring: 13.2 },
+          { x: avatarOrigin.x, y: avatarOrigin.y, pulse: true, core: 4.8, ring: 13.6 },
+          { x: avatarCenter.x - avatar.width * 0.36, y: avatarCenter.y + avatar.height * 0.18, pulse: false, core: 3.8, ring: 10.2 },
         ],
       },
       {
         key: 'capability',
-        path: buildRoundedPath(capabilityPoints, 26),
-        travellerDuration: '18s',
-        travellerOffset: '-6s',
+        className: styles.capabilitySegment,
+        paths: [
+          { d: capabilityAccent, travellerDuration: '17.6s', travellerOffset: '-6.4s' },
+        ],
         nodes: [
-          { x: capabilityPoints[1].x, y: capabilityPoints[1].y, pulse: true, core: 5, ring: 14 },
-          { x: capabilityPoints[3].x, y: capabilityPoints[3].y, pulse: false, core: 4.4, ring: 12 },
+          { x: capability.right + DESKTOP.capRight, y: capability.top - DESKTOP.capTop + 2, pulse: true, core: 4.4, ring: 12.2 },
+          { x: capability.left + 54, y: capability.bottom + DESKTOP.capBottom, pulse: false, core: 3.8, ring: 10.8 },
         ],
       },
       {
         key: 'translation',
-        path: buildRoundedPath(translationPoints, 18),
-        travellerDuration: '16s',
-        travellerOffset: '-8s',
-        className: styles.translationRoute,
+        className: styles.translationSegment,
+        paths: [
+          { d: translationAccent, travellerDuration: '14.2s', travellerOffset: '-5.2s' },
+        ],
         nodes: [
-          { x: translationPoints[1].x, y: translationPoints[1].y, pulse: false, core: 4.2, ring: 11.4 },
-          { x: translationPoints[2].x, y: translationPoints[2].y, pulse: true, core: 4.8, ring: 13.2 },
+          { x: translation.left - DESKTOP.translationLeft, y: translation.top + 78, pulse: true, core: 3.9, ring: 10.8 },
         ],
       },
       {
         key: 'featured',
-        path: buildRoundedPath(featuredPoints, 28),
-        travellerDuration: '20s',
-        travellerOffset: '-10s',
+        className: styles.featuredSegment,
+        paths: [
+          { d: featuredAccent, travellerDuration: '19.8s', travellerOffset: '-8.4s' },
+        ],
         nodes: [
-          { x: featuredPoints[1].x, y: featuredPoints[1].y, pulse: false, core: 4.2, ring: 11.6 },
-          { x: featuredPoints[3].x, y: featuredPoints[3].y, pulse: true, core: 4.8, ring: 13.4 },
-          { x: featuredPoints[4].x, y: featuredPoints[4].y, pulse: false, core: 4.4, ring: 12.2 },
-          { x: featuredPoints[5].x, y: featuredPoints[5].y, pulse: false, core: 4.2, ring: 11.8 },
+          { x: featuredLeft, y: featuredTop, pulse: false, core: 3.8, ring: 10.6 },
+          { x: featuredRight, y: featuredTop + 12, pulse: true, core: 4.6, ring: 12.8 },
+          { x: featuredLeft + 96, y: featuredBottom, pulse: false, core: 3.9, ring: 11.2 },
         ],
       },
     ],
   }
 }
 
-function buildMobileGeometry(overlayElement) {
-  const root = overlayElement.parentElement
-  if (!root) return null
+function buildMobileSignalGeometry(measured) {
+  if (!measured) return null
 
-  const hero = root.querySelector('section[aria-label="Introduction"]')
-  const avatar = root.querySelector('img[alt="TJ Johnson"]')
-  const capabilityRow = root.querySelector('section[aria-label="Core capabilities"]')
-  const translationHeading = root.querySelector('#game-production-translation')
-  const translationPanel = translationHeading?.closest('section')
-  const featured = root.querySelector('section[aria-label="Featured work"]')
-  const cards = featured ? [...featured.querySelectorAll('article[role="button"]')] : []
+  const { width, height, hero, avatar, capability, translation, featured } = measured
+  const laneX = clamp(Math.min(hero.left - MOBILE.laneInset, avatar.left - MOBILE.laneInset), 28, Math.max(28, width * 0.18))
+  const avatarCenter = point(avatar.left + avatar.width * 0.5, avatar.top + avatar.height * 0.5)
+  const avatarOrigin = clampPoint(point(avatar.left + avatar.width * 0.2, avatar.bottom + 10), width, height, 8)
 
-  if (!hero || !avatar || !capabilityRow || !translationPanel || !featured || !cards.length) {
-    return null
-  }
+  const heroAccent = buildRoundedPath(dedupePoints([
+    clampPoint(point(avatar.left - 18, avatar.top + 14), width, height, 8),
+    clampPoint(point(avatar.left - 18, avatar.bottom + 18), width, height, 8),
+    clampPoint(point(avatar.left + avatar.width * 0.32, avatar.bottom + 24), width, height, 8),
+  ]), 16)
 
-  const overlayRect = overlayElement.getBoundingClientRect()
-  const heroRect = relRect(hero, overlayRect)
-  const avatarRect = relRect(avatar, overlayRect)
-  const capRect = relRect(capabilityRow, overlayRect)
-  const translationRect = relRect(translationPanel, overlayRect)
-  const featuredRect = relRect(featured, overlayRect)
-
-  const width = overlayRect.width
-  const height = overlayRect.height
-  const laneX = clamp(Math.min(heroRect.left - 18, avatarRect.left - 18), 26, Math.max(26, width * 0.18))
-
-  const points = dedupePoints([
-    clampPoint(point(avatarRect.left + avatarRect.width * 0.36, avatarRect.bottom + 10), width, height, 8),
-    clampPoint(point(laneX, avatarRect.bottom + 26), width, height, 8),
-    clampPoint(point(laneX, capRect.top - 20), width, height, 8),
-    clampPoint(point(laneX, translationRect.top - 18), width, height, 8),
-    clampPoint(point(laneX, featuredRect.top - 18), width, height, 8),
-    clampPoint(point(laneX, featuredRect.bottom + 24), width, height, 8),
-    clampPoint(point(width * 0.72, featuredRect.bottom + 26), width, height, 8),
-  ], 20)
+  const laneTop = clampPoint(point(laneX, capability.top - 20), width, height, 8)
+  const laneBottom = clampPoint(point(laneX, featured.bottom + 20), width, height, 8)
+  const lanePath = buildRoundedPath(dedupePoints([laneTop, laneBottom]), 12)
 
   return {
     width,
     height,
-    path: buildRoundedPath(points, 20),
-    nodes: [
-      { x: points[0].x, y: points[0].y, pulse: false, core: 4.4, ring: 11.6 },
-      { x: points[2].x, y: points[2].y, pulse: true, core: 4.8, ring: 13.6 },
-      { x: points[3].x, y: points[3].y, pulse: true, core: 4.8, ring: 13.8 },
-      { x: points[4].x, y: points[4].y, pulse: false, core: 4.4, ring: 12.6 },
-      { x: points[5].x, y: points[5].y, pulse: true, core: 4.6, ring: 13.2 },
+    avatarCenter,
+    avatarOrigin,
+    motes: [
+      { x: laneX + 8, y: capability.top + 44, drift: 88, delay: '0s', duration: '11.8s', size: 2.1, tint: 'gold' },
+      { x: laneX + 12, y: translation.top + 66, drift: 76, delay: '-4.1s', duration: '12.6s', size: 2.2, tint: 'teal' },
+      { x: laneX + 10, y: featured.top + 72, drift: 82, delay: '-6.2s', duration: '13.2s', size: 2.1, tint: 'gold' },
+    ],
+    segments: [
+      {
+        key: 'hero',
+        className: styles.heroSegment,
+        paths: [{ d: heroAccent, travellerDuration: '11.2s', travellerOffset: '-2s' }],
+        nodes: [
+          { x: avatarOrigin.x, y: avatarOrigin.y, pulse: true, core: 4.4, ring: 12.4 },
+          { x: avatarCenter.x - avatar.width * 0.28, y: avatarCenter.y + avatar.height * 0.16, pulse: false, core: 3.6, ring: 9.8 },
+        ],
+      },
+      {
+        key: 'lane',
+        className: styles.mobileLaneSegment,
+        paths: [{ d: lanePath, travellerDuration: '17s', travellerOffset: '-7s' }],
+        nodes: [
+          { x: laneTop.x, y: laneTop.y, pulse: false, core: 3.6, ring: 10.2 },
+          { x: laneBottom.x, y: laneBottom.y, pulse: true, core: 4.2, ring: 11.8 },
+        ],
+      },
     ],
     ticks: [
-      { d: `M ${laneX + 4},${heroRect.bottom + 18} C ${laneX + 46},${heroRect.bottom + 18} ${laneX + 82},${heroRect.bottom + 22} ${laneX + 118},${heroRect.bottom + 32}` },
-      { d: `M ${laneX + 4},${capRect.top + 36} C ${laneX + 52},${capRect.top + 36} ${laneX + 94},${capRect.top + 40} ${laneX + 132},${capRect.top + 52}` },
-      { d: `M ${laneX + 4},${translationRect.top + 58} C ${laneX + 56},${translationRect.top + 58} ${laneX + 102},${translationRect.top + 62} ${laneX + 142},${translationRect.top + 74}` },
-      { d: `M ${laneX + 4},${featuredRect.top + 60} C ${laneX + 62},${featuredRect.top + 60} ${laneX + 112},${featuredRect.top + 64} ${laneX + 156},${featuredRect.top + 76}` },
+      buildRoundedPath(dedupePoints([
+        clampPoint(point(laneX + 4, hero.bottom + 18), width, height, 8),
+        clampPoint(point(laneX + 74, hero.bottom + 26), width, height, 8),
+      ]), 12),
+      buildRoundedPath(dedupePoints([
+        clampPoint(point(laneX + 4, capability.top + MOBILE.capTick), width, height, 8),
+        clampPoint(point(laneX + 86, capability.top + MOBILE.capTick + 8), width, height, 8),
+      ]), 12),
+      buildRoundedPath(dedupePoints([
+        clampPoint(point(laneX + 4, translation.top + MOBILE.translationTick), width, height, 8),
+        clampPoint(point(laneX + 78, translation.top + MOBILE.translationTick + 8), width, height, 8),
+      ]), 12),
+      buildRoundedPath(dedupePoints([
+        clampPoint(point(laneX + 4, featured.top + MOBILE.featuredTick), width, height, 8),
+        clampPoint(point(laneX + 94, featured.top + MOBILE.featuredTick + 10), width, height, 8),
+      ]), 12),
     ],
   }
+}
+
+function SignalSegment({ segment }) {
+  return (
+    <g className={segment.className}>
+      {segment.paths.map((pathConfig, index) => (
+        <g key={`${segment.key}-path-${index}`}>
+          <path className={styles.channelTrace} d={pathConfig.d} />
+          <g className={styles.travellers}>
+            <g className={styles.traveller}>
+              <circle r="2.2" />
+              <circle r="5.8" className={styles.pulseRing} />
+              <animateMotion
+                dur={pathConfig.travellerDuration}
+                begin={pathConfig.travellerOffset}
+                repeatCount="indefinite"
+                rotate="auto"
+                path={pathConfig.d}
+              />
+            </g>
+          </g>
+        </g>
+      ))}
+
+      <g className={styles.nodes}>
+        {segment.nodes.map((node, index) => (
+          <g key={`${segment.key}-node-${index}`} transform={`translate(${node.x} ${node.y})`}>
+            <circle r={node.core} className={styles.nodeCore} />
+            <circle
+              r={node.ring}
+              className={node.pulse ? styles.nodeRingPulse : styles.nodeRing}
+            />
+          </g>
+        ))}
+      </g>
+    </g>
+  )
 }
 
 export default function OverviewRouteOverlay() {
@@ -316,8 +364,9 @@ export default function OverviewRouteOverlay() {
 
     const measure = () => {
       rafRef.current = 0
-      setDesktopGeometry(buildDesktopGeometry(overlayElement))
-      setMobileGeometry(buildMobileGeometry(overlayElement))
+      const measured = measureSections(overlayElement)
+      setDesktopGeometry(buildDesktopSignalGeometry(measured))
+      setMobileGeometry(buildMobileSignalGeometry(measured))
     }
 
     const scheduleMeasure = () => {
@@ -332,6 +381,7 @@ export default function OverviewRouteOverlay() {
 
     const elements = [
       root.querySelector('section[aria-label="Introduction"]'),
+      root.querySelector('img[alt="TJ Johnson"]'),
       root.querySelector('section[aria-label="Core capabilities"]'),
       root.querySelector('#game-production-translation')?.closest('section'),
       root.querySelector('section[aria-label="Featured work"]'),
@@ -344,9 +394,7 @@ export default function OverviewRouteOverlay() {
     return () => {
       observer.disconnect()
       window.removeEventListener('resize', scheduleMeasure)
-      if (rafRef.current) {
-        window.cancelAnimationFrame(rafRef.current)
-      }
+      if (rafRef.current) window.cancelAnimationFrame(rafRef.current)
     }
   }, [])
 
@@ -355,107 +403,92 @@ export default function OverviewRouteOverlay() {
     return `0 0 ${Math.max(1200, desktopGeometry.width)} ${Math.max(1900, desktopGeometry.height)}`
   }, [desktopGeometry])
 
+  const mobileViewBox = useMemo(() => {
+    if (!mobileGeometry) return '0 0 420 2100'
+    return `0 0 ${Math.max(420, mobileGeometry.width)} ${Math.max(2100, mobileGeometry.height)}`
+  }, [mobileGeometry])
+
   return (
     <div ref={overlayRef} className={styles.overlay} aria-hidden="true">
-      <svg
-        className={styles.desktop}
-        viewBox={desktopViewBox}
-        preserveAspectRatio="none"
-        focusable="false"
-      >
-        {desktopGeometry?.segments && (
+      <svg className={styles.desktop} viewBox={desktopViewBox} preserveAspectRatio="none" focusable="false">
+        {desktopGeometry && (
           <>
+            <g className={styles.avatarOrigin}>
+              <circle
+                cx={desktopGeometry.avatarCenter.x}
+                cy={desktopGeometry.avatarCenter.y}
+                r="48"
+                className={styles.avatarHalo}
+              />
+              <circle
+                cx={desktopGeometry.avatarCenter.x}
+                cy={desktopGeometry.avatarCenter.y}
+                r="72"
+                className={styles.avatarHaloSecondary}
+              />
+            </g>
+
             {desktopGeometry.segments.map((segment) => (
-              <g key={segment.key} className={segment.className}>
-                <path
-                  className={styles.primaryRoute}
-                  d={segment.path}
-                />
-
-                <g className={styles.nodes}>
-                  {segment.nodes.map((node, index) => (
-                    <g key={`${segment.key}-${node.x}-${node.y}-${index}`} transform={`translate(${node.x} ${node.y})`}>
-                      <circle r={node.core} className={styles.nodeCore} />
-                      <circle
-                        r={node.ring}
-                        className={node.pulse ? styles.nodeRingPulse : styles.nodeRing}
-                      />
-                    </g>
-                  ))}
-                </g>
-
-                <g className={styles.travellers}>
-                  <g className={styles.traveller}>
-                    <circle r="2.2" />
-                    <circle r="5.8" className={styles.pulseRing} />
-                    <animateMotion
-                      dur={segment.travellerDuration}
-                      begin={segment.travellerOffset}
-                      repeatCount="indefinite"
-                      rotate="auto"
-                      path={segment.path}
-                    />
-                  </g>
-                </g>
-              </g>
+              <SignalSegment key={segment.key} segment={segment} />
             ))}
+
+            <g className={styles.telemetryField}>
+              {desktopGeometry.motes.map((mote, index) => (
+                <g
+                  key={`desktop-mote-${index}`}
+                  className={`${styles.telemetryMote} ${mote.tint === 'teal' ? styles.tealMote : styles.goldMote}`}
+                  style={{
+                    '--drift': `${mote.drift}px`,
+                    '--delay': mote.delay,
+                    '--duration': mote.duration,
+                  }}
+                  transform={`translate(${mote.x} ${mote.y})`}
+                >
+                  <circle r={mote.size} />
+                </g>
+              ))}
+            </g>
           </>
         )}
       </svg>
 
-      <svg
-        className={styles.mobile}
-        viewBox={mobileGeometry ? `0 0 ${Math.max(420, mobileGeometry.width)} ${Math.max(2100, mobileGeometry.height)}` : '0 0 420 2100'}
-        preserveAspectRatio="none"
-        focusable="false"
-      >
+      <svg className={styles.mobile} viewBox={mobileViewBox} preserveAspectRatio="none" focusable="false">
         {mobileGeometry && (
           <>
-            <path
-              className={styles.primaryRoute}
-              d={mobileGeometry.path}
-            />
+            <g className={styles.avatarOrigin}>
+              <circle
+                cx={mobileGeometry.avatarCenter.x}
+                cy={mobileGeometry.avatarCenter.y}
+                r="34"
+                className={styles.avatarHalo}
+              />
+            </g>
+
+            {mobileGeometry.segments.map((segment) => (
+              <SignalSegment key={segment.key} segment={segment} />
+            ))}
 
             <g className={styles.dockingRoutes}>
               {mobileGeometry.ticks.map((tick, index) => (
-                <path key={`${tick.d}-${index}`} className={styles.dockTick} d={tick.d} />
+                <path key={`mobile-tick-${index}`} className={styles.dockTick} d={tick} />
               ))}
             </g>
 
-            <g className={styles.nodes}>
-              {mobileGeometry.nodes.map((node, index) => (
-                <g key={`${node.x}-${node.y}-${index}`} transform={`translate(${node.x} ${node.y})`}>
-                  <circle r={node.core} className={styles.nodeCore} />
-                  <circle
-                    r={node.ring}
-                    className={node.pulse ? styles.nodeRingPulse : styles.nodeRing}
-                  />
+            <g className={styles.telemetryField}>
+              {mobileGeometry.motes.map((mote, index) => (
+                <g
+                  key={`mobile-mote-${index}`}
+                  className={`${styles.telemetryMote} ${mote.tint === 'teal' ? styles.tealMote : styles.goldMote}`}
+                  style={{
+                    '--drift': `${mote.drift}px`,
+                    '--delay': mote.delay,
+                    '--duration': mote.duration,
+                  }}
+                  transform={`translate(${mote.x} ${mote.y})`}
+                >
+                  <circle r={mote.size} />
                 </g>
               ))}
-            </g>
-
-            <g className={styles.travellers}>
-              <g className={styles.traveller}>
-                <circle r="2.2" />
-                <circle r="5.8" className={styles.pulseRing} />
-                <animateMotion
-                  dur="20s"
-                  repeatCount="indefinite"
-                  rotate="auto"
-                  path={mobileGeometry.path}
-                />
-              </g>
-              <g className={styles.traveller}>
-                <circle r="2" />
-                <circle r="5.4" className={styles.pulseRing} />
-                <animateMotion
-                  dur="20s"
-                  begin="-10s"
-                  repeatCount="indefinite"
-                  rotate="auto"
-                  path={mobileGeometry.path}
-                />
-              </g>
             </g>
           </>
         )}
