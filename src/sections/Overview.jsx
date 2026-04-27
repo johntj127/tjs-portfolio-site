@@ -2,8 +2,7 @@ import React, { useMemo, useState } from 'react'
 import ProjectCard from '../components/ProjectCard.jsx'
 import CapabilityCards from '../components/CapabilityCards.jsx'
 import CapabilityDetailModal from '../components/CapabilityDetailModal.jsx'
-import MapField from '../components/MapField/MapField.jsx'
-import OverviewRouteOverlay from '../components/OverviewRouteOverlay.jsx'
+import OverviewSignalField from '../components/OverviewSignalField.jsx'
 import TranslationGrid from '../components/TranslationGrid.jsx'
 import styles from './Overview.module.css'
 
@@ -236,8 +235,7 @@ export default function Overview() {
     <div className={styles.overview}>
 
       {/* ── Ambient background field ─────────────────── */}
-      <MapField variant="overviewContentAware" />
-      <OverviewRouteOverlay />
+      <OverviewSignalField />
 
       {/* ── Identity block ───────────────────────────── */}
       <section className={styles.identity} aria-label="Introduction">
