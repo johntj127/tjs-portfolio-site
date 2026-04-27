@@ -2,16 +2,20 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import styles from './OverviewRouteOverlay.module.css'
 
 const DESKTOP_PADDING = {
-  cardsTop: 52,
-  cardsRight: 42,
-  cardsBottom: 34,
-  translationLeft: 42,
-  translationTop: 26,
-  translationBottom: 40,
-  featuredLeft: 40,
-  featuredTop: 24,
-  featuredBottom: 28,
-  featuredRight: 34,
+  heroExitX: 18,
+  heroExitY: 30,
+  heroRunwayX: 74,
+  heroRunwayY: 62,
+  cardsTop: 56,
+  cardsRight: 52,
+  cardsBottom: 52,
+  translationLeft: 58,
+  translationTop: 34,
+  translationBottom: 54,
+  featuredLeft: 54,
+  featuredTop: 36,
+  featuredBottom: 40,
+  featuredRight: 58,
 }
 
 function point(x, y) {
@@ -122,16 +126,22 @@ function buildDesktopGeometry(overlayElement) {
   const avatarRect = relRect(avatar, overlayRect)
   const capRect = relRect(capabilityRow, overlayRect)
   const translationRect = relRect(translationPanel, overlayRect)
-  const [firstCard, secondCard, thirdCard] = cards.map((card) => relRect(card, overlayRect))
+  const [firstCard, , thirdCard] = cards.map((card) => relRect(card, overlayRect))
 
   const width = overlayRect.width
   const height = overlayRect.height
 
-  const avatarStart = point(avatarRect.left + avatarRect.width * 0.38, avatarRect.bottom + 10)
-  const avatarExit = point(avatarRect.left - 12, avatarRect.bottom + 22)
-  const heroRunway = point(capRect.left - 52, capRect.top - DESKTOP_PADDING.cardsTop)
+  const avatarStart = point(avatarRect.left + avatarRect.width * 0.42, avatarRect.bottom + 8)
+  const avatarExit = point(
+    avatarRect.left - DESKTOP_PADDING.heroExitX,
+    avatarRect.bottom + DESKTOP_PADDING.heroExitY
+  )
+  const heroRunway = point(
+    capRect.left - DESKTOP_PADDING.heroRunwayX,
+    capRect.top - DESKTOP_PADDING.heroRunwayY
+  )
 
-  const cardsTopLeft = point(capRect.left - 28, capRect.top - DESKTOP_PADDING.cardsTop)
+  const cardsTopLeft = point(capRect.left - 32, capRect.top - DESKTOP_PADDING.cardsTop)
   const cardsTopRight = point(capRect.right + DESKTOP_PADDING.cardsRight, capRect.top - DESKTOP_PADDING.cardsTop)
   const cardsRightLower = point(capRect.right + DESKTOP_PADDING.cardsRight, capRect.bottom + DESKTOP_PADDING.cardsBottom)
 
@@ -141,26 +151,22 @@ function buildDesktopGeometry(overlayElement) {
   )
   const cardsBottomLeft = point(translationRect.left - DESKTOP_PADDING.translationLeft, cardsToTranslationY)
 
-  const translationLeftTop = point(translationRect.left - DESKTOP_PADDING.translationLeft, translationRect.top - 10)
-  const translationLeftBottom = point(translationRect.left - DESKTOP_PADDING.translationLeft, translationRect.bottom + DESKTOP_PADDING.translationBottom)
-  const translationBottomRun = point(
-    Math.min(translationRect.left + translationRect.width * 0.56, firstCard.left - DESKTOP_PADDING.featuredLeft),
-    translationRect.bottom + DESKTOP_PADDING.translationBottom
+  const translationLeftTop = point(
+    translationRect.left - DESKTOP_PADDING.translationLeft,
+    translationRect.top - 18
   )
+  const translationLeftBottom = point(translationRect.left - DESKTOP_PADDING.translationLeft, translationRect.bottom + DESKTOP_PADDING.translationBottom)
+  const featuredTopY = firstCard.top - DESKTOP_PADDING.featuredTop
+  const featuredLeftX = firstCard.left - DESKTOP_PADDING.featuredLeft
+  const featuredBottomY = Math.max(firstCard.bottom, thirdCard.bottom) + DESKTOP_PADDING.featuredBottom
+  const featuredRightX = thirdCard.right + DESKTOP_PADDING.featuredRight
+  const translationBottomRun = point(featuredLeftX, translationRect.bottom + DESKTOP_PADDING.translationBottom)
 
-  const featuredApproach = point(firstCard.left - DESKTOP_PADDING.featuredLeft, firstCard.top - DESKTOP_PADDING.featuredTop)
-  const firstOuterLeftBottom = point(firstCard.left - DESKTOP_PADDING.featuredLeft, firstCard.bottom + DESKTOP_PADDING.featuredBottom)
-  const gutter12X = (firstCard.right + secondCard.left) / 2
-  const gutter12Bottom = point(gutter12X, firstCard.bottom + DESKTOP_PADDING.featuredBottom)
-  const gutter12Top = point(gutter12X, secondCard.top - DESKTOP_PADDING.featuredTop)
-  const secondOuterRightTop = point(secondCard.right + DESKTOP_PADDING.featuredRight, secondCard.top - DESKTOP_PADDING.featuredTop)
-  const secondOuterRightBottom = point(secondCard.right + DESKTOP_PADDING.featuredRight, secondCard.bottom + DESKTOP_PADDING.featuredBottom)
-  const gutter23X = (secondCard.right + thirdCard.left) / 2
-  const gutter23Bottom = point(gutter23X, secondCard.bottom + DESKTOP_PADDING.featuredBottom)
-  const gutter23Top = point(gutter23X, thirdCard.top - DESKTOP_PADDING.featuredTop)
-  const thirdOuterRightTop = point(thirdCard.right + DESKTOP_PADDING.featuredRight, thirdCard.top - DESKTOP_PADDING.featuredTop)
-  const thirdOuterRightBottom = point(thirdCard.right + DESKTOP_PADDING.featuredRight, thirdCard.bottom + DESKTOP_PADDING.featuredBottom)
-  const exit = point(Math.min(width - 28, thirdCard.right + 84), thirdCard.bottom + DESKTOP_PADDING.featuredBottom)
+  const featuredApproach = point(featuredLeftX, featuredTopY)
+  const featuredLeftBottom = point(featuredLeftX, featuredBottomY)
+  const featuredRightBottom = point(featuredRightX, featuredBottomY)
+  const featuredRightTop = point(featuredRightX, featuredTopY + 6)
+  const exit = point(Math.min(width - 30, featuredRightX + 86), featuredTopY + 6)
 
   const routePoints = dedupePoints([
     clampPoint(avatarStart, width, height),
@@ -174,15 +180,9 @@ function buildDesktopGeometry(overlayElement) {
     clampPoint(translationLeftBottom, width, height),
     clampPoint(translationBottomRun, width, height),
     clampPoint(featuredApproach, width, height),
-    clampPoint(firstOuterLeftBottom, width, height),
-    clampPoint(gutter12Bottom, width, height),
-    clampPoint(gutter12Top, width, height),
-    clampPoint(secondOuterRightTop, width, height),
-    clampPoint(secondOuterRightBottom, width, height),
-    clampPoint(gutter23Bottom, width, height),
-    clampPoint(gutter23Top, width, height),
-    clampPoint(thirdOuterRightTop, width, height),
-    clampPoint(thirdOuterRightBottom, width, height),
+    clampPoint(featuredLeftBottom, width, height),
+    clampPoint(featuredRightBottom, width, height),
+    clampPoint(featuredRightTop, width, height),
     clampPoint(exit, width, height),
   ])
 
@@ -195,8 +195,8 @@ function buildDesktopGeometry(overlayElement) {
       { x: cardsTopRight.x, y: cardsTopRight.y, pulse: true, core: 5, ring: 14 },
       { x: translationLeftBottom.x, y: translationLeftBottom.y, pulse: true, core: 5.1, ring: 14.6 },
       { x: translationBottomRun.x, y: translationBottomRun.y, pulse: false, core: 4.4, ring: 12.2 },
-      { x: secondOuterRightTop.x, y: secondOuterRightTop.y, pulse: false, core: 4.4, ring: 12.2 },
-      { x: thirdOuterRightTop.x, y: thirdOuterRightTop.y, pulse: true, core: 4.8, ring: 13.4 },
+      { x: featuredLeftBottom.x, y: featuredLeftBottom.y, pulse: false, core: 4.4, ring: 12.2 },
+      { x: featuredRightTop.x, y: featuredRightTop.y, pulse: true, core: 4.8, ring: 13.4 },
       { x: exit.x, y: exit.y, pulse: false, core: 4.4, ring: 12.2 },
     ],
   }
